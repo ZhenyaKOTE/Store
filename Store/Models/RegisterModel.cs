@@ -12,7 +12,7 @@ namespace Store.Models
         public string Email { get; set; }
 
         [Required]
-        public string Login { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

@@ -37,18 +37,21 @@ namespace Store.BLL.Services
         public async Task<OperationDetails> CreateAsync(UserDTO userDto)
         {
             ApplicationUser user = await DBContext.UserManager.FindByEmailAsync(userDto.Email);
-            if (user != null)
+            if (user == null)
             {
-                user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
+                user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Name };
                 var Result = await DBContext.UserManager.CreateAsync(user, userDto.Password);
 
                 if (Result.Errors.Count() > 0)
                     return new OperationDetails(false, Result.Errors.FirstOrDefault(), "");
-                
-                await DBContext.UserManager.AddToRoleAsync(user.Id, userDto.Role); // добавляем роль
 
-                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Name = userDto.Name }; // создаем профиль клиента
-                DBContext.ClientManager.Create(clientProfile);
+                if (await DBContext.RoleManager.RoleExistsAsync(userDto.Role) == false) //Якщо ролі не існує взагалі, то створити
+                    await DBContext.RoleManager.CreateAsync(new ApplicationRole { Name = userDto.Role });
+
+                await DBContext.UserManager.AddToRoleAsync(user.Id, userDto.Role);
+
+                //ClientProfile clientProfile = new ClientProfile { Id = user.Id, Name = userDto.Name }; // создаем профиль клиента
+                //DBContext.ClientManager.Create(clientProfile);
                 await DBContext.SaveAsync();
                 return new OperationDetails(true, "Регистрация успешно пройдена", "");
             }
