@@ -18,6 +18,13 @@ namespace Store
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Account",
+                url: "{controller}/{action}/{id}",
+                namespaces: new[] { "Pizzeria.Controllers" },
+                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
+            );
         }
     }
 }

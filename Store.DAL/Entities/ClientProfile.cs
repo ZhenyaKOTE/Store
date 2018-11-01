@@ -9,7 +9,7 @@ namespace Store.DAL.Entities
         [ForeignKey("ApplicationUser")]
         public string Id { get; set; }
 
-        public string Login { get; set; }
+        public string Name { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

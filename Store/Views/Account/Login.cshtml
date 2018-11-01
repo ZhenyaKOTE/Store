@@ -1,0 +1,15 @@
+﻿@model Store.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<form class="form-group" method="post" action="@Url.Action("Login", "Account")">
+    @Html.TextBox("EmailText", null, new { @class = "form-control" })
+    <br>
+    @Html.TextBox("PasswordText", null, new { @class = "form-control" })
+    <br>
+    <input type="submit" id="LoginButton" value="Login" class="btn btn-success" />
+</form>

@@ -1,4 +1,6 @@
 ﻿using Ninject.Modules;
+using Store.BLL.Interfaces;
+using Store.BLL.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,8 @@ namespace Store.Util
     {
         public override void Load()
         {
-            //Bind<IRepository>().To<BookRepository>();
+            //Bind<IUserService>().To<UserService>();
+            //Bind<IServiceCreator>().To<ServiceCreator>();
         }
     }
 }
