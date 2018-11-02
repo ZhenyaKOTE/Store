@@ -35,10 +35,6 @@ namespace Store.Controllers
             }
         }
 
-        public string GetUserNameByEmail()
-        {
-            return "Hello";
-        }
         public ActionResult Register()
         {
             return View();
@@ -55,6 +51,7 @@ namespace Store.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
                 ClaimsIdentity claim = await UserService.Authenticate(userDto);
                 if (claim == null)
@@ -73,6 +70,14 @@ namespace Store.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public string GetUserNameByEmail()
+        {
+            return UserService.GetUserNameByEmail(User.Identity.Name);
+        }
+
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -24,17 +24,10 @@ namespace Store.DAL.Repositories
             DbContext.SaveChanges();
         }
 
-        public async Task<string> GetUserNameByEmail(string Email)
+        public string GetUserNameByEmail(string Email)
         {
-            // var User = DbContext.ClientProfiles(x => x.ApplicationUser.Email == Email);
-            Debug.Write("Hello" + Email + "\n\n\n\n\n\n\n");
-            var User = await Task.Run(() =>
-            {
-                return DbContext.ClientProfiles.FirstOrDefault(x => x.ApplicationUser.Email == Email);
-            });
-            if(User == null)
-                Debug.Write("null" + "\n\n\n\n\n\n\n\n\n\n");
-            return User.Name;
+             var User = DbContext.ClientProfiles.FirstOrDefault(x => x.ApplicationUser.Email == Email);
+             return User.Name;
         }
 
         public void Dispose()

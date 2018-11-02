@@ -17,16 +17,17 @@ namespace Store.BLL.Services
     public class UserService : IUserService
     {
         private IUnitOfWork DBContext;
+
         public UserService(IUnitOfWork UOW)
         {
             DBContext = UOW;
 
         }
 
-        public async Task<string> GetUserNameByEmail(string Email)
+        public string GetUserNameByEmail(string Email)
         {
-            Debug.Write("Hello" + "Email" + "\n\n\n\n\\n\n\n");
-            string UserName = await DBContext.ClientManager.GetUserNameByEmail(Email);
+            
+            string UserName = DBContext.ClientManager.GetUserNameByEmail(Email);
             return UserName;  
         }
 

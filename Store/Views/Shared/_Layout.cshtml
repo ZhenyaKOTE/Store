@@ -1,4 +1,5 @@
-﻿@model Store.Models.ViewUserModel
+﻿@*@model Store.Models.ViewUserModel*@
+@using Store.Helpers
 
 <!DOCTYPE html>
 <html>
@@ -18,8 +19,10 @@
     else
     {
         @*<a>Привет @Html.DisplayForModel()</a>*@
-        <a>Привет  @User.Identity.Name</a>
-        @Html.Action("GetUserNameByEmail", "Account")
+        @*<a>Привет @User.Identity</a>*@
+        
+        <a>@Html.Action("GetUserNameByEmail", "Account") </a>
+        @*@ActionHelper.ActionAsync("GetUserNameByEmail", "Account");*@
         @Html.ActionLink("Выход", "Logout", "Account")
     }
 
@@ -33,6 +36,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/PostAction")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>
