@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Store.BLL.DTO;
 using Store.BLL.Infrastructure;
@@ -33,8 +34,11 @@ namespace Store.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-        
 
+        public string GetUserNameByEmail()
+        {
+            return "Hello";
+        }
         public ActionResult Register()
         {
             return View();
@@ -83,7 +87,7 @@ namespace Store.Controllers
                     Name = model.Name,
                     Role = "User"
                 };
-                
+
                 OperationDetails operationDetails = await UserService.CreateAsync(userDto);
                 //Debug.Write(operationDetails.Message);
                 if (operationDetails.Succedeed)

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model Store.Models.ViewUserModel
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -15,11 +17,9 @@
     }
     else
     {
-
-
-        <a>Привет @User.Identity.Name</a>
-
-
+        @*<a>Привет @Html.DisplayForModel()</a>*@
+        <a>Привет  @User.Identity.Name</a>
+        @Html.Action("GetUserNameByEmail", "Account")
         @Html.ActionLink("Выход", "Logout", "Account")
     }
 

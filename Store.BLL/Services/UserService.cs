@@ -6,6 +6,7 @@ using Store.DAL.Entities;
 using Store.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -19,7 +20,14 @@ namespace Store.BLL.Services
         public UserService(IUnitOfWork UOW)
         {
             DBContext = UOW;
-            
+
+        }
+
+        public async Task<string> GetUserNameByEmail(string Email)
+        {
+            Debug.Write("Hello" + "Email" + "\n\n\n\n\\n\n\n");
+            string UserName = await DBContext.ClientManager.GetUserNameByEmail(Email);
+            return UserName;  
         }
 
         public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
@@ -27,6 +35,8 @@ namespace Store.BLL.Services
             ClaimsIdentity claim = null;
             // находим пользователя
             ApplicationUser user = await DBContext.UserManager.FindAsync(userDto.Email, userDto.Password);
+            //ApplicationUser user = await DBContext.UserManager.FindByEmailAsync(userDto.Email);
+
             // авторизуем его и возвращаем объект ClaimsIdentity
             if (user != null)
                 claim = await DBContext.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
@@ -39,7 +49,7 @@ namespace Store.BLL.Services
             ApplicationUser user = await DBContext.UserManager.FindByEmailAsync(userDto.Email);
             if (user == null)
             {
-                user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Name };
+                user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
                 var Result = await DBContext.UserManager.CreateAsync(user, userDto.Password);
 
                 if (Result.Errors.Count() > 0)
@@ -50,13 +60,14 @@ namespace Store.BLL.Services
 
                 await DBContext.UserManager.AddToRoleAsync(user.Id, userDto.Role);
 
-                //ClientProfile clientProfile = new ClientProfile { Id = user.Id, Name = userDto.Name }; // создаем профиль клиента
-                //DBContext.ClientManager.Create(clientProfile);
+                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Name = userDto.Name }; // создаем профиль клиента
+                DBContext.ClientManager.Create(clientProfile);
+
                 await DBContext.SaveAsync();
                 return new OperationDetails(true, "Регистрация успешно пройдена", "");
             }
             else
-                return new OperationDetails(false, "Пользователь с таким логином уже существует", "Email");
+                return new OperationDetails(false, "Пользователь с таким Email уже существует", "Email");
         }
 
         public async Task SetInitialData(UserDTO adminDto, List<string> roles)
