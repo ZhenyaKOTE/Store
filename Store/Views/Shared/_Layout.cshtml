@@ -1,5 +1,5 @@
 ﻿@*@model Store.Models.ViewUserModel*@
-@using Store.Helpers
+@using Store.Util
 
 <!DOCTYPE html>
 <html>
@@ -11,20 +11,21 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @if (!User.Identity.IsAuthenticated)
-    {
-        @Html.ActionLink("Войти", "Login", "Account")
-        @Html.ActionLink("Регистрация", "Register", "Account")
-    }
-    else
-    {
-        @*<a>Привет @Html.DisplayForModel()</a>*@
-        @*<a>Привет @User.Identity</a>*@
-        
-        <a>@Html.Action("GetUserNameByEmail", "Account") </a>
-        @*@ActionHelper.ActionAsync("GetUserNameByEmail", "Account");*@
-        @Html.ActionLink("Выход", "Logout", "Account")
-    }
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <form class="form-inline">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("Войти", "Login", "Account")
+                @Html.ActionLink("Регистрация", "Register", "Account")
+            }
+            else
+            {
+                <a href="" class="font-weight-normal main">@((User as CustomPrincipal).Name)</a>
+                @Html.ActionLink("Выход", "Logout", "Account")
+
+            }
+        </form>
+    </nav>
 
     <div class="container body-content">
         @RenderBody()

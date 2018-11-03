@@ -33,16 +33,23 @@ namespace Store.BLL.Services
 
         public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
         {
-            ClaimsIdentity claim = null;
+            ClaimsIdentity claimIdentity = null;
+            
             // находим пользователя
             ApplicationUser user = await DBContext.UserManager.FindAsync(userDto.Email, userDto.Password);
+            //claim.AddClaim(new Claim("UserName", this.));
+
             //ApplicationUser user = await DBContext.UserManager.FindByEmailAsync(userDto.Email);
 
             // авторизуем его и возвращаем объект ClaimsIdentity
             if (user != null)
-                claim = await DBContext.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            {
+                claimIdentity = await DBContext.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                Claim claim = new Claim("UserName", user.ClientProfile.Name);
+                claimIdentity.AddClaim(claim);
+            }
 
-            return claim;
+            return claimIdentity;
         }
 
         public async Task<OperationDetails> CreateAsync(UserDTO userDto)

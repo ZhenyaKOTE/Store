@@ -5,14 +5,16 @@ using Store.BLL.DTO;
 using Store.BLL.Infrastructure;
 using Store.BLL.Interfaces;
 using Store.Models;
+using Store.Util;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using System.Web.Security;
 
 namespace Store.Controllers
 {
@@ -49,35 +51,62 @@ namespace Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
         {
+            //Debug.Write("fdsfsdfsdfs");
             if (ModelState.IsValid)
             {
-                
+                //var user = userRepository.Users.Where(u => u.Email == viewModel.Email).First();
                 UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
-                ClaimsIdentity claim = await UserService.Authenticate(userDto);
-                if (claim == null)
+
+                var Claim = await UserService.Authenticate(userDto);
+
+                if (Claim == null)
                 {
                     ModelState.AddModelError("", "Неверный логин или пароль.");
                 }
                 else
                 {
+                    string _TempUserName = "";
+
+                    foreach (var ClaimStr in Claim.Claims)
+                    {
+                        if (ClaimStr.Type == "UserName")
+                        {
+                            _TempUserName = ClaimStr.Value;
+                            break;
+                        }
+                    }
+
                     AuthenticationManager.SignOut();
                     AuthenticationManager.SignIn(new AuthenticationProperties
                     {
                         IsPersistent = true
-                    }, claim);
+                    }, Claim);
+
+                    CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
+                    serializeModel.Name = _TempUserName;
+                    serializeModel.Email = userDto.Email;
+
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                    string userData = serializer.Serialize(serializeModel);
+
+                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+                             1,
+                             model.Email,
+                             DateTime.Now,
+                             DateTime.Now.AddMinutes(20),
+                             false,
+                             userData);
+
+                    string encTicket = FormsAuthentication.Encrypt(authTicket);
+                    HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                    Response.Cookies.Add(faCookie);
                     return RedirectToAction("Index", "Home");
                 }
+
             }
             return View(model);
         }
-
-        [HttpGet]
-        public string GetUserNameByEmail()
-        {
-            return UserService.GetUserNameByEmail(User.Identity.Name);
-        }
-
-        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -105,6 +134,14 @@ namespace Store.Controllers
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
+
+            if (Request.Cookies[FormsAuthentication.FormsCookieName] != null)
+            {
+                var cookieToDelete = new HttpCookie(FormsAuthentication.FormsCookieName);
+                cookieToDelete.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(cookieToDelete);
+            }
+
             return RedirectToAction("Index", "Home");
         }
     }
