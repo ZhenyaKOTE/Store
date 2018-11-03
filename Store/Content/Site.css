@@ -23,6 +23,52 @@ textarea {
     max-width: 280px;
 }
 
-a.main {
+/*a.main {
     color: white;
+}*/
+
+a {
+    color: #08c;
+    text-decoration: none
 }
+
+a:hover {
+    color: #005580;
+    text-decoration: underline
+}
+
+.dropdown-toggle-over::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    content: "";
+
+}
+
+
+
+
+
+
+
+    .btn-secondary-over:focus, .btn-secondary-over.focus {
+        box-shadow: none;
+    }
+
+    .btn-secondary-over.disabled, .btn-secondary-over:disabled {
+        color: #fff;
+        background-color: transparent;
+        border-color: transparent;
+    }
+
+    .btn-secondary-over:not(:disabled):not(.disabled):active, .btn-secondary-over:not(:disabled):not(.disabled).active,
+    .show > .btn-secondary-over.dropdown-toggle {
+        color: white;
+        background-color: transparent;
+        border-color: transparent;
+    }
+
+     .btn-secondary-over:not(:disabled):not(.disabled):active:focus, .btn-secondary-over:not(:disabled):not(.disabled).active:focus,
+     .show > .btn-secondary-over.dropdown-toggle:focus {
+         box-shadow: none;
+     }
