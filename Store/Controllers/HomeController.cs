@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace Store.Controllers
 {
@@ -19,15 +20,13 @@ namespace Store.Controllers
 
         }
 
-        [HttpGet]
-        public string[] GetCategory()
+        [HttpPost]
+        public string GetCategory()
         {
             List<string> list = new List<string>();
-            list.Add("Action1");
-            list.Add("Action2");
-            list.Add("Action3");
-            list.Add("Action4");
-            return list.ToArray();
+            list.Add("Шини");
+            list.Add("Диски");
+            return new JavaScriptSerializer().Serialize(list.ToArray());
         }
 
         public ActionResult Index()
