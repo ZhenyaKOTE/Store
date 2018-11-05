@@ -4,6 +4,7 @@ using Owin;
 using Store.BLL.Services;
 using Microsoft.AspNet.Identity;
 using Store.BLL.Interfaces;
+using System.Web.Http;
 
 [assembly: OwinStartup(typeof(Store.App_Start.Startup))]
 
@@ -15,6 +16,7 @@ namespace Store.App_Start
         public void Configuration(IAppBuilder app)
         {
             app.CreatePerOwinContext<IUserService>(CreateUserService);
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,

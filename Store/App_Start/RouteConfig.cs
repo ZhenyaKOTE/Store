@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -22,7 +23,7 @@ namespace Store
             routes.MapRoute(
                 name: "Account",
                 url: "{controller}/{action}/{id}",
-                namespaces: new[] { "Pizzeria.Controllers" },
+                namespaces: new[] { "Store.Controllers" },
                 defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
             );
         }

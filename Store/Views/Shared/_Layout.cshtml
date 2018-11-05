@@ -11,21 +11,29 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body onload="CategoryLoadTo('Category')">
+@*CategoryLoadTo тільки для апі*@
+<body onload="CategoryLoadTo('Category', '@Url.Action("GetCategory", "DefaultApi")')">
+
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
 
         <button style="background-color: transparent;border-color: transparent" class=" dropdown-toggle-over dropdown-toggle btn btn-secondary-over btn-secondary btn-lg dropdown-toggle-over" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span>
                 <img src="~/Images/shiny.png" style="height: 40px; width: 40px" />
-                Добрі Колеса
+                Магазин
                 @*<a class="navbar-brand" href="">*@
             </span>
         </button>
 
-        
-        <div  class="dropdown-menu" style="background-color: #fff; align-content: center; margin-left: 10px">
-            <ul id="Category" class="navbar-nav mr-auto">
-            </ul>
+
+        <div class="dropdown-menu" style="background-color: #fff; align-content: center; margin-left: 10px">
+            <div id="Category" class="list-group mr-auto">
+                <a href="@Url.Action("SecretPage","Home")" class="list-group-item list-group-item-action text-center" @*style="background-color: silver"*@>
+                    Hello
+                    @*<span>
+                            <img src="~/Images/Media-Controls-Play-icon.png" style="height: 15px; width:15px; margin-left: 40%;"/>
+                        </span>*@
+                </a>
+            </div>
         </div>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +46,7 @@
                     <a class="nav-link" href="@Url.Action("Index","Home")">Головна</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Контакти</a>
+                    <a class="nav-link" href="@Url.Action("SecretPage","Home")">Контакти</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -63,7 +71,7 @@
                         <a class="font-weight-light main nav-link">@((User as CustomPrincipal).Name)</a>
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("Выход", "Logout", "Account", new { @class = "nav-link" })
+                        @Html.ActionLink("Выход", "Logout", "Account", null, new { @class = "nav-link" })
                     </li>
                 </ul>
             }

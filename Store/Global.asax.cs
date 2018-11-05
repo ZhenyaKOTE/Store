@@ -1,11 +1,13 @@
 ﻿using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
+using Store.App_Start;
 using Store.Models;
 using Store.Util;
 using System;
 using System.Diagnostics;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -16,12 +18,16 @@ namespace Store
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+
         protected void Application_Start()
         {
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
+
 
             NinjectModule registrations = new NinjectRegistrations();
             var kernel = new StandardKernel(registrations);

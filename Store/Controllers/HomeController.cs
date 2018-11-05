@@ -1,17 +1,22 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Web.UI;
 
 namespace Store.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult SomeEvent()
+        [Authorize]
+        [HttpGet]
+        public ActionResult SecretPage()
         {
             return View();
         }
@@ -20,14 +25,8 @@ namespace Store.Controllers
 
         }
 
-        [HttpPost]
-        public string GetCategory()
-        {
-            List<string> list = new List<string>();
-            list.Add("Шини");
-            list.Add("Диски");
-            return new JavaScriptSerializer().Serialize(list.ToArray());
-        }
+
+
 
         public ActionResult Index()
         {
