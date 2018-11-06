@@ -13,6 +13,7 @@ namespace Store.BLL.Interfaces
     {
         Task<OperationDetails> CreateAsync(UserDTO userDto);
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
+
         //Task<UserDTO> Authenticate(UserDTO userDto);
         Task SetInitialData(UserDTO adminDto, List<string> roles);
         string GetUserNameByEmail(string Email);

@@ -8,8 +8,10 @@ namespace Store.BLL.Services
     {
         public IUserService CreateUserService(string connection)
         {
-            Debug.Write(connection + "\n\n\n\n\n\n\n\n");
+            //Debug.Write(connection + "\n\n\n\n\n\n\n\n");
             return new UserService(new IdentityUnitOfWork(connection));
         }
+
+        
     }
 }

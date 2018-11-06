@@ -21,7 +21,6 @@ namespace Store.BLL.Services
         public UserService(IUnitOfWork UOW)
         {
             DBContext = UOW;
-
         }
 
         public string GetUserNameByEmail(string Email)
@@ -46,6 +45,7 @@ namespace Store.BLL.Services
             {
                 claimIdentity = await DBContext.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
                 Claim claim = new Claim("UserName", user.ClientProfile.Name);
+                
                 claimIdentity.AddClaim(claim);
             }
 

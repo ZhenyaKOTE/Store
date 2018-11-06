@@ -12,7 +12,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 @*CategoryLoadTo тільки для апі*@
-<body onload="CategoryLoadTo('Category', '@Url.Action("GetCategory", "DefaultApi")')">
+<body onload="CategoryLoadTo('Category', '@Url.Content("~/api/DefaultApi/GetCategory")')">
 
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
 
@@ -27,12 +27,7 @@
 
         <div class="dropdown-menu" style="background-color: #fff; align-content: center; margin-left: 10px">
             <div id="Category" class="list-group mr-auto">
-                <a href="@Url.Action("SecretPage","Home")" class="list-group-item list-group-item-action text-center" @*style="background-color: silver"*@>
-                    Hello
-                    @*<span>
-                            <img src="~/Images/Media-Controls-Play-icon.png" style="height: 15px; width:15px; margin-left: 40%;"/>
-                        </span>*@
-                </a>
+
             </div>
         </div>
 
@@ -48,6 +43,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("SecretPage","Home")">Контакти</a>
                 </li>
+                @if (User != null)
+                {
+                    if (!(User as CustomPrincipal).IsInRole("User"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Admin")">Адміністрування</a>
+                        </li>
+                    }
+                }
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="...">
@@ -77,9 +81,6 @@
             }
         </div>
     </nav>
-
-
-
 
     <div>
         @if (User == null)

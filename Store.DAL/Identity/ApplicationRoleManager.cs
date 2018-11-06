@@ -14,5 +14,7 @@ namespace Store.DAL.Identity
         public ApplicationRoleManager(RoleStore<ApplicationRole> RoleStore)
                    : base(RoleStore)
         { }
+
+ 
     }
 }

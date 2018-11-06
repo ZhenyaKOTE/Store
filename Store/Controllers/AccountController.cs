@@ -38,8 +38,10 @@ namespace Store.Controllers
             }
         }
 
+
         public ActionResult Register()
         {
+            Debug.Write(User.IsInRole("User"));
             return View();
         }
 
@@ -52,6 +54,7 @@ namespace Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
         {
+            
             //Debug.Write("fdsfsdfsdfs");
             if (ModelState.IsValid)
             {
@@ -78,14 +81,16 @@ namespace Store.Controllers
                     }
 
                     AuthenticationManager.SignOut();
+
                     AuthenticationManager.SignIn(new AuthenticationProperties
                     {
                         IsPersistent = true
                     }, Claim);
-
+                    
                     CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
                     serializeModel.Name = _TempUserName;
                     serializeModel.Email = userDto.Email;
+                    //var a = userDto.Role;
 
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
 
@@ -113,6 +118,7 @@ namespace Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel model)
         {
+
             if (ModelState.IsValid)
             {
                 UserDTO userDto = new UserDTO
@@ -134,6 +140,9 @@ namespace Store.Controllers
         }
         public ActionResult Logout()
         {
+            Debug.Write(AuthenticationManager.User.IsInRole("User"));
+            Debug.Write("Pause");
+
             AuthenticationManager.SignOut();
 
             if (Request.Cookies[FormsAuthentication.FormsCookieName] != null)

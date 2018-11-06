@@ -5,6 +5,7 @@ using Store.App_Start;
 using Store.Models;
 using Store.Util;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Web;
 using System.Web.Http;
@@ -46,9 +47,18 @@ namespace Store
 
                 CustomPrincipalSerializeModel serializeModel = serializer.Deserialize<CustomPrincipalSerializeModel>(authTicket.UserData);
 
-                CustomPrincipal newUser = new CustomPrincipal(authTicket.Name);
+
+                string[] roles = authTicket.UserData.Split('|');
+                Debug.Write(roles[0]+"\n\n\n\n\n");
+                FormsIdentity id = new FormsIdentity(authTicket);
+
+                CustomPrincipal newUser = new CustomPrincipal(id, roles);
                 newUser.Name = serializeModel.Name;
                 newUser.Email = serializeModel.Email;
+                //List<string> UserRoles = new List<string>();
+
+                //CustomPrincipal p = new CustomPrincipal();
+                
 
                 Debug.Write(newUser.Name);
 

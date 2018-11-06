@@ -16,20 +16,14 @@ namespace Store.Controllers
     public class DefaultApiController : ApiController
     {
         [System.Web.Http.HttpPost]
-        //[OutputCache(Duration = 3600, Location = OutputCacheLocation.Server)]
+        [OutputCache(Duration = 3600, Location = OutputCacheLocation.ServerAndClient)]
         public string GetCategory()
         {
             List<string> list = new List<string>();
             list.Add("Шини");
             list.Add("Диски");
-            //Thread.Sleep(5000);
             return JsonConvert.SerializeObject(list.ToArray());
-            //return new JavaScriptSerializer().Serialize(list.ToArray());
         }
 
-        public string Get()
-        {
-            return "hELLO";
-        }
     }
 }

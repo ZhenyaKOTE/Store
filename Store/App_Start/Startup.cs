@@ -17,6 +17,8 @@ namespace Store.App_Start
         {
             app.CreatePerOwinContext<IUserService>(CreateUserService);
 
+            
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
