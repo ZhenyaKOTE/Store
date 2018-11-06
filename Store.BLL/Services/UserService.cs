@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Store.BLL.DTO;
 using Store.BLL.Infrastructure;
 using Store.BLL.Interfaces;
@@ -36,21 +37,19 @@ namespace Store.BLL.Services
             
             // находим пользователя
             ApplicationUser user = await DBContext.UserManager.FindAsync(userDto.Email, userDto.Password);
-            //claim.AddClaim(new Claim("UserName", this.));
-
-            //ApplicationUser user = await DBContext.UserManager.FindByEmailAsync(userDto.Email);
-
+            
             // авторизуем его и возвращаем объект ClaimsIdentity
             if (user != null)
             {
                 claimIdentity = await DBContext.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-                Claim claim = new Claim("UserName", user.ClientProfile.Name);
-                
-                claimIdentity.AddClaim(claim);
+                Claim UserNameClaim = new Claim("UserName", user.ClientProfile.Name);
+                claimIdentity.AddClaim(UserNameClaim);
             }
-
+            //claimIdentity.GetUserId();
             return claimIdentity;
         }
+
+        //public async Task<OperationDetails> CreateRoleOrDefault()
 
         public async Task<OperationDetails> CreateAsync(UserDTO userDto)
         {
@@ -63,10 +62,13 @@ namespace Store.BLL.Services
                 if (Result.Errors.Count() > 0)
                     return new OperationDetails(false, Result.Errors.FirstOrDefault(), "");
 
-                if (await DBContext.RoleManager.RoleExistsAsync(userDto.Role) == false) //Якщо ролі не існує взагалі, то створити
-                    await DBContext.RoleManager.CreateAsync(new ApplicationRole { Name = userDto.Role });
+                foreach (string role in userDto.Roles)
+                {
+                    if (await DBContext.RoleManager.RoleExistsAsync(role) == false) //Якщо ролі не існує взагалі, то створити
+                        await DBContext.RoleManager.CreateAsync(new ApplicationRole { Name = role });
 
-                await DBContext.UserManager.AddToRoleAsync(user.Id, userDto.Role);
+                    await DBContext.UserManager.AddToRoleAsync(user.Id, role);
+                }
 
                 ClientProfile clientProfile = new ClientProfile { Id = user.Id, Name = userDto.Name }; // создаем профиль клиента
                 DBContext.ClientManager.Create(clientProfile);
@@ -96,5 +98,12 @@ namespace Store.BLL.Services
         {
             DBContext.Dispose();
         }
+
+        public async Task<string[]> GetRoles(string id)
+        {
+            return await Task.Run(() => { return DBContext.UserManager.GetRoles(id).ToArray(); });
+        }
+
+
     }
 }

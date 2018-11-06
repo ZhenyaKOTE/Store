@@ -48,13 +48,14 @@ namespace Store
                 CustomPrincipalSerializeModel serializeModel = serializer.Deserialize<CustomPrincipalSerializeModel>(authTicket.UserData);
 
 
-                string[] roles = authTicket.UserData.Split('|');
-                Debug.Write(roles[0]+"\n\n\n\n\n");
+                //string[] roles = authTicket.UserData.Split('|');
+                //Debug.Write(roles[0]+"\n\n\n\n\n");
                 FormsIdentity id = new FormsIdentity(authTicket);
 
-                CustomPrincipal newUser = new CustomPrincipal(id, roles);
+                CustomPrincipal newUser = new CustomPrincipal(id, serializeModel.Roles);
                 newUser.Name = serializeModel.Name;
                 newUser.Email = serializeModel.Email;
+              
                 //List<string> UserRoles = new List<string>();
 
                 //CustomPrincipal p = new CustomPrincipal();

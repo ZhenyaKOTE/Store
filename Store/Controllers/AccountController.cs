@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Store.BLL.DTO;
@@ -38,10 +39,8 @@ namespace Store.Controllers
             }
         }
 
-
         public ActionResult Register()
         {
-            Debug.Write(User.IsInRole("User"));
             return View();
         }
 
@@ -54,16 +53,15 @@ namespace Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
         {
-            
             //Debug.Write("fdsfsdfsdfs");
             if (ModelState.IsValid)
             {
                 //var user = userRepository.Users.Where(u => u.Email == viewModel.Email).First();
                 UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
 
-                var Claim = await UserService.Authenticate(userDto);
+                var claim = await UserService.Authenticate(userDto);
 
-                if (Claim == null)
+                if (claim == null)
                 {
                     ModelState.AddModelError("", "Неверный логин или пароль.");
                 }
@@ -71,7 +69,7 @@ namespace Store.Controllers
                 {
                     string _TempUserName = "";
 
-                    foreach (var ClaimStr in Claim.Claims)
+                    foreach (var ClaimStr in claim.Claims)
                     {
                         if (ClaimStr.Type == "UserName")
                         {
@@ -85,13 +83,14 @@ namespace Store.Controllers
                     AuthenticationManager.SignIn(new AuthenticationProperties
                     {
                         IsPersistent = true
-                    }, Claim);
+                    }, claim);
+
                     
                     CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
                     serializeModel.Name = _TempUserName;
                     serializeModel.Email = userDto.Email;
-                    //var a = userDto.Role;
-
+                    serializeModel.Roles = await UserService.GetRoles(claim.GetUserId());
+                
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
 
                     string userData = serializer.Serialize(serializeModel);
@@ -126,7 +125,7 @@ namespace Store.Controllers
                     Email = model.Email,
                     Password = model.Password,
                     Name = model.Name,
-                    Role = "User"
+                    //Roles.add = "User"
                 };
 
                 OperationDetails operationDetails = await UserService.CreateAsync(userDto);

@@ -21,8 +21,7 @@ namespace Store.Util
 {
     public class CustomPrincipal : ICustomPrincipal
     {
-        private IUserService US;
-        public string[] _roles;
+        private readonly string[] _roles;
 
         public CustomPrincipal(IIdentity identity, string[] roles)
         {
@@ -38,10 +37,10 @@ namespace Store.Util
         public IIdentity Identity { get; private set; }
         public bool IsInRole(string role)
         {
-            Debug.Write(Roles[0]+"\n\n\n\n\n");
-            foreach (string r in Roles)
+            foreach (string rol in Roles)
             {
-                if (string.Compare(r, role, true) == 0)
+                //Debug.Write(Roles[0]+"\n\n\n\n\n");
+                if (string.Compare(rol, role, true) == 0)
                 {
                     return true;
                 }
