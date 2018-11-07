@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Store.DAL.Repositories
 {
-    public class IdentityUnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private ApplicationContext DBContext;
         private ApplicationUserManager userManager;
         private ApplicationRoleManager roleManager;
         private IClientManager clientManager;
 
-        public IdentityUnitOfWork(string connectionString)
+        public UnitOfWork(string connectionString)
         {
             DBContext = new ApplicationContext(connectionString);
             userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(DBContext));

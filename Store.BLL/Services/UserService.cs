@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Store.BLL.Services
 {
-    public class UserService : IUserService
+    public class UserService : IService
     {
         private IUnitOfWork DBContext;
 
@@ -103,7 +103,5 @@ namespace Store.BLL.Services
         {
             return await Task.Run(() => { return DBContext.UserManager.GetRoles(id).ToArray(); });
         }
-
-
     }
 }

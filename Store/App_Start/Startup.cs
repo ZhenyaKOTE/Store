@@ -12,10 +12,10 @@ namespace Store.App_Start
 {
     public class Startup
     {
-        IServiceCreator serviceCreator = new ServiceCreator();
+        Creator serviceCreator = new ServiceCreator();
         public void Configuration(IAppBuilder app)
         {
-            app.CreatePerOwinContext<IUserService>(CreateUserService);
+            app.CreatePerOwinContext<IService>(CreateUserService);
 
             
 
@@ -26,7 +26,7 @@ namespace Store.App_Start
             });
         }
 
-        private IUserService CreateUserService()
+        private IService CreateUserService()
         {
             return serviceCreator.CreateUserService("entityFramework");
         }

@@ -23,11 +23,11 @@ namespace Store.Controllers
     public class AccountController : Controller
     {
 
-        private IUserService UserService
+        private IService UserService
         {
             get
             {
-                return HttpContext.GetOwinContext().GetUserManager<IUserService>();
+                return HttpContext.GetOwinContext().GetUserManager<IService>();
             }
         }
 
@@ -85,12 +85,12 @@ namespace Store.Controllers
                         IsPersistent = true
                     }, claim);
 
-                    
+
                     CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
                     serializeModel.Name = _TempUserName;
                     serializeModel.Email = userDto.Email;
                     serializeModel.Roles = await UserService.GetRoles(claim.GetUserId());
-                
+
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
 
                     string userData = serializer.Serialize(serializeModel);
@@ -120,16 +120,15 @@ namespace Store.Controllers
 
             if (ModelState.IsValid)
             {
-                UserDTO userDto = new UserDTO
-                {
-                    Email = model.Email,
-                    Password = model.Password,
-                    Name = model.Name,
-                    //Roles.add = "User"
-                };
+                UserDTO userDto = new UserDTO();
+                userDto.Email = model.Email;
+                userDto.Password = model.Password;
+                userDto.Name = model.Name;
+                userDto.Roles.Add("Admin");
+                userDto.Roles.Add("User");
 
                 OperationDetails operationDetails = await UserService.CreateAsync(userDto);
-                //Debug.Write(operationDetails.Message);
+                
                 if (operationDetails.Succedeed)
                     return RedirectToAction("Index", "Home");
                 else

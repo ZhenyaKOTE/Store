@@ -14,12 +14,13 @@ namespace Store.Controllers
 {
     public class HomeController : Controller
     {
-        [Authorize]
+        [Authorize(Roles = "User")]
         [HttpGet]
         public ActionResult SecretPage()
         {
             return View();
         }
+
         public HomeController(/*IRepository BusinessLogicLayer*/)
         {
 
