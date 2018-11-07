@@ -54,11 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\StoreEntities\Disks.cs" />
-    <Compile Include="Entities\StoreEntities\Tires.cs" />
-    <Compile Include="Entities\UserEntities\ApplicationRole.cs" />
-    <Compile Include="Entities\UserEntities\ApplicationUser.cs" />
-    <Compile Include="Entities\UserEntities\ClientProfile.cs" />
+    <Compile Include="Entities\ApplicationRole.cs" />
+    <Compile Include="Entities\ApplicationUser.cs" />
+    <Compile Include="Entities\ClientProfile.cs" />
     <Compile Include="EntityFramework\ApplicationContext.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />

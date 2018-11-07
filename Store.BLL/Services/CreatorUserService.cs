@@ -4,12 +4,12 @@ using System.Diagnostics;
 
 namespace Store.BLL.Services
 {
-    public class ServiceCreator : Creator
+    public class ServiceCreator : IServiceCreator
     {
-        public IService CreateUserService(string connection)
+        public IUserService CreateUserService(string connection)
         {
             //Debug.Write(connection + "\n\n\n\n\n\n\n\n");
-            return new UserService(new UnitOfWork(connection));
+            return new UserService(new IdentityUnitOfWork(connection));
         }
 
         

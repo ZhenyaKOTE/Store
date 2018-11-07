@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Store.BLL.Interfaces
 {
-    public interface Creator
+    public interface IServiceCreator
     {
-        IService CreateUserService(string connection);
+        IUserService CreateUserService(string connection);
         //IRoleService CreateRoleService(string connection);
     }
 }
