@@ -24,12 +24,6 @@ namespace Store.DAL.Repositories
             DbContext.SaveChanges();
         }
 
-        public string GetUserNameByEmail(string Email)
-        {
-             var User = DbContext.ClientProfiles.FirstOrDefault(x => x.ApplicationUser.Email == Email);
-             return User.Name;
-        }
-
         public void Dispose()
         {
             DbContext.Dispose();

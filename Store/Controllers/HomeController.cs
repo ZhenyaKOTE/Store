@@ -20,7 +20,7 @@ namespace Store.Controllers
         {
             return View();
         }
-        public HomeController(/*IRepository BusinessLogicLayer*/)
+        public HomeController()
         {
 
         }

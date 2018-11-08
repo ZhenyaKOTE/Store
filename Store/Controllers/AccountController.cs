@@ -85,12 +85,14 @@ namespace Store.Controllers
                         IsPersistent = true
                     }, claim);
 
-                    
-                    CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
-                    serializeModel.Name = _TempUserName;
-                    serializeModel.Email = userDto.Email;
-                    serializeModel.Roles = await UserService.GetRoles(claim.GetUserId());
-                
+
+                    CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel
+                    {
+                        Name = _TempUserName,
+                        Email = userDto.Email,
+                        Roles = await UserService.GetRoles(claim.GetUserId())
+                    };
+
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
 
                     string userData = serializer.Serialize(serializeModel);
@@ -124,9 +126,10 @@ namespace Store.Controllers
                 {
                     Email = model.Email,
                     Password = model.Password,
-                    Name = model.Name,
-                    //Roles.add = "User"
+                    Name = model.Name
                 };
+                userDto.Roles.Add("User");
+
 
                 OperationDetails operationDetails = await UserService.CreateAsync(userDto);
                 //Debug.Write(operationDetails.Message);

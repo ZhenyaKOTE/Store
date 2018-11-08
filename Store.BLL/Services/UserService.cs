@@ -24,13 +24,6 @@ namespace Store.BLL.Services
             DBContext = UOW;
         }
 
-        public string GetUserNameByEmail(string Email)
-        {
-            
-            string UserName = DBContext.ClientManager.GetUserNameByEmail(Email);
-            return UserName;  
-        }
-
         public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
         {
             ClaimsIdentity claimIdentity = null;

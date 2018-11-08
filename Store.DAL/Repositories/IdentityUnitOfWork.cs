@@ -2,6 +2,7 @@
 using Store.DAL.Entities;
 using Store.DAL.EntityFramework;
 using Store.DAL.Identity;
+using Store.DAL.Identity.StoreManagers;
 using Store.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,20 +18,26 @@ namespace Store.DAL.Repositories
         private ApplicationUserManager userManager;
         private ApplicationRoleManager roleManager;
         private IClientManager clientManager;
+        private IStoreManager storeManager;
 
         public IdentityUnitOfWork(string connectionString)
         {
             DBContext = new ApplicationContext(connectionString);
             userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(DBContext));
             roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(DBContext));
+            storeManager = new ApplicationStoreManager(DBContext);
             clientManager = new ClientManager(DBContext);
         }
+
+        public IStoreManager StoreManager => storeManager;
 
         public ApplicationUserManager UserManager => userManager;
 
         public IClientManager ClientManager => clientManager;
 
         public ApplicationRoleManager RoleManager => roleManager;
+
+
 
         #region Dispose
         public void Dispose()
