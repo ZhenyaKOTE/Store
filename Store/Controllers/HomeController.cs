@@ -24,10 +24,6 @@ namespace Store.Controllers
         {
 
         }
-
-
-
-
         public ActionResult Index()
         {
             return View();

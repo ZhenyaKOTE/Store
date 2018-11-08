@@ -24,10 +24,11 @@ namespace Store.DAL.Identity.StoreManagers
                 DbContext.SaveChanges();
             });
         }
-        public async Task<IList<T>> GetAsync<T>() where T: class
-        {
-            return await Task.Run(() => { return DbContext.Set<T>(); }) as IList<T> ;
-        }
+        //public async Task<IList<T>> GetAsync<T>() where T: class
+        //{
+        //    return await Task.Run(() => { return DbContext.Set<T>(); }) as IList<T> ;
+        //}
+
         public async Task<IList<T>> GetItemsAsync<T>() where T : class
         {
             var a = await Task.Run(() => { return DbContext.Set<T>(); });

@@ -16,6 +16,7 @@ namespace Store.App_Start
         public void Configuration(IAppBuilder app)
         {
             app.CreatePerOwinContext<IUserService>(CreateUserService);
+            app.CreatePerOwinContext<IStoreService>(CreateStoreService);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
@@ -29,6 +30,10 @@ namespace Store.App_Start
             return serviceCreator.CreateUserService("entityFramework");
         }
 
+        private IStoreService CreateStoreService()
+        {
+            return serviceCreator.CreateStoreService("entityFramework");
+        }
 
 
     }

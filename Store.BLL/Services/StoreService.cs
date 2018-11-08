@@ -5,6 +5,7 @@ using Store.DAL.Entities.StoreEntities;
 using Store.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Store.BLL.Services
 
         public StoreService(IUnitOfWork UOW)
         {
+            //Debug.Write(UOW.ToString() + "Alax akbar \n\n\n\n\n\n");
             DBContext = UOW;
         }
 
@@ -81,6 +83,21 @@ namespace Store.BLL.Services
                 }
             }
             return new OperationDetails(true, "The product has been successfully added", "");
+        }
+
+        public async Task<IList<string>> GetCategoryNames()
+        {
+            return await Task.Run(async () =>
+            {
+                List<string> NamesList = new List<string>();
+                var temp = (await DBContext.StoreManager.GetItemsAsync<Category>()).ToList<Category>();
+                //Debug.Write(temp.Count + "\n\n\n\n\n\n\n");
+                foreach (Category category in temp)
+                {
+                    NamesList.Add(category.Name);
+                }
+                return NamesList;
+            });
         }
 
         public void Dispose()

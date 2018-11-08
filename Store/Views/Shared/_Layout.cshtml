@@ -12,7 +12,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 @*CategoryLoadTo тільки для апі*@
-<body onload="CategoryLoadTo('Category', ('@Url.Content("~/api/DefaultApi/GetCategory")'))">
+<body onload="CategoryLoadTo('Category', '@Url.Content("~/api/DefaultApi/GetCategory")')">
 
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
 

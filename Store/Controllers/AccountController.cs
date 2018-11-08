@@ -6,12 +6,8 @@ using Store.BLL.DTO;
 using Store.BLL.Infrastructure;
 using Store.BLL.Interfaces;
 using Store.Models;
-using Store.Util;
 using System;
-
 using System.Diagnostics;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;

@@ -9,7 +9,7 @@ namespace Store.DAL.Interfaces
     {
         
         Task CreateAsync<T>(T item) where T : class;
-        Task<IList<T>> GetAsync<T>() where T: class;
+        //Task<IList<T>> GetAsync<T>() where T: class;
         Task<IList<T>> GetItemsAsync<T>() where T : class;
 
 

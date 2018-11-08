@@ -1,6 +1,4 @@
-﻿using Ninject;
-using Ninject.Modules;
-using Ninject.Web.Mvc;
+﻿
 using Store.App_Start;
 using Store.Models;
 using Store.Util;
@@ -27,12 +25,6 @@ namespace Store
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
-
-
-            NinjectModule registrations = new NinjectRegistrations();
-            var kernel = new StandardKernel(registrations);
-            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
 
         protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
