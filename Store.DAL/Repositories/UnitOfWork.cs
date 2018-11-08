@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Store.DAL.Repositories
 {
-    public class IdentityUnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private ApplicationContext DBContext;
         private ApplicationUserManager userManager;
@@ -20,7 +20,7 @@ namespace Store.DAL.Repositories
         private IClientManager clientManager;
         private IStoreManager storeManager;
 
-        public IdentityUnitOfWork(string connectionString)
+        public UnitOfWork(string connectionString)
         {
             DBContext = new ApplicationContext(connectionString);
             userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(DBContext));

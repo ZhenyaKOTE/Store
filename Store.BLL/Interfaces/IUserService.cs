@@ -15,7 +15,6 @@ namespace Store.BLL.Interfaces
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
         //Task<UserDTO> Authenticate(UserDTO userDto);
         Task SetInitialData(UserDTO adminDto, List<string> roles);
-        
         Task<string[]> GetRoles(string id);
     }
 }

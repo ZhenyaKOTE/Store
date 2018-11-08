@@ -1,10 +1,9 @@
-﻿namespace Store.DAL.Entities.StoreEntities
+﻿namespace Store.BLL.DTO
 {
-    public class Characteristic
+    public class CharacteristicDTO
     {
         public int Id { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
-        public virtual Product Product { get; set; }
     }
 }

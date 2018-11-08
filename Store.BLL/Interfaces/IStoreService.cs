@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store.BLL.Interfaces
 {
-    public interface IServiceCreator
+    public interface IStoreService: IDisposable
     {
-        IUserService CreateUserService(string connection);
-
-
-        //IRoleService CreateRoleService(string connection);
     }
 }

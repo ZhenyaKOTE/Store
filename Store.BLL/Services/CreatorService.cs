@@ -9,7 +9,12 @@ namespace Store.BLL.Services
         public IUserService CreateUserService(string connection)
         {
             //Debug.Write(connection + "\n\n\n\n\n\n\n\n");
-            return new UserService(new IdentityUnitOfWork(connection));
+            return new UserService(new UnitOfWork(connection));
+        }
+
+        public IStoreService CreateStoreService(string connection)
+        {
+            return new StoreService(new UnitOfWork(connection));
         }
 
         

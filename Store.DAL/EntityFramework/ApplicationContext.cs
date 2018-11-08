@@ -17,5 +17,6 @@ namespace Store.DAL.EntityFramework
         public DbSet<ClientProfile> ClientProfiles { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Characteristic> Characteristics { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
