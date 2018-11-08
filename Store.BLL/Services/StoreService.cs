@@ -20,26 +20,51 @@ namespace Store.BLL.Services
             DBContext = UOW;
         }
 
-        public async CreateCategory()
+        public async Task<bool> Exists(CategoryDTO item)
         {
+            Category result = (await DBContext.StoreManager.GetItemsAsync<Category>() as List<Category>)
+                .FirstOrDefault(x => x.Name == item.Name);
 
+            if (result != null)
+                return true;
+            else
+                return false;
+        }
+
+        public async Task<bool> Exists(ProductDTO item)
+        {
+            Product result = (await DBContext.StoreManager.GetItemsAsync<Product>() as List<Product>)
+                .FirstOrDefault(x => x.Name == item.Name);
+
+            if (result != null)
+                return true;
+            else
+                return false;
+        }
+
+        public async Task CreateAsync(CategoryDTO item)
+        {
+            await DBContext.StoreManager.CreateAsync(new Category { Name = item.Name });
         }
 
         public async Task<OperationDetails> AddProductToCategory(ProductDTO item, string CategoryName)
         {
 
-            if (item == null || CategoryName == null || CategoryName == "")
+            if (item == null || (CategoryName == null || CategoryName == ""))
                 return new OperationDetails(false, "Some models are Empty", "");
             else
             {
 
-                Category category = await DBContext.StoreManager.GetCategoryByName(CategoryName) ?? null;
+                Category category = (await DBContext.StoreManager.GetItemsAsync<Category>()).ToArray().
+                    FirstOrDefault(x => x.Name == CategoryName) ?? null;
 
                 if (category == null)
-                    return new OperationDetails(false, "Category is not found", "");
-                else
                 {
 
+                    return new OperationDetails(false, "Category is not found", "");
+                }
+                else
+                {
                     Product ProductDAL = new Product
                     {
                         Name = item.Name,

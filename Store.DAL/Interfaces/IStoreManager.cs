@@ -7,10 +7,15 @@ namespace Store.DAL.Interfaces
 {
     public interface IStoreManager :IDisposable
     {
-        Task CreateAsync(Product item);
-        Task CreateAsync(Category item);
+        
+        Task CreateAsync<T>(T item) where T : class;
+        Task<IList<T>> GetAsync<T>() where T: class;
+        Task<IList<T>> GetItemsAsync<T>() where T : class;
+
+
         //void Create(Characteristic item);
-        Task<IList<Category>> GetCategoriesAsync();
-        Task<Category> GetCategoryByName(string CategoryName);
+        //Task<Category> GetCategoryByName(string CategoryName);
+        //Task<Category> GetItemByName(string name);
+        //Task CreateAsync(Product item);
     }
 }

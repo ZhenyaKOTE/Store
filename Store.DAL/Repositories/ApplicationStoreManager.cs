@@ -11,51 +11,35 @@ namespace Store.DAL.Identity.StoreManagers
     public class ApplicationStoreManager : IStoreManager
     {
         private ApplicationContext DbContext;
-
-        //public Task<IList<Category>> Categories
-        //{
-        //    get { return GetCategoriesAsync(); }
-        //}
-
-        public async Task<IList<Category>> GetCategoriesAsync()
-        {
-            return (await Task.Run(() => { return DbContext.Categories; }) as IList<Category>) ;
-        }
-
         public ApplicationStoreManager(ApplicationContext AppDbContext)
         {
             DbContext = AppDbContext;
         }
 
-        public async Task CreateAsync(Product item)
+        public async Task CreateAsync<T>(T item) where T : class
         {
             await Task.Run(() =>
             {
-                DbContext.Products.Add(item);
+                DbContext.Set<T>().Add(item);
                 DbContext.SaveChanges();
             });
         }
-
-        public async Task CreateAsync(Category item)
+        public async Task<IList<T>> GetAsync<T>() where T: class
         {
-            await Task.Run(() => 
-            {
-                DbContext.Categories.Add(item);
-                DbContext.SaveChanges();
-            });
+            return await Task.Run(() => { return DbContext.Set<T>(); }) as IList<T> ;
+        }
+        public async Task<IList<T>> GetItemsAsync<T>() where T : class
+        {
+            var a = await Task.Run(() => { return DbContext.Set<T>(); });
+            return a.ToArray();
         }
 
-        public async Task<Category> GetCategoryByName(string CategoryName)
-        {
-            return await Task.Run(() =>
-            {
-                return DbContext.Categories.FirstOrDefault(x => x.Name == CategoryName);
-            });
-        }
 
         public void Dispose()
         {
             DbContext.Dispose();
         }
+
+
     }
 }
