@@ -1,14 +1,14 @@
 ﻿
-function CategoryLoadTo(Id, Url) {
-    var u = Url;
+function CategoryLoadTo(Id, UrlByCategory) {
+    let u = UrlByCategory;
     $(function () {
         $.ajax({
             url: u,
             type: "POST",
             success: function (msg) {
                 //id_numbers = msg.split('|');
-                var result = JSON.parse(msg);
-                      
+                let result = JSON.parse(msg);
+
                 for (var a = 0; a < result.length; a++) {
                     $("#" + Id).append("<a href='#' class='list-group-item list-group-item-action text-center'>" + result[a] + "</li>");
                 }
@@ -17,24 +17,30 @@ function CategoryLoadTo(Id, Url) {
     });
 }
 
-function GetFilters(Url) {
-    var u = Url;
+function GetFilters(Id, Url) {
+    let u = Url;
     $(function () {
         $.ajax({
             url: u,
             type: "POST",
             success: function (msg) {
-                //id_numbers = msg.split('|');
-                var result = JSON.parse(msg);
-                for (var i = 0; i < result.length; i++) {
-                    
-                    
-                    console.log(result[i].Value);
+                let result1 = JSON.parse(msg);
+                for (let i = 0; i < result1.length; i++)
+                {
+                    let str =
+                        "<div class='custom-control custom-checkbox'>" +
+                            "<input type='checkbox' class='custom-control-input' id="+ i +">" +
+                            "<label class='custom-control-label' for=" + i +">" + result1[i].Value +"</label>" +
+                        "</div>";
+                    $("#" + Id).append(str);
+                    //console.log(result1[i].Value);
                 }
-                
-                //for (var a = 0; a < result.length; a++) {
-                //    $("#" + Id).append("<a href='#' class='list-group-item list-group-item-action text-center'>" + result[a] + "</a>");
-                //}
+
+                //let str =
+                //    "<div class='custom-control custom-checkbox'>" +
+                //    "<input type='checkbox' class='custom-control-input' id='customCheck1'>" +
+                //    "<label class='custom-control-label' for='customCheck1'>" + result1[i].Value + "</label>" +
+                //    "</div>";
             }
         })
     });

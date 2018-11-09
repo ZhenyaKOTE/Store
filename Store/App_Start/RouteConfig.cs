@@ -26,6 +26,13 @@ namespace Store
                 namespaces: new[] { "Store.Controllers" },
                 defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Store",
+                url: "{controller}/{action}/{id}",
+                namespaces: new[] { "Store.Controllers" },
+                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
+            );
         }
     }
 }

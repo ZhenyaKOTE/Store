@@ -1,0 +1,15 @@
+﻿@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetFilters("_Filters","@Url.Content("~/Store/GetFilters")");
+    });
+</script>
+<body>
+    <div id="_Filters">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck1">
+            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+        </div>
+    </div>
+</body>

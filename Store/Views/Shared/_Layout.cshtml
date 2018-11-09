@@ -12,7 +12,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 @*CategoryLoadTo тільки для апі*@
-<body onload="CategoryLoadTo('Category', '@Url.Content("~/api/DefaultApi/GetCategory")')">
+<body onload="CategoryLoadTo('Category', '@Url.Content("~/Store/GetCategory")')">
 
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
 
@@ -23,7 +23,6 @@
                 @*<a class="navbar-brand" href="">*@
             </span>
         </button>
-
 
         <div class="dropdown-menu" style="background-color: #fff; align-content: center; margin-left: 10px">
             <div id="Category" class="list-group mr-auto">
@@ -41,7 +40,7 @@
                     <a class="nav-link" href="@Url.Action("Index","Home")">Головна</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("SecretPage","Home")">Контакти</a>
+                    <a class="nav-link" href="@Url.Action("SecretPage","Store")">Контакти</a>
                 </li>
                 @if (User != null)
                 {
