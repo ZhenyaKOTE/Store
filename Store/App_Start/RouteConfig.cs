@@ -28,10 +28,9 @@ namespace Store
             );
 
             routes.MapRoute(
-                name: "Store",
-                url: "{controller}/{action}/{id}",
-                namespaces: new[] { "Store.Controllers" },
-                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
+            name: "Store",
+            url: "{controller}/{action}/{id}",
+            defaults: new { controller = "Store", action = "GetFilters", id = UrlParameter.Optional }
             );
         }
     }
