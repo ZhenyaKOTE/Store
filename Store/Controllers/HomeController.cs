@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+using Store.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,10 +22,26 @@ namespace Store.Controllers
         {
             return View();
         }
-        public HomeController()
-        {
 
+        [HttpPost]
+        public string GetFilters()
+        {
+            List<CheckBoxModel> list = new List<CheckBoxModel>();
+            CheckBoxModel model = new CheckBoxModel();
+            model.Value = "Test1";
+            model.IsChecked = false;
+            CheckBoxModel model1 = new CheckBoxModel();
+            model1.Value = "Test2";
+            model1.IsChecked = false;
+            CheckBoxModel model2 = new CheckBoxModel();
+            model2.Value = "Test3";
+            model2.IsChecked = false;
+            list.Add(model);
+            list.Add(model1);
+            list.Add(model2);
+            return JsonConvert.SerializeObject(list);
         }
+
         public ActionResult Index()
         {
             return View();
@@ -42,5 +60,7 @@ namespace Store.Controllers
 
             return View();
         }
+
+
     }
 }

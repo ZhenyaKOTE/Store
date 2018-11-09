@@ -32,9 +32,7 @@ namespace Store.Controllers
             //    Debug.Write("Norm \n\n\n\n\n\n\n");
 
             var list = await StoreService.GetCategoryNames();
-            //List<string> list = new List<string>();
-            //list.Add("Шини");
-            //list.Add("Диски");
+
             return JsonConvert.SerializeObject(list);
         }
 

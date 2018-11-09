@@ -17,7 +17,7 @@ function CategoryLoadTo(Id, Url) {
     });
 }
 
-function CreateCategory(Id, Url) {
+function GetFilters(Url) {
     var u = Url;
     $(function () {
         $.ajax({
@@ -26,10 +26,15 @@ function CreateCategory(Id, Url) {
             success: function (msg) {
                 //id_numbers = msg.split('|');
                 var result = JSON.parse(msg);
-
-                for (var a = 0; a < result.length; a++) {
-                    $("#" + Id).append("<a href='#' class='list-group-item list-group-item-action text-center'>" + result[a] + "</li>");
+                for (var i = 0; i < result.length; i++) {
+                    
+                    
+                    console.log(result[i].Value);
                 }
+                
+                //for (var a = 0; a < result.length; a++) {
+                //    $("#" + Id).append("<a href='#' class='list-group-item list-group-item-action text-center'>" + result[a] + "</a>");
+                //}
             }
         })
     });

@@ -93,6 +93,8 @@ namespace Store.Controllers
 
                     string userData = serializer.Serialize(serializeModel);
 
+                    
+
                     FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
                              1,
                              model.Email,
