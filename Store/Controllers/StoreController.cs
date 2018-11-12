@@ -25,9 +25,23 @@ namespace Store.Controllers
             }
         }
 
+        public ActionResult GetImg()
+        {
+            //if (!string.IsNullOrEmpty(fileName))
+            //{
+                string path = /*@"C:\Users\Public\Pictures\Sample Pictures\" + fileName;*/@"C:\Users\Jekin\source\repos\Store\Store\Images\shiny.png";
+                FileInfo file = new FileInfo(path);
+                if (file.Exists)
+                    return File(file.FullName, "text/plain", file.Name);
+           //}
+            return Content("");
+        }
+
         [HttpGet]
         public async Task<ActionResult> Test()
         {
+            byte[] imgdata = System.IO.File.ReadAllBytes(@"C:\Users\Jekin\source\repos\Store\Store\Images\shiny.png");
+
             var m = await Task.Run(() =>
             {
                 GeneralProductModel model = new GeneralProductModel();
