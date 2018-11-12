@@ -5,6 +5,8 @@ using Store.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -24,29 +26,52 @@ namespace Store.Controllers
         }
 
         [HttpGet]
-        public ActionResult SecretPage()
+        public async Task<ActionResult> Test()
         {
-            List<CheckBoxModel> list = new List<CheckBoxModel>();
+            var m = await Task.Run(() =>
+            {
+                GeneralProductModel model = new GeneralProductModel();
+                model.PhotoPath = "";
+                model.Price = 1566;
+                model.TextUrl = "Bridgestone Blizzak DM-V2 245/70 R16 107S";
+                model.UrlToBuy = "";
 
-            CheckBoxModel.RefreshId();
+                List<GeneralProductModel> generals = new List<GeneralProductModel>();
+                generals.Add(model);
+                generals.Add(model);
+                generals.Add(model);
+                generals.Add(model);
+                return generals as IList<GeneralProductModel>;
 
-            CheckBoxModel model = new CheckBoxModel();
-            model.Value = "Test1";
-            model.IsChecked = false;
-            CheckBoxModel model1 = new CheckBoxModel();
-            model1.Value = "Test2";
-            model1.IsChecked = false;
-            CheckBoxModel model2 = new CheckBoxModel();
-            model2.Value = "Test3";
-            model2.IsChecked = true;
-
-            list.Add(model);
-            list.Add(model1);
-            list.Add(model2);
-
-            ViewBag.Filters = list;
-            return View();
+            });
+            return View("Test", m);
+        
         }
+
+        //[HttpGet]
+        //public ActionResult Test()
+        //{
+        //    List<CheckBoxModel> list = new List<CheckBoxModel>();
+
+        //    CheckBoxModel.RefreshId();
+
+        //    CheckBoxModel model = new CheckBoxModel();
+        //    model.Value = "Test1";
+        //    model.IsChecked = false;
+        //    CheckBoxModel model1 = new CheckBoxModel();
+        //    model1.Value = "Test2";
+        //    model1.IsChecked = false;
+        //    CheckBoxModel model2 = new CheckBoxModel();
+        //    model2.Value = "Test3";
+        //    model2.IsChecked = true;
+
+        //    list.Add(model);
+        //    list.Add(model1);
+        //    list.Add(model2);
+
+        //    ViewBag.Filters = list;
+        //    return View();
+        //}
 
         [HttpGet]
         public async Task<PartialViewResult> GetFilters(IEnumerable<Store.Models.CheckBoxModel> Message)

@@ -1,0 +1,78 @@
+﻿
+@using Store.Models;
+@model IEnumerable<Store.Models.GeneralProductModel>
+
+<h1>Сторінка перенаправлення</h1>
+
+
+@*<div class="product-photo">
+        <img src="~/Images/shiny.png" alt="">
+    </div>*@
+
+
+
+@using (Html.BeginForm())
+{
+
+    <ul class="products clearfix align-content-center" style="height: auto">
+        @if (Model != null)
+        {
+            foreach (GeneralProductModel gpm in Model)
+            {
+                <li class="product-wrapper">
+                    <div class="product">
+                        <a href="@gpm.UrlToBuy">
+                            <div class="product-photo">
+                                <img src="@gpm.PhotoPath" alt="" />
+                            </div>
+                        </a>
+                        <hr>
+                        <div style="margin:10px;">
+                            <a href="@gpm.UrlToBuy"><p style="font-size:13px; text-align:left">@gpm.TextUrl</p></a>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label style="margin-left:5px; background-color:antiquewhite; border-radius: 3px;">@gpm.Price грн.</label>
+                                </div>
+                                <div class="col">
+                                    <a href="@gpm.UrlToBuy" style="margin-right:10px; margin-top:-5px" class="btn btn-success">Купить</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+
+        @*<li class="product-wrapper">
+                <div class="product">
+                    <a href="#"><div class="product-photo">
+                        <img src="~/Images/shiny.png" alt="" />
+                    </div></a>
+                    <hr>
+                    <div style="margin:10px;">
+                        <a href="#"><p style="font-size:13px; text-align:left">Bridgestone Blizzak DM-V2 245/70 R16 107S</p></a>
+
+                        <div class="row">
+                            <div class="col">
+                                <label style="margin-left:5px; background-color:antiquewhite; border-radius: 3px;">1998 грн.</label>
+                            </div>
+                            <div class="col">
+                                <a href="#" style="margin-right:10px; margin-top:-5px" class="btn btn-success">Купить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>*@
+    </ul>
+
+}
+
+
+@*<div id="_Filter">
+        @Html.Partial("_FilterView", (ViewBag.Filters as IEnumerable<CheckBoxModel>))
+
+        <div type="button" style="width: 50px; height: 50px" onclick="GetFilters('@Url.Content("~/Store/GetFilters")')" />
+    </div>*@
+
+@*@Html.Partial("_FilterView");*@

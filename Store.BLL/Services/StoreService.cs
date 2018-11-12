@@ -21,7 +21,7 @@ namespace Store.BLL.Services
             //Debug.Write(UOW.ToString() + "Alax akbar \n\n\n\n\n\n");
             DBContext = UOW;
         }
-
+        
         public async Task<bool> Exists(CategoryDTO item)
         {
             Category result = (await DBContext.StoreManager.GetItemsAsync<Category>() as List<Category>)
