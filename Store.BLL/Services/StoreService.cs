@@ -104,5 +104,26 @@ namespace Store.BLL.Services
         {
             DBContext.Dispose();
         }
+
+        public async Task<IList<ProductDTO>> GetProductsByPosition(int beginCount, int endCount)
+        {
+            return await Task.Run(async () =>
+            {
+                List<ProductDTO> list = new List<ProductDTO>();
+                var listDAL = await DBContext.StoreManager.GetItemsAsync<Product>();
+                for (int i = beginCount; i < endCount; i++)
+                {
+                    list.Add(new ProductDTO
+                    {
+                        Price = listDAL[i].Price,
+                        Description = listDAL[i].Description,
+                        Name = listDAL[i].Name,
+                        PhotoPath = listDAL[i].PhotoPath,
+                        Id = listDAL[i].Id
+                    });
+                }
+                return list;
+            });
+        }
     }
 }

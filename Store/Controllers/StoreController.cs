@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
+using Store.BLL.DTO;
 using Store.BLL.Interfaces;
 using Store.Models;
 using System;
@@ -18,48 +19,58 @@ namespace Store.Controllers
     public class StoreController : Controller
     {
         private IStoreService StoreService
-        { 
+        {
             get
-            {   
+            {
                 return HttpContext.GetOwinContext().Get<IStoreService>();
             }
         }
 
-        public ActionResult GetImg()
-        {
-            //if (!string.IsNullOrEmpty(fileName))
-            //{
-                string path = /*@"C:\Users\Public\Pictures\Sample Pictures\" + fileName;*/@"C:\Users\Jekin\source\repos\Store\Store\Images\shiny.png";
-                FileInfo file = new FileInfo(path);
-                if (file.Exists)
-                    return File(file.FullName, "text/plain", file.Name);
-           //}
-            return Content("");
-        }
 
         [HttpGet]
-        public async Task<ActionResult> Test()
+        public async Task<ActionResult> Test(int BeginCount = 0, int EndCount = 12)
         {
-            byte[] imgdata = System.IO.File.ReadAllBytes(@"C:\Users\Jekin\source\repos\Store\Store\Images\shiny.png");
 
-            var m = await Task.Run(() =>
+            var m = await Task.Run(async () =>
             {
-                GeneralProductModel model = new GeneralProductModel();
-                model.PhotoPath = "";
-                model.Price = 1566;
-                model.TextUrl = "Bridgestone Blizzak DM-V2 245/70 R16 107S";
-                model.UrlToBuy = "";
+                List<ProductDTO> DTO = await StoreService.GetProductsByPosition(BeginCount, EndCount) as List<ProductDTO>;
+                List<GeneralProductModel> GPM = new List<GeneralProductModel>();
+                foreach (ProductDTO pr in DTO)
+                {
+                    GPM.Add(new GeneralProductModel
+                    {
+                        Id = pr.Id,
+                        Price = pr.Price,
+                        PhotoPath = Url.Content(pr.PhotoPath),
+                        TextUrl = pr.Name,
+                        UrlToBuy = (Url.Content("~/Store/ToBuyProduct/" + pr.Id))
+                    });
+           
+                }
 
-                List<GeneralProductModel> generals = new List<GeneralProductModel>();
-                generals.Add(model);
-                generals.Add(model);
-                generals.Add(model);
-                generals.Add(model);
-                return generals as IList<GeneralProductModel>;
+                return GPM as IList<GeneralProductModel>;
 
             });
             return View("Test", m);
-        
+
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> ToBuyProduct(int Id)
+        {
+            var model = await Task.Run(() =>
+            {
+                GeneralProductModel _model = new GeneralProductModel();
+                //model.PhotoPath = System.IO.File.ReadAllBytes(@"C:\Users\zhenyastufeev\Source\Repos\Store\Store\Images\shiny.png");
+                _model.PhotoPath = Url.Content("~/ContentImages/Content.png");
+                _model.Price = 1566;
+                _model.TextUrl = "Bridgestone Blizzak DM-V2 245/70 R16 107S";
+                //_model.UrlToBuy = Url.Content("~/Store/ToBuyProduct/" + Id.ToString());
+
+                return _model;
+            });
+
+            return View("ToBuyProduct", model);
         }
 
         //[HttpGet]
@@ -100,7 +111,7 @@ namespace Store.Controllers
             // ViewBag.ToReloadFilters = false;
             return await Task.Run(() =>
             {
-                
+
                 List<CheckBoxModel> list = new List<CheckBoxModel>();
 
                 CheckBoxModel.RefreshId();
@@ -120,7 +131,7 @@ namespace Store.Controllers
                 list.Add(model2);
 
                 return PartialView("_FilterView", list);
-               // return JsonConvert.SerializeObject(list);
+                // return JsonConvert.SerializeObject(list);
             });
 
         }

@@ -10,7 +10,6 @@
     </div>*@
 
 
-
 @using (Html.BeginForm())
 {
 
@@ -23,7 +22,11 @@
                     <div class="product">
                         <a href="@gpm.UrlToBuy">
                             <div class="product-photo">
-                                <img src="@(Url.Action("GetImg", "Store",null))" alt="" />
+
+
+                                @*<img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(@gpm.PhotoPath))" alt="" />*@
+
+                                <img src="@gpm.PhotoPath" alt="" />
                             </div>
                         </a>
                         <hr>
@@ -43,6 +46,8 @@
                 </li>
             }
         }
+
+        @*@(Url.Action("GetImg", "Store", null))*@
 
         @*<li class="product-wrapper">
                 <div class="product">
