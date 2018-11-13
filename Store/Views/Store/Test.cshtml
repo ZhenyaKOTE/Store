@@ -3,11 +3,12 @@
 @model IEnumerable<Store.Models.GeneralProductModel>
 
 <h1>Сторінка перенаправлення</h1>
-
-
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/PostAction")
 @*<div class="product-photo">
         <img src="~/Images/shiny.png" alt="">
     </div>*@
+
 
 
 @using (Html.BeginForm())
@@ -23,16 +24,13 @@
                         <a href="@gpm.UrlToBuy">
                             <div class="product-photo">
 
-
-                                @*<img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(@gpm.PhotoPath))" alt="" />*@
-
                                 <img src="@gpm.PhotoPath" alt="" />
                             </div>
                         </a>
                         <hr>
                         <div style="margin:10px;">
                             <a href="@gpm.UrlToBuy"><p style="font-size:13px; text-align:left">@gpm.TextUrl</p></a>
-                            
+
                             <div class="row">
                                 <div class="col">
                                     <label style="margin-left:5px; background-color:antiquewhite; border-radius: 3px;">@gpm.Price грн.</label>
@@ -45,33 +43,27 @@
                     </div>
                 </li>
             }
+
         }
-
-        @*@(Url.Action("GetImg", "Store", null))*@
-
-        @*<li class="product-wrapper">
-                <div class="product">
-                    <a href="#"><div class="product-photo">
-                        <img src="~/Images/shiny.png" alt="" />
-                    </div></a>
-                    <hr>
-                    <div style="margin:10px;">
-                        <a href="#"><p style="font-size:13px; text-align:left">Bridgestone Blizzak DM-V2 245/70 R16 107S</p></a>
-
-                        <div class="row">
-                            <div class="col">
-                                <label style="margin-left:5px; background-color:antiquewhite; border-radius: 3px;">1998 грн.</label>
-                            </div>
-                            <div class="col">
-                                <a href="#" style="margin-right:10px; margin-top:-5px" class="btn btn-success">Купить</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>*@
     </ul>
+    if (Model != null)
+    {
+        <script>
+            LoadNavigation('@Url.Content("~/Store/_NavigationView/25/1/")');
+        </script>
+        <div id="HelpNav">
+            <div id="Navigation">
 
+            </div>
+        </div>
+
+
+
+
+        @*@Html.Action("_NavigationView", "Store", new { MaxPages = 25, SelectedPage = 1 })*@
+    }
 }
+
 
 
 @*<div id="_Filter">

@@ -206,6 +206,7 @@
     <Compile Include="Models\CustomPrincipalSerializeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\GeneralProductModel.cs" />
+    <Compile Include="Models\NavigationModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\BaseViewPage.cs" />
@@ -225,10 +226,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\ActiveStar.png" />
-    <Content Include="Images\Capture.PNG" />
-    <Content Include="Images\Media-Controls-Play-icon.png" />
-    <Content Include="Images\NoActiveStar.png" />
     <Content Include="Images\shiny.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -303,6 +300,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Store\_FilterView.cshtml" />
     <Content Include="Views\Store\ToBuyProduct.cshtml" />
+    <Content Include="Views\Store\_NavigationView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

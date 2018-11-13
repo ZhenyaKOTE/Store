@@ -1,0 +1,30 @@
+﻿@model Store.Models.NavigationModel
+
+
+<div id="Navigation">
+
+
+    @for (int i = 1; i <= Model.MaxPages; ++i)
+    {
+        if (i == Model.SelectedPage)
+        {
+            <a href="#" onclick="LoadNavigation('@Url.Content("~/Store/_NavigationView/25/" + @i + "/")')" style="background-color: silver; opacity:0.7; font-size: 20px; height: 30px; width:auto; min-width:30px" class="badge badge-light">@i</a>
+        }
+        else
+        {
+            if (Model.SelectedPage - 2 == i || Model.SelectedPage - 1 == i || Model.SelectedPage + 2 == i || Model.SelectedPage + 1 == i || i == 1 || i == Model.MaxPages) //Selected page != 40
+            {
+                <a href="#" onclick="LoadNavigation('@Url.Content("~/Store/_NavigationView/25/" + @i + "/")')" style="font-size: 20px; height: 30px; width:auto; min-width:30px" class="badge badge-light">@i</a>
+            }
+            else
+            {
+                if ((Model.SelectedPage - 3 == i || Model.SelectedPage + 3 == i) && i != 1)
+                {
+                    <a href="#" onclick="LoadNavigation('@Url.Content("~/Store/_NavigationView/25/" + @i + "/")')" style="font-size: 20px; height: 30px; width:auto; min-width:30px" class="badge badge-light">...</a>
+                }
+            }
+        }
+    }
+
+</div>
+

@@ -18,7 +18,6 @@ namespace Store.BLL.Services
 
         public StoreService(IUnitOfWork UOW)
         {
-            //Debug.Write(UOW.ToString() + "Alax akbar \n\n\n\n\n\n");
             DBContext = UOW;
         }
 
@@ -56,17 +55,13 @@ namespace Store.BLL.Services
                 return new OperationDetails(false, "Some models are Empty", "");
             else
             {
-
-                Category category = (await DBContext.StoreManager.GetItemsAsync<Category>()).ToArray().
-                    FirstOrDefault(x => x.Name == CategoryName) ?? null;
-
-                if (category == null)
-                {
-
+                var AllCategories = await DBContext.StoreManager.GetItemsAsync<Category>() ?? null;
+                
+                if (AllCategories == null)
                     return new OperationDetails(false, "Category is not found", "");
-                }
                 else
                 {
+                    Category category = AllCategories.FirstOrDefault(x => x.Name == CategoryName);
                     Product ProductDAL = new Product
                     {
                         Name = item.Name,
@@ -86,47 +81,7 @@ namespace Store.BLL.Services
             }
             return new OperationDetails(true, "The product has been successfully added", "");
         }
-
-        public async Task<IList<string>> GetCategoryNames()
-        {
-            return await Task.Run(async () =>
-            {
-                List<string> NamesList = new List<string>();
-                var temp = (await DBContext.StoreManager.GetItemsAsync<Category>()).ToList<Category>();
-                //Debug.Write(temp.Count + "\n\n\n\n\n\n\n");
-                foreach (Category category in temp)
-                {
-                    NamesList.Add(category.Name);
-                }
-                return NamesList;
-            });
-        }
-
-        public void Dispose()
-        {
-            DBContext.Dispose();
-        }
-
-        //public async Task<IList<ProductDTO>> GetProductsByPosition(int beginCount, int endCount)
-        //{
-        //    return await Task.Run(async () =>
-        //    {
-        //        List<ProductDTO> list = new List<ProductDTO>();
-        //        var listDAL = await DBContext.StoreManager.GetItemsAsync<Product>();
-        //        for (int i = beginCount; i < endCount; i++)
-        //        {
-        //            list.Add(new ProductDTO
-        //            {
-        //                Price = listDAL[i].Price,
-        //                Description = listDAL[i].Description,
-        //                Name = listDAL[i].Name,
-        //                PhotoPath = listDAL[i].PhotoPath,
-        //                Id = listDAL[i].Id
-        //            });
-        //        }
-        //        return list;
-        //    });
-        //}
+    
         public async Task<IList<CategoryDTO>> GetCategories()
         {
             return await Task.Run(async () =>
@@ -137,7 +92,7 @@ namespace Store.BLL.Services
                 {
                     list.Add(new CategoryDTO { Id = DalCategory.Id, Name = DalCategory.Name });
                 }
-                return list;
+                return list ?? null;
             });
 
         }
@@ -150,28 +105,39 @@ namespace Store.BLL.Services
 
                 var ListDalProducts = await Task.Run(async () =>
                 {
-                    //var a = (await DBContext.StoreManager.GetItemsAsync<Category>() as List<Category>).FirstOrDefault(x => x.Name == CategoryName);
-                    var a = (await DBContext.StoreManager.GetItemsAsync<Category>() as List<Category>).FirstOrDefault(x => x.Name == CategoryName);
-                    return a.Products;
+                    Category category = (await DBContext.StoreManager.GetItemsAsync<Category>() as List<Category>)
+                         .FirstOrDefault(x => x.Name == CategoryName);
+
+                    if (category == null)
+                        return null;
+                    else
+                        return category.Products ?? null;
                 });
 
-
-                for (int i = beginCount; i < endCount; i++)
+                if (ListDalProducts != null)
                 {
-                    list.Add(new ProductDTO
+                    for (int i = beginCount; i < endCount; i++)
                     {
-                        Price = ListDalProducts[i].Price,
-                        Description = ListDalProducts[i].Description,
-                        Name = ListDalProducts[i].Name,
-                        PhotoPath = ListDalProducts[i].PhotoPath,
-                        Id = ListDalProducts[i].Id
-                    });
-                    if (i + 1 >= list.Count)
-                        break;
+                        list.Add(new ProductDTO
+                        {
+                            Price = ListDalProducts[i].Price,
+                            Description = ListDalProducts[i].Description,
+                            Name = ListDalProducts[i].Name,
+                            PhotoPath = ListDalProducts[i].PhotoPath,
+                            Id = ListDalProducts[i].Id
+                        });
+                        if (i + 1 >= list.Count)
+                            break;
+                    }
                 }
 
-                return list;
+                return list ?? null;
             });
+        }
+
+        public void Dispose()
+        {
+            DBContext.Dispose();
         }
     }
 }

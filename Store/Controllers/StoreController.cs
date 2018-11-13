@@ -54,6 +54,16 @@ namespace Store.Controllers
            
 
         }
+        [HttpPost]
+        public async Task<PartialViewResult> _NavigationView(int MaxPages = 0, int SelectedPage = 1)
+        {
+            NavigationModel model = new NavigationModel();
+            model.ActionUrl = new List<string>();
+            model.MaxPages = MaxPages;
+            model.SelectedPage = SelectedPage;
+            return PartialView("_NavigationView", model);
+        }
+
 
         [HttpGet]
         public async Task<ActionResult> ToBuyProduct(int Id) //GetProductById

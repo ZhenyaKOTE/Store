@@ -17,6 +17,19 @@ function CategoryLoadTo(Id, UrlByCategory) {
     });
 }
 
+function LoadNavigation(Url) {
+    let u = Url;
+    $(function () {
+        $.ajax({
+            url: u,
+            type: "POST",
+            success: function (msg) {
+                $("#Navigation").replaceWith(msg);
+                
+            }
+        })
+    });
+}
 //function GetFilters(Id, Url) {
 //    let u = Url;
 //    $(function () {

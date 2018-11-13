@@ -10,6 +10,8 @@ namespace Store
 {
     public class RouteConfig
     {
+        
+
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -31,6 +33,12 @@ namespace Store
             name: "Store",
             url: "{controller}/{action}/{id}",
             defaults: new { controller = "Store", action = "GetFilters", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+            name: "_Navigation",
+            url: "{controller}/{action}/{MaxPages}/{SelectedPage}",
+            defaults: new { controller = "Store", action = "_NavigationView",  SelectedPage = UrlParameter.Optional }
             );
         }
     }
