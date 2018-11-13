@@ -6,11 +6,11 @@ function CategoryLoadTo(Id, UrlByCategory) {
             url: u,
             type: "POST",
             success: function (msg) {
-                //id_numbers = msg.split('|');
                 let result = JSON.parse(msg);
-
-                for (var a = 0; a < result.length; a++) {
-                    $("#" + Id).append("<a href='#' class='list-group-item list-group-item-action text-center'>" + result[a] + "</li>");
+                console.log(result);
+                for (var a = 0; a < result.length; a++)
+                {
+                    $("#" + Id).append("<a href=" + result[a].UrlToMove + " class='list-group-item list-group-item-action text-center'>" + result[a].Name + "</li>");
                 }
             }
         })

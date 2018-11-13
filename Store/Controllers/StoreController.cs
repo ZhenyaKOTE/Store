@@ -18,6 +18,7 @@ namespace Store.Controllers
 {
     public class StoreController : Controller
     {
+
         private IStoreService StoreService
         {
             get
@@ -28,36 +29,36 @@ namespace Store.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Test(int BeginCount = 0, int EndCount = 12)
+        public async Task<ActionResult> Test(string Id)
         {
 
-            var m = await Task.Run(async () =>
+            return View("Test", await Task.Run(async () =>
             {
-                List<ProductDTO> DTO = await StoreService.GetProductsByPosition(BeginCount, EndCount) as List<ProductDTO>;
+                List<ProductDTO> DTO = await StoreService.GetProductsByCategory(Id, 0, 12) as List<ProductDTO>;
+
                 List<GeneralProductModel> GPM = new List<GeneralProductModel>();
                 foreach (ProductDTO pr in DTO)
                 {
-                    GPM.Add(new GeneralProductModel
-                    {
-                        Id = pr.Id,
-                        Price = pr.Price,
-                        PhotoPath = Url.Content(pr.PhotoPath),
-                        TextUrl = pr.Name,
-                        UrlToBuy = (Url.Content("~/Store/ToBuyProduct/" + pr.Id))
-                    });
-           
+                    GeneralProductModel PrModel = new GeneralProductModel();
+                    PrModel.Id = pr.Id;
+                    PrModel.Price = pr.Price;
+                    PrModel.PhotoPath = Url.Content(pr.PhotoPath) ?? "";
+                    PrModel.TextUrl = pr.Name;
+                    PrModel.UrlToBuy = (Url.Content("~/Store/ToBuyProduct/" + pr.Id) ?? "");
+                    GPM.Add(PrModel);
                 }
 
                 return GPM as IList<GeneralProductModel>;
 
-            });
-            return View("Test", m);
+            }));
+           
 
         }
 
         [HttpGet]
-        public async Task<ActionResult> ToBuyProduct(int Id)
+        public async Task<ActionResult> ToBuyProduct(int Id) //GetProductById
         {
+            Debug.Write(Id + "\n\n\n\n");
             var model = await Task.Run(() =>
             {
                 GeneralProductModel _model = new GeneralProductModel();
@@ -72,31 +73,6 @@ namespace Store.Controllers
 
             return View("ToBuyProduct", model);
         }
-
-        //[HttpGet]
-        //public ActionResult Test()
-        //{
-        //    List<CheckBoxModel> list = new List<CheckBoxModel>();
-
-        //    CheckBoxModel.RefreshId();
-
-        //    CheckBoxModel model = new CheckBoxModel();
-        //    model.Value = "Test1";
-        //    model.IsChecked = false;
-        //    CheckBoxModel model1 = new CheckBoxModel();
-        //    model1.Value = "Test2";
-        //    model1.IsChecked = false;
-        //    CheckBoxModel model2 = new CheckBoxModel();
-        //    model2.Value = "Test3";
-        //    model2.IsChecked = true;
-
-        //    list.Add(model);
-        //    list.Add(model1);
-        //    list.Add(model2);
-
-        //    ViewBag.Filters = list;
-        //    return View();
-        //}
 
         [HttpGet]
         public async Task<PartialViewResult> GetFilters(IEnumerable<Store.Models.CheckBoxModel> Message)
@@ -152,8 +128,62 @@ namespace Store.Controllers
         [OutputCache(Duration = 3600, Location = OutputCacheLocation.ServerAndClient)]
         public async Task<string> GetCategory()
         {
-            var list = await StoreService.GetCategoryNames();
-            return JsonConvert.SerializeObject(list);
+
+            return await Task.Run(async () =>
+            {
+                var a = await StoreService.GetCategories();
+                List<CategoryModel> list = new List<CategoryModel>();
+                foreach (CategoryDTO DTOCategory in a)
+                {
+                    list.Add(new CategoryModel
+                    {
+                        Id = DTOCategory.Id,
+                        Name = DTOCategory.Name,
+                        UrlToMove = (Url.Content("~/Store/Test/" + DTOCategory.Name))
+                    });
+           
+                }
+                return JsonConvert.SerializeObject(list);
+            });
+            
+           // return null;
         }
     }
 }
+
+
+
+
+
+//CategoryDTO category = new CategoryDTO();
+//category.Name = "Диски";
+//            await StoreService.CreateAsync(category);
+
+//ProductDTO product = new ProductDTO();
+//product.Name = "Диск для машини";
+//            product.PhotoPath = "~/ContentImages/7.jpg";
+//            product.Price = 3247;
+//            product.Description = "А це диск для машин";
+
+//            await StoreService.AddProductToCategory(product, category.Name);
+
+
+//CategoryDTO category = new CategoryDTO();
+//category.Name = "Tires";
+//await StoreService.CreateAsync(category);
+
+//await StoreService.CreateAsync(new CategoryDTO { Name = "Tires" });
+
+//ProductDTO product = new ProductDTO();
+//product.Name = "Покришка";
+//product.PhotoPath = "~/ContentImages/1.jpg";
+//product.Price = 1567;
+//product.Description = "This is cool tire";
+
+//ProductDTO product1 = new ProductDTO();
+//product1.Name = "Мега покришка";
+//product1.PhotoPath = "~/ContentImages/3.jpg";
+//product1.Price = 14577;
+//product1.Description = "Це дуже крута покришка";
+//await StoreService.AddProductToCategory(product, "Tires");
+//await StoreService.AddProductToCategory(product1, "Tires");

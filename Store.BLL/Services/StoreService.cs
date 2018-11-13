@@ -21,7 +21,7 @@ namespace Store.BLL.Services
             //Debug.Write(UOW.ToString() + "Alax akbar \n\n\n\n\n\n");
             DBContext = UOW;
         }
-        
+
         public async Task<bool> Exists(CategoryDTO item)
         {
             Category result = (await DBContext.StoreManager.GetItemsAsync<Category>() as List<Category>)
@@ -70,6 +70,7 @@ namespace Store.BLL.Services
                     Product ProductDAL = new Product
                     {
                         Name = item.Name,
+                        PhotoPath = item.PhotoPath,
                         Description = item.Description,
                         Price = item.Price,
                     };
@@ -80,6 +81,7 @@ namespace Store.BLL.Services
                     }
 
                     category.Products.Add(ProductDAL);
+                    await DBContext.SaveAsync();
                 }
             }
             return new OperationDetails(true, "The product has been successfully added", "");
@@ -105,25 +107,72 @@ namespace Store.BLL.Services
             DBContext.Dispose();
         }
 
-        public async Task<IList<ProductDTO>> GetProductsByPosition(int beginCount, int endCount)
+        //public async Task<IList<ProductDTO>> GetProductsByPosition(int beginCount, int endCount)
+        //{
+        //    return await Task.Run(async () =>
+        //    {
+        //        List<ProductDTO> list = new List<ProductDTO>();
+        //        var listDAL = await DBContext.StoreManager.GetItemsAsync<Product>();
+        //        for (int i = beginCount; i < endCount; i++)
+        //        {
+        //            list.Add(new ProductDTO
+        //            {
+        //                Price = listDAL[i].Price,
+        //                Description = listDAL[i].Description,
+        //                Name = listDAL[i].Name,
+        //                PhotoPath = listDAL[i].PhotoPath,
+        //                Id = listDAL[i].Id
+        //            });
+        //        }
+        //        return list;
+        //    });
+        //}
+        public async Task<IList<CategoryDTO>> GetCategories()
+        {
+            return await Task.Run(async () =>
+            {
+                var a = (await DBContext.StoreManager.GetItemsAsync<Category>()).ToList();
+                List<CategoryDTO> list = new List<CategoryDTO>();
+                foreach (Category DalCategory in a)
+                {
+                    list.Add(new CategoryDTO { Id = DalCategory.Id, Name = DalCategory.Name });
+                }
+                return list;
+            });
+
+        }
+
+        public async Task<IList<ProductDTO>> GetProductsByCategory(string CategoryName, int beginCount = 0, int endCount = 12)
         {
             return await Task.Run(async () =>
             {
                 List<ProductDTO> list = new List<ProductDTO>();
-                var listDAL = await DBContext.StoreManager.GetItemsAsync<Product>();
+
+                var ListDalProducts = await Task.Run(async () =>
+                {
+                    //var a = (await DBContext.StoreManager.GetItemsAsync<Category>() as List<Category>).FirstOrDefault(x => x.Name == CategoryName);
+                    var a = (await DBContext.StoreManager.GetItemsAsync<Category>() as List<Category>).FirstOrDefault(x => x.Name == CategoryName);
+                    return a.Products;
+                });
+
+
                 for (int i = beginCount; i < endCount; i++)
                 {
                     list.Add(new ProductDTO
                     {
-                        Price = listDAL[i].Price,
-                        Description = listDAL[i].Description,
-                        Name = listDAL[i].Name,
-                        PhotoPath = listDAL[i].PhotoPath,
-                        Id = listDAL[i].Id
+                        Price = ListDalProducts[i].Price,
+                        Description = ListDalProducts[i].Description,
+                        Name = ListDalProducts[i].Name,
+                        PhotoPath = ListDalProducts[i].PhotoPath,
+                        Id = ListDalProducts[i].Id
                     });
+                    if (i + 1 >= list.Count)
+                        break;
                 }
+
                 return list;
             });
         }
     }
 }
+

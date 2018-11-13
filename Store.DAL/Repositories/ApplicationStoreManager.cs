@@ -3,6 +3,7 @@ using Store.DAL.EntityFramework;
 using Store.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,8 +32,13 @@ namespace Store.DAL.Identity.StoreManagers
 
         public async Task<IList<T>> GetItemsAsync<T>() where T : class
         {
-            var a = await Task.Run(() => { return DbContext.Set<T>(); });
-            return a.ToArray();
+            var a = await Task.Run(() => {
+
+                return DbContext.Set<T>().ToList();
+
+            });
+            Debug.Write(a + "\n\n\n\n\n\n");
+            return a;
         }
 
 
