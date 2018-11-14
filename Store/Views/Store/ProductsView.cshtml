@@ -2,7 +2,17 @@
 @using Store.Models;
 @model Store.Models.InfoForPageProductModel
 
-<h1>Сторінка перенаправлення</h1>
+
+
+<div class="form-horizontal">
+    <h1 style="border-radius: 5px; width:100%; text-align:left; height:55px">@Model.ThisCategory:</h1>
+    <span>
+        <label style="font-size:11px">Сортировка</label>
+        <input class="form-control" style="height: 35px;" />
+    </span>
+</div>
+<hr>
+
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/PostAction")
 @*<div class="product-photo">
