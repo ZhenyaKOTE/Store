@@ -6,6 +6,7 @@ function CategoryLoadTo(Id, UrlByCategory) {
             url: u,
             type: "POST",
             success: function (msg) {
+                console.log(u);
                 let result = JSON.parse(msg);
                 console.log(result);
                 for (var a = 0; a < result.length; a++)

@@ -15,6 +15,6 @@ namespace Store.BLL.Interfaces
         Task CreateAsync(CategoryDTO item);
         Task<OperationDetails> AddProductToCategory(ProductDTO item, string CategoryName);
         Task<IList<CategoryDTO>> GetCategories();
-        Task<IList<ProductDTO>> GetProductsByCategory(string CategoryName = "Tires", int beginCount = 0, int endCount = 12);
+        Task<PageInfoDTO> GetProductsByCategory(string CategoryName, int Page);
     }
 }

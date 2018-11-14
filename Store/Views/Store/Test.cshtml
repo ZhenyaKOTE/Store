@@ -1,6 +1,6 @@
 ﻿
 @using Store.Models;
-@model IEnumerable<Store.Models.GeneralProductModel>
+@model Store.Models.InfoForPageProductModel
 
 <h1>Сторінка перенаправлення</h1>
 @Scripts.Render("~/bundles/jquery")
@@ -17,7 +17,7 @@
     <ul class="products clearfix align-content-center" style="height: auto">
         @if (Model != null)
         {
-            foreach (GeneralProductModel gpm in Model)
+            foreach (GeneralProductModel gpm in Model.ProductModels)
             {
                 <li class="product-wrapper">
                     <div class="product">
@@ -48,28 +48,7 @@
     </ul>
     if (Model != null)
     {
-        <script>
-            LoadNavigation('@Url.Content("~/Store/_NavigationView/25/1/")');
-        </script>
-        <div id="HelpNav">
-            <div id="Navigation">
+        @Html.Partial("_NavPartial", Model);
 
-            </div>
-        </div>
-
-
-
-
-        @*@Html.Action("_NavigationView", "Store", new { MaxPages = 25, SelectedPage = 1 })*@
     }
 }
-
-
-
-@*<div id="_Filter">
-        @Html.Partial("_FilterView", (ViewBag.Filters as IEnumerable<CheckBoxModel>))
-
-        <div type="button" style="width: 50px; height: 50px" onclick="GetFilters('@Url.Content("~/Store/GetFilters")')" />
-    </div>*@
-
-@*@Html.Partial("_FilterView");*@

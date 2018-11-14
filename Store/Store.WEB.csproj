@@ -204,6 +204,7 @@
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CheckBoxModel.cs" />
     <Compile Include="Models\CustomPrincipalSerializeModel.cs" />
+    <Compile Include="Models\InfoForPageProductModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\GeneralProductModel.cs" />
     <Compile Include="Models\NavigationModel.cs" />
@@ -300,7 +301,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Store\_FilterView.cshtml" />
     <Content Include="Views\Store\ToBuyProduct.cshtml" />
-    <Content Include="Views\Store\_NavigationView.cshtml" />
+    <Content Include="Views\Store\_NavPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

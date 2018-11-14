@@ -29,40 +29,63 @@ namespace Store.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Test(string Id)
+        public async Task<ActionResult> Test(string NameCategory, int Page = 1)
         {
-
+            Page -= 1;
+            //Debug.Write(NameCategory + "\n\n\n\n\n\n");
             return View("Test", await Task.Run(async () =>
             {
-                List<ProductDTO> DTO = await StoreService.GetProductsByCategory(Id, 0, 12) as List<ProductDTO>;
-
-                List<GeneralProductModel> GPM = new List<GeneralProductModel>();
-                foreach (ProductDTO pr in DTO)
+                PageInfoDTO pageInfo = await StoreService.GetProductsByCategory(NameCategory, Page);
+                if (pageInfo != null)
                 {
-                    GeneralProductModel PrModel = new GeneralProductModel();
-                    PrModel.Id = pr.Id;
-                    PrModel.Price = pr.Price;
-                    PrModel.PhotoPath = Url.Content(pr.PhotoPath) ?? "";
-                    PrModel.TextUrl = pr.Name;
-                    PrModel.UrlToBuy = (Url.Content("~/Store/ToBuyProduct/" + pr.Id) ?? "");
-                    GPM.Add(PrModel);
-                }
+                    List<ProductDTO> DTO = pageInfo.Products as List<ProductDTO>;
+                    //Debug.Write(DTO.Count + "\n\n\n\n");
 
-                return GPM as IList<GeneralProductModel>;
+                    List<GeneralProductModel> GPM = new List<GeneralProductModel>();
+                    foreach (ProductDTO pr in DTO)
+                    {
+                        GeneralProductModel PrModel = new GeneralProductModel();
+                        PrModel.Id = pr.Id;
+                        PrModel.Price = pr.Price;
+                        PrModel.PhotoPath = Url.Content(pr.PhotoPath) ?? "";
+                        PrModel.TextUrl = pr.Name;
+                        PrModel.UrlToBuy = (Url.Content("~/Store/ToBuyProduct/" + pr.Id) ?? "");
+                        GPM.Add(PrModel);
+                    }
+
+                    //return GPM as IList<GeneralProductModel>;
+
+                    NavigationModel navigation = new NavigationModel();
+                    navigation.MaxPages = pageInfo.MaxPages;
+                    navigation.SelectedPage = Page+1;
+                    
+
+                    InfoForPageProductModel info = new InfoForPageProductModel();
+                    info.ProductModels = GPM as IList<GeneralProductModel>;
+
+                    info.NavigationModel_ = navigation;
+                    info.ThisCategory = NameCategory;
+                    return info;
+                }
+                else
+                    return null;
 
             }));
+
+            //return View("Test", null);
            
 
         }
-        [HttpPost]
-        public async Task<PartialViewResult> _NavigationView(int MaxPages = 0, int SelectedPage = 1)
-        {
-            NavigationModel model = new NavigationModel();
-            model.ActionUrl = new List<string>();
-            model.MaxPages = MaxPages;
-            model.SelectedPage = SelectedPage;
-            return PartialView("_NavigationView", model);
-        }
+
+        //[HttpPost]
+        //public async Task<PartialViewResult> _NavigationView(int MaxPages = 0, int SelectedPage = 1)
+        //{
+        //    NavigationModel model = new NavigationModel();
+        //    model.ActionUrl = new List<string>();
+        //    model.MaxPages = MaxPages;
+        //    model.SelectedPage = SelectedPage;
+        //    return PartialView("_NavigationView", model);
+        //}
 
 
         [HttpGet]
@@ -149,7 +172,7 @@ namespace Store.Controllers
                     {
                         Id = DTOCategory.Id,
                         Name = DTOCategory.Name,
-                        UrlToMove = (Url.Content("~/Store/Test/" + DTOCategory.Name))
+                        UrlToMove = (Url.Content("~/Store/Test/" + DTOCategory.Name + "/1"))
                     });
            
                 }

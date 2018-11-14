@@ -61,6 +61,7 @@
     <Compile Include="Entities\StoreEntities\CharacteristicByProduct.cs" />
     <Compile Include="Entities\StoreEntities\Product.cs" />
     <Compile Include="EntityFramework\ApplicationContext.cs" />
+    <Compile Include="EntityFramework\ContextInitializer.cs" />
     <Compile Include="Identity\IdentityManagers\ApplicationRoleManager.cs" />
     <Compile Include="Identity\IdentityManagers\ApplicationUserManager.cs" />
     <Compile Include="Repositories\ApplicationStoreManager.cs" />

@@ -56,7 +56,7 @@ namespace Store.BLL.Services
             else
             {
                 var AllCategories = await DBContext.StoreManager.GetItemsAsync<Category>() ?? null;
-                
+
                 if (AllCategories == null)
                     return new OperationDetails(false, "Category is not found", "");
                 else
@@ -81,7 +81,7 @@ namespace Store.BLL.Services
             }
             return new OperationDetails(true, "The product has been successfully added", "");
         }
-    
+
         public async Task<IList<CategoryDTO>> GetCategories()
         {
             return await Task.Run(async () =>
@@ -97,10 +97,13 @@ namespace Store.BLL.Services
 
         }
 
-        public async Task<IList<ProductDTO>> GetProductsByCategory(string CategoryName, int beginCount = 0, int endCount = 12)
-        {
+        public async Task<PageInfoDTO> GetProductsByCategory(string CategoryName, int Page)
+        {        
             return await Task.Run(async () =>
             {
+                PageInfoDTO pageInfoDTO = new PageInfoDTO();
+                int BeginCountProduct = 12 * Page;
+                int EndCountProduct = BeginCountProduct + 12;
                 List<ProductDTO> list = new List<ProductDTO>();
 
                 var ListDalProducts = await Task.Run(async () =>
@@ -116,7 +119,7 @@ namespace Store.BLL.Services
 
                 if (ListDalProducts != null)
                 {
-                    for (int i = beginCount; i < endCount; i++)
+                    for (int i = BeginCountProduct; (i < EndCountProduct && i < ListDalProducts.Count); i++)
                     {
                         list.Add(new ProductDTO
                         {
@@ -126,13 +129,22 @@ namespace Store.BLL.Services
                             PhotoPath = ListDalProducts[i].PhotoPath,
                             Id = ListDalProducts[i].Id
                         });
-                        if (i + 1 >= list.Count)
-                            break;
                     }
-                }
 
-                return list ?? null;
+                    pageInfoDTO.Products = list ?? null;
+                    int PageCount = (ListDalProducts.Count / 12);
+
+                    if ((double)(ListDalProducts.Count / 12) > PageCount)
+                        PageCount++;
+
+                    pageInfoDTO.MaxPages = PageCount;
+
+                    return pageInfoDTO;
+                }
+                else
+                    return null;
             });
+
         }
 
         public void Dispose()

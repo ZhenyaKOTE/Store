@@ -9,6 +9,6 @@ namespace Store.Models
     {
         public int SelectedPage { get; set; }
         public int MaxPages { get; set; }
-        public IEnumerable<string> ActionUrl { get; set; }
+        //public IEnumerable<string> ActionUrl { get; set; }
     }
 }

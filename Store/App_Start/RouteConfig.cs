@@ -36,6 +36,12 @@ namespace Store
             );
 
             routes.MapRoute(
+            name: "AllProducts",
+            url: "{controller}/{action}/{NameCategory}/{Page}",
+            defaults: new { controller = "Store", action = "Test", Page = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
             name: "_Navigation",
             url: "{controller}/{action}/{MaxPages}/{SelectedPage}",
             defaults: new { controller = "Store", action = "_NavigationView",  SelectedPage = UrlParameter.Optional }
