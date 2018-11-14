@@ -20,7 +20,6 @@
             <span>
                 <img src="~/Images/shiny.png" style="height: 40px; width: 40px" />
                 Магазин
-                @*<a class="navbar-brand" href="">*@
             </span>
         </button>
 
@@ -39,9 +38,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Index","Home")">Головна</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Test","Store")">Тестова сторінка</a>
-                </li>
+                @*<li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Test","Store")">Тестова сторінка</a>
+                    </li>*@
                 @if (User != null)
                 {
                     if ((User as CustomPrincipal).IsInRole("admin"))
@@ -97,13 +96,16 @@
 
 
 
-    <div class="container body-content">
+    <div class="container body-content mx-auto">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        <br />
     </div>
+    <footer class="navbar navbar-dark bg-dark navbar-expand-lg" style="position:absolute; width: 100%;">
+        <div class="" style="">
+            <img src="~/Images/shiny.png" style="height: 40px; width: 40px" />
+            <label style="color:white;">&copy; @DateTime.Now.Year - Магазин</label>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

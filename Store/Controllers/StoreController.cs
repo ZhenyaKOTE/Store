@@ -29,17 +29,15 @@ namespace Store.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Test(string NameCategory, int Page = 1)
+        public async Task<ActionResult> ProductsView(string NameCategory, int Page = 1)
         {
-            Page -= 1;
-            //Debug.Write(NameCategory + "\n\n\n\n\n\n");
-            return View("Test", await Task.Run(async () =>
+            
+            return View( await Task.Run(async () =>
             {
-                PageInfoDTO pageInfo = await StoreService.GetProductsByCategory(NameCategory, Page);
+                PageInfoDTO pageInfo = await StoreService.GetProductsByCategory(NameCategory, Page-1);
                 if (pageInfo != null)
                 {
                     List<ProductDTO> DTO = pageInfo.Products as List<ProductDTO>;
-                    //Debug.Write(DTO.Count + "\n\n\n\n");
 
                     List<GeneralProductModel> GPM = new List<GeneralProductModel>();
                     foreach (ProductDTO pr in DTO)
@@ -53,13 +51,10 @@ namespace Store.Controllers
                         GPM.Add(PrModel);
                     }
 
-                    //return GPM as IList<GeneralProductModel>;
-
                     NavigationModel navigation = new NavigationModel();
                     navigation.MaxPages = pageInfo.MaxPages;
-                    navigation.SelectedPage = Page+1;
+                    navigation.SelectedPage = Page;
                     
-
                     InfoForPageProductModel info = new InfoForPageProductModel();
                     info.ProductModels = GPM as IList<GeneralProductModel>;
 
@@ -71,27 +66,11 @@ namespace Store.Controllers
                     return null;
 
             }));
-
-            //return View("Test", null);
-           
-
         }
-
-        //[HttpPost]
-        //public async Task<PartialViewResult> _NavigationView(int MaxPages = 0, int SelectedPage = 1)
-        //{
-        //    NavigationModel model = new NavigationModel();
-        //    model.ActionUrl = new List<string>();
-        //    model.MaxPages = MaxPages;
-        //    model.SelectedPage = SelectedPage;
-        //    return PartialView("_NavigationView", model);
-        //}
-
 
         [HttpGet]
         public async Task<ActionResult> ToBuyProduct(int Id) //GetProductById
         {
-            Debug.Write(Id + "\n\n\n\n");
             var model = await Task.Run(() =>
             {
                 GeneralProductModel _model = new GeneralProductModel();
@@ -172,7 +151,7 @@ namespace Store.Controllers
                     {
                         Id = DTOCategory.Id,
                         Name = DTOCategory.Name,
-                        UrlToMove = (Url.Content("~/Store/Test/" + DTOCategory.Name + "/1"))
+                        UrlToMove = (Url.Content("~/Store/ProductsView/" + DTOCategory.Name + "/1"))
                     });
            
                 }

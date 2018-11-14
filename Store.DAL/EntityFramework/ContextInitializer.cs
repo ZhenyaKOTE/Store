@@ -21,7 +21,7 @@ namespace Store.DAL.EntityFramework
             
 
             Random rand = new Random();
-            for (int i = 0; i < 84; i++)
+            for (int i = 0; i < 87; i++)
             {
 
                 Product product = new Product();
@@ -60,7 +60,7 @@ namespace Store.DAL.EntityFramework
             }
             db.Set<Category>().Add(TireCategory);
 
-            for (int i = 0; i < 84; i++)
+            for (int i = 0; i < 87; i++)
             {
 
                 Product product = new Product();

@@ -38,7 +38,7 @@ namespace Store
             routes.MapRoute(
             name: "AllProducts",
             url: "{controller}/{action}/{NameCategory}/{Page}",
-            defaults: new { controller = "Store", action = "Test", Page = UrlParameter.Optional }
+            defaults: new { controller = "Store", action = "ProductView", Page = UrlParameter.Optional }
             );
 
             routes.MapRoute(

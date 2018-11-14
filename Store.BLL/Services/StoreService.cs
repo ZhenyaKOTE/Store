@@ -98,10 +98,10 @@ namespace Store.BLL.Services
         }
 
         public async Task<PageInfoDTO> GetProductsByCategory(string CategoryName, int Page)
-        {        
+        {
             return await Task.Run(async () =>
             {
-                PageInfoDTO pageInfoDTO = new PageInfoDTO();
+
                 int BeginCountProduct = 12 * Page;
                 int EndCountProduct = BeginCountProduct + 12;
                 List<ProductDTO> list = new List<ProductDTO>();
@@ -131,11 +131,14 @@ namespace Store.BLL.Services
                         });
                     }
 
+                    PageInfoDTO pageInfoDTO = new PageInfoDTO();
+
                     pageInfoDTO.Products = list ?? null;
                     int PageCount = (ListDalProducts.Count / 12);
 
-                    if ((double)(ListDalProducts.Count / 12) > PageCount)
-                        PageCount++;
+
+                    if ((double)(ListDalProducts.Count / 12.0) > PageCount)
+                        PageCount += 1;
 
                     pageInfoDTO.MaxPages = PageCount;
 
