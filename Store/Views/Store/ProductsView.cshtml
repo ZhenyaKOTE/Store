@@ -2,23 +2,36 @@
 @using Store.Models;
 @model Store.Models.InfoForPageProductModel
 
+<script src="~/Scripts/umd/popper.min.js" type="text/javascript"></script>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/PostAction")
 
 
 <div class="form-horizontal">
-    <h1 style="border-radius: 5px; width:100%; text-align:left; height:55px">@Model.ThisCategory:</h1>
-    <span>
-        <label style="font-size:11px">Сортировка</label>
-        <input class="form-control" style="height: 35px;" />
-    </span>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1 style="border-radius: 5px; width:100%; text-align:left; height:55px">@Model.ThisCategory:</h1>
+            </div>
+            <div class="col-sm d-flex flex-column">
+
+                <div class="dropdown text align-self-end p-0" style="width:250px">
+                    <label class="" style="font-size:11px; margin-left: 4px">Сортировка:</label>
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelect02">
+                            <option selected value="1">По рейтенгу</option>
+                            <option value="2">От дешевых к дорогим</option>
+                            <option value="3">От дорогих к дешевым</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 </div>
 <hr>
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/PostAction")
-@*<div class="product-photo">
-        <img src="~/Images/shiny.png" alt="">
-    </div>*@
-
 
 
 @using (Html.BeginForm())

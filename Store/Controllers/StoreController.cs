@@ -71,8 +71,10 @@ namespace Store.Controllers
         [HttpGet]
         public async Task<ActionResult> ToBuyProduct(int Id) //GetProductById
         {
+            
             var model = await Task.Run(() =>
             {
+                //ProductDTO product = StoreService.GetProductById(Id);
                 GeneralProductModel _model = new GeneralProductModel();
                 //model.PhotoPath = System.IO.File.ReadAllBytes(@"C:\Users\zhenyastufeev\Source\Repos\Store\Store\Images\shiny.png");
                 _model.PhotoPath = Url.Content("~/ContentImages/Content.png");
