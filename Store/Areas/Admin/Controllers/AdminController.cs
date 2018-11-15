@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace Store.Areas.Admin.Controllers
 {
-    
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         // GET: Admin/Admin

@@ -16,6 +16,7 @@ using System.Web.Security;
 
 namespace Store.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
 
@@ -35,16 +36,18 @@ namespace Store.Controllers
             }
         }
 
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
-
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
@@ -113,6 +116,7 @@ namespace Store.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel model)
@@ -138,6 +142,8 @@ namespace Store.Controllers
             }
             return View(model);
         }
+
+        
         public ActionResult Logout()
         {
             Debug.Write(AuthenticationManager.User.IsInRole("User"));

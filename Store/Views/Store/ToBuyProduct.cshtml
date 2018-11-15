@@ -2,7 +2,54 @@
 @{
     ViewBag.Title = "ToBuyProduct";
 }
+@Scripts.Render("~/bundles/jquery")
 
 <h2>@Model.TextUrl</h2>
+
+<div id="ToBuyBody">
+    <script>
+        var w = window.innerHeight;
+        var container = document.getElementById('ToBuyBody');
+        container.style.minHeight = (w - 130) + "px"; //130 - height: header and footer
+    </script>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <img src="~/Images/shiny.png" style="height: 300px; width: 300px" />
+            </div>
+
+            <div class="col-sm" style="background-color: whitesmoke; border-radius: 8px; margin: 5px">
+                <div style="background-color:white; margin-left: 5px; margin-right: 5px; margin-top: 15px; margin-bottom:15px; border-radius:8px">
+                    <br>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <ul>
+                                    @foreach (var ch in Model.Characteristics)
+                                    {
+                                        <li style="font-size:20px">@ch.Key:<hr></li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <ul>
+                                    @foreach (var ch in Model.Characteristics)
+                                    {
+                                        <li style="font-size:20px">@ch.Value<hr></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
 
 

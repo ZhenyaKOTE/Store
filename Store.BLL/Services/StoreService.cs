@@ -154,6 +154,35 @@ namespace Store.BLL.Services
         {
             DBContext.Dispose();
         }
+
+        public async Task<ProductDTO> GetProductById(int Id)
+        {
+            return await Task.Run(async () =>
+            {
+                Product product = (await DBContext.StoreManager.GetItemsAsync<Product>()).FirstOrDefault(x => x.Id == Id);
+                if (product != null)
+                {
+                    ProductDTO productDTO = new ProductDTO
+                    {
+                        Description = product.Description,
+                        Id = product.Id,
+                        Name = product.Name,
+                        Price = product.Price,
+                        PhotoPath = product.PhotoPath
+                    };
+
+                    foreach (var pr in product.Characteristics)
+                    {
+                        productDTO.Characteristics.Add(new CharacteristicDTO { Id = pr.Id, Key = pr.Key, Value = pr.Value });
+                    }
+
+                    return productDTO;
+                }
+                else
+                    return null;
+            });
+            
+        }
     }
 }
 

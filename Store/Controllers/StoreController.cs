@@ -71,18 +71,31 @@ namespace Store.Controllers
         [HttpGet]
         public async Task<ActionResult> ToBuyProduct(int Id) //GetProductById
         {
-            
-            var model = await Task.Run(() =>
-            {
-                //ProductDTO product = StoreService.GetProductById(Id);
-                GeneralProductModel _model = new GeneralProductModel();
-                //model.PhotoPath = System.IO.File.ReadAllBytes(@"C:\Users\zhenyastufeev\Source\Repos\Store\Store\Images\shiny.png");
-                _model.PhotoPath = Url.Content("~/ContentImages/Content.png");
-                _model.Price = 1566;
-                _model.TextUrl = "Bridgestone Blizzak DM-V2 245/70 R16 107S";
-                //_model.UrlToBuy = Url.Content("~/Store/ToBuyProduct/" + Id.ToString());
 
-                return _model;
+            var model = await Task.Run(async () =>
+            {
+                ProductDTO product = await StoreService.GetProductById(Id);
+                if (product != null)
+                {
+                    GeneralProductModel GeneralModel = new GeneralProductModel
+                    {
+                        Description = product.Description,
+                        Id = product.Id,
+                        TextUrl = product.Name,
+                        Price = product.Price,
+                        PhotoPath = product.PhotoPath,
+                        //UrlToBuy = 
+                    };
+
+                    foreach (var pr in product.Characteristics)
+                    {
+                        GeneralModel.Characteristics.Add(new CharacteriscitModel { Key = pr.Key, Value = pr.Value });
+                    }
+
+                    return GeneralModel;
+                }
+                else
+                    return null;
             });
 
             return View("ToBuyProduct", model);

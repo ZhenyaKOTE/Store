@@ -6,72 +6,77 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/PostAction")
 
+<div id="ProductsView">
+    <div class="form-horizontal">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h1 style="border-radius: 5px; width:100%; text-align:left; height:55px">@Model.ThisCategory:</h1>
+                </div>
+                <div class="col-sm d-flex flex-column">
 
-<div class="form-horizontal">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h1 style="border-radius: 5px; width:100%; text-align:left; height:55px">@Model.ThisCategory:</h1>
-            </div>
-            <div class="col-sm d-flex flex-column">
-
-                <div class="dropdown text align-self-end p-0" style="width:250px">
-                    <label class="" style="font-size:11px; margin-left: 4px">Сортировка:</label>
-                    <div class="input-group mb-3">
-                        <select class="custom-select" id="inputGroupSelect02">
-                            <option selected value="1">По рейтенгу</option>
-                            <option value="2">От дешевых к дорогим</option>
-                            <option value="3">От дорогих к дешевым</option>
-                        </select>
+                    <div class="dropdown text align-self-end p-0" style="width:250px">
+                        <label class="" style="font-size:11px; margin-left: 4px">Сортировка:</label>
+                        <div class="input-group mb-3">
+                            <select class="custom-select" id="inputGroupSelect02">
+                                <option selected value="1">По рейтенгу</option>
+                                <option value="2">От дешевых к дорогим</option>
+                                <option value="3">От дорогих к дешевым</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-</div>
-<hr>
+    <hr>
 
 
-@using (Html.BeginForm())
-{
+    @using (Html.BeginForm())
+    {
 
-    <ul class="products clearfix align-content-center" style="height: auto">
-        @if (Model != null)
-        {
-            foreach (GeneralProductModel gpm in Model.ProductModels)
+        <ul class="products clearfix align-content-center" style="height: auto">
+            @if (Model != null)
             {
-                <li class="product-wrapper">
-                    <div class="product">
-                        <a href="@gpm.UrlToBuy">
-                            <div class="product-photo">
+                foreach (GeneralProductModel gpm in Model.ProductModels)
+                {
+                    <li class="product-wrapper">
+                        <div class="product">
+                            <a href="@gpm.UrlToBuy">
+                                <div class="product-photo">
 
-                                <img src="@gpm.PhotoPath" alt="" />
-                            </div>
-                        </a>
-                        <hr>
-                        <div style="margin:10px;">
-                            <a href="@gpm.UrlToBuy"><p style="font-size:13px; text-align:left">@gpm.TextUrl</p></a>
-
-                            <div class="row">
-                                <div class="col">
-                                    <label style="margin-left:5px; background-color:antiquewhite; border-radius: 3px;">@gpm.Price грн.</label>
+                                    <img src="@gpm.PhotoPath" alt="" />
                                 </div>
-                                <div class="col">
-                                    <a href="@gpm.UrlToBuy" style="margin-right:10px; margin-top:-5px" class="btn btn-success">Купить</a>
+                            </a>
+                            <hr>
+                            <div style="margin:10px;">
+                                <a href="@gpm.UrlToBuy"><p style="font-size:13px; text-align:left">@gpm.TextUrl</p></a>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label style="margin-left:5px; background-color:antiquewhite; border-radius: 3px;">@gpm.Price грн.</label>
+                                    </div>
+                                    <div class="col">
+                                        <a href="@gpm.UrlToBuy" style="margin-right:10px; margin-top:-5px" class="btn btn-success">Купить</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
+                }
+
             }
+        </ul>
+        if (Model != null)
+        {
+            @Html.Partial("_NavPartial", Model);
 
         }
-    </ul>
-    if (Model != null)
-    {
-        @Html.Partial("_NavPartial", Model);
-
     }
-}
+</div>
+
+<script>
+    var w = window.innerHeight;
+    var container = document.getElementById('ProductsView');
+    container.style.minHeight = (w - 130) + "px"; //130 - height: header and footer
+</script>

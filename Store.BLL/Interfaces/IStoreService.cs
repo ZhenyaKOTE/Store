@@ -16,5 +16,6 @@ namespace Store.BLL.Interfaces
         Task<OperationDetails> AddProductToCategory(ProductDTO item, string CategoryName);
         Task<IList<CategoryDTO>> GetCategories();
         Task<PageInfoDTO> GetProductsByCategory(string CategoryName, int Page);
+        Task<ProductDTO> GetProductById(int Id);
     }
 }

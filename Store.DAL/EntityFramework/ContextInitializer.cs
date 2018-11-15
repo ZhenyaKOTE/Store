@@ -5,7 +5,7 @@ using System.Data.Entity;
 
 namespace Store.DAL.EntityFramework
 {
-    internal class ContextInitializer : DropCreateDatabaseAlways<ApplicationContext>
+    internal class ContextInitializer : CreateDatabaseIfNotExists<ApplicationContext>
     {
         protected override void Seed(ApplicationContext db)
         {

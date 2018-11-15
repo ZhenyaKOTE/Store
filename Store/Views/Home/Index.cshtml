@@ -2,6 +2,12 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="d-flex flex-column">
+<div id="Main" class="d-flex flex-column">
     <h3 class="text align-self-center p-2" style="background-color:silver; text-align: center; width: 220px; border-radius:5px; height:55px">Рекомендации</h3>
+    <img src="~/Images/Capture.PNG" />
 </div>
+<script>
+    var w = window.innerHeight;
+    var container = document.getElementById('Main');
+    container.style.minHeight = (w - 130) + "px"; //130 - height: header and footer
+</script>
