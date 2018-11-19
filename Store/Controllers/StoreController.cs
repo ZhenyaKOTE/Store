@@ -31,7 +31,9 @@ namespace Store.Controllers
         [HttpGet]
         public async Task<ActionResult> ProductsView(string NameCategory, int Page = 1)
         {
-            
+            if (NameCategory == null)
+                return null;
+
             return View( await Task.Run(async () =>
             {
                 PageInfoDTO pageInfo = await StoreService.GetProductsByCategory(NameCategory, Page-1);
@@ -101,54 +103,23 @@ namespace Store.Controllers
             return View("ToBuyProduct", model);
         }
 
+
+
+
         [HttpGet]
-        public async Task<PartialViewResult> GetFilters(IEnumerable<Store.Models.CheckBoxModel> Message)
+        public async Task<ActionResult> TestPage()
         {
-            if (Message == null)
-                Debug.Write("null!!!\n\n\n\n\n\n");
-            else
-            {
-                Debug.Write("NotNull\n\n\n\n\n\n");
-                Debug.Write((Message as List<CheckBoxModel>).Count); //Приходить пустий список
-            }
-            // ViewBag.ToReloadFilters = false;
-            return await Task.Run(() =>
-            {
-
-                List<CheckBoxModel> list = new List<CheckBoxModel>();
-
-                CheckBoxModel.RefreshId();
-
-                CheckBoxModel model = new CheckBoxModel();
-                model.Value = "Test1";
-                model.IsChecked = false;
-                CheckBoxModel model1 = new CheckBoxModel();
-                model1.Value = "Test2";
-                model1.IsChecked = false;
-                CheckBoxModel model2 = new CheckBoxModel();
-                model2.Value = "Test3";
-                model2.IsChecked = true;
-
-                list.Add(model);
-                list.Add(model1);
-                list.Add(model2);
-
-                return PartialView("_FilterView", list);
-                // return JsonConvert.SerializeObject(list);
-            });
-
+            return View();
         }
 
 
         [HttpPost]
-        public async Task SendFilters(IEnumerable<CheckBoxModel> checks)
+        public async Task<PartialViewResult> _FilterView(string SerializeFilters)
         {
-            await Task.Run(() =>
-            {
-                List<CheckBoxModel> list = checks as List<CheckBoxModel>;
-            });
-
+            
+            return PartialView("_FilterView");
         }
+
 
 
         [HttpPost]

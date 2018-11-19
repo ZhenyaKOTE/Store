@@ -46,6 +46,13 @@ namespace Store
             url: "{controller}/{action}/{MaxPages}/{SelectedPage}",
             defaults: new { controller = "Store", action = "_NavigationView",  SelectedPage = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+            name: "_FilterView",
+            url: "{controller}/{action}/{SerializeFilters}",
+            defaults: new { controller = "Store", action = "_NavigationView", SerializeFilters = UrlParameter.Optional }
+            );
         }
     }
 }
+//SerializeFilters
