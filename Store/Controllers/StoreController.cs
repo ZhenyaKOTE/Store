@@ -16,7 +16,7 @@ using System.Web.UI;
 
 namespace Store.Controllers
 {
-    public class StoreController : Controller
+    public class StoreController :  Controller
     {
 
         private IStoreService StoreService
