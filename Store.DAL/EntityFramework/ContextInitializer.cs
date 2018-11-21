@@ -5,7 +5,7 @@ using System.Data.Entity;
 
 namespace Store.DAL.EntityFramework
 {
-    internal class ContextInitializer : CreateDatabaseIfNotExists<ApplicationContext>
+    internal class ContextInitializer : DropCreateDatabaseAlways<ApplicationContext>
     {
         protected override void Seed(ApplicationContext db)
         {
@@ -54,6 +54,9 @@ namespace Store.DAL.EntityFramework
                 product.Characteristics.Add(characteristic3);
                 product.Characteristics.Add(characteristic4);
                 product.Characteristics.Add(characteristic5);
+
+                product.Description = @"Интернет-магазин «Шины и Диски» - зимняя и летняя резина по низкой цене
+Тот, кто ценит свое время, бережет автомобиль и хочет недорого купить хорошую авторезину, понимает, что покупка покрышек должна происходить в магазине с высокой репутацией. Здесь предложат качественный сервис при выборе и покупке изделий.Поддерживая желание наших клиентов, мы сделали все возможное, чтобы приобретать шины в интернет магазине Шины и Диски было удобно, легко и безопасно.";
 
                 TireCategory.Products.Add(product);
                 
