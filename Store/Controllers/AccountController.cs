@@ -128,33 +128,30 @@ namespace Store.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterModel model)
-        {
-
-            if (ModelState.IsValid)
-            {
-                UserDTO userDto = new UserDTO
-                {
-                    Email = model.Email,
-                    Password = model.Password,
-                    Name = model.Name
-                };
-                userDto.Roles.Add("User");
-                userDto.Roles.Add("Admin");
-
-
-                OperationDetails operationDetails = await UserService.CreateAsync(userDto);
-                //Debug.Write(operationDetails.Message);
-                if (operationDetails.Succedeed)
-                    return RedirectToAction("Index", "Home");
-                else
-                    ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
-            }
-            return View(model);
-        }
+        //[AllowAnonymous]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Register(RegisterModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        UserDTO userDto = new UserDTO
+        //        {
+        //            Email = model.Email,
+        //            Password = model.Password,
+        //            Name = model.Name
+        //        };
+        //        userDto.Roles.Add("User");
+        //        userDto.Roles.Add("Admin");
+        //        OperationDetails operationDetails = await UserService.CreateAsync(userDto);
+        //        //Debug.Write(operationDetails.Message);
+        //        if (operationDetails.Succedeed)
+        //            return RedirectToAction("Index", "Home");
+        //        else
+        //            ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
+        //    }
+        //    return View(model);
+        //}
 
         
         public ActionResult Logout()

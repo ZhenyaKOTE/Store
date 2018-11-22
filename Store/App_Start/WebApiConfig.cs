@@ -1,4 +1,7 @@
 ﻿
+using Newtonsoft.Json.Serialization;
+using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 
 namespace Store.App_Start
@@ -12,6 +15,8 @@ namespace Store.App_Start
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            JsonMediaTypeFormatter jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

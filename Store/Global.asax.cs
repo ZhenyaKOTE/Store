@@ -27,37 +27,37 @@ namespace Store
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
-        {
-            var UserInfo = Request.Cookies[FormsAuthentication.FormsCookieName];
+        //protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
+        //{
+        //    var UserInfo = Request.Cookies[FormsAuthentication.FormsCookieName];
                 
-            if (UserInfo != null)
-            {
-                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(UserInfo.Value);
+        //    if (UserInfo != null)
+        //    {
+        //        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(UserInfo.Value);
 
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
+        //        JavaScriptSerializer serializer = new JavaScriptSerializer();
 
-                CustomPrincipalSerializeModel serializeModel = serializer.Deserialize<CustomPrincipalSerializeModel>(authTicket.UserData);
+        //        CustomPrincipalSerializeModel serializeModel = serializer.Deserialize<CustomPrincipalSerializeModel>(authTicket.UserData);
 
 
-                //string[] roles = authTicket.UserData.Split('|');
-                //Debug.Write(roles[0]+"\n\n\n\n\n");
-                FormsIdentity id = new FormsIdentity(authTicket);
+        //        //string[] roles = authTicket.UserData.Split('|');
+        //        //Debug.Write(roles[0]+"\n\n\n\n\n");
+        //        FormsIdentity id = new FormsIdentity(authTicket);
 
-                CustomPrincipal newUser = new CustomPrincipal(id, serializeModel.Roles);
-                newUser.Name = serializeModel.Name;
-                newUser.Email = serializeModel.Email;
+        //        CustomPrincipal newUser = new CustomPrincipal(id, serializeModel.Roles);
+        //        newUser.Name = serializeModel.Name;
+        //        newUser.Email = serializeModel.Email;
               
-                //List<string> UserRoles = new List<string>();
+        //        //List<string> UserRoles = new List<string>();
 
-                //CustomPrincipal p = new CustomPrincipal();
+        //        //CustomPrincipal p = new CustomPrincipal();
                 
 
-                Debug.Write(newUser.Name);
+        //        Debug.Write(newUser.Name);
 
-                HttpContext.Current.User = newUser;
-            }
-        }
+        //        HttpContext.Current.User = newUser;
+        //    }
+        //}
 
     }
 }
