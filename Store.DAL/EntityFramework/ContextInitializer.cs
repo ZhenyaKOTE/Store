@@ -1,14 +1,19 @@
-﻿using Store.DAL.Entities;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Store.DAL.Entities;
 using Store.DAL.Entities.StoreEntities;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 
 namespace Store.DAL.EntityFramework
 {
-    internal class ContextInitializer : CreateDatabaseIfNotExists<ApplicationContext>
+    internal class ContextInitializer : DropCreateDatabaseAlways<ApplicationContext>
     {
         protected override void Seed(ApplicationContext db)
         {
+
+           
+
             Category TireCategory = new Category();
             TireCategory.Name = "Шини";
 

@@ -36,9 +36,13 @@ namespace Store.BLL.Services
             {
                 claimIdentity = await DBContext.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
                 Claim UserNameClaim = new Claim("UserName", user.ClientProfile.Name);
+                foreach (string role in await GetRoles(user.Id))
+                {
+                    Claim RolesClaim = new Claim("Roles", role);
+                }
+                
                 claimIdentity.AddClaim(UserNameClaim);
             }
-            //claimIdentity.GetUserId();
             return claimIdentity;
         }
 

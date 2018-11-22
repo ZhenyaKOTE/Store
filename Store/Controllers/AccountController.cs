@@ -8,6 +8,8 @@ using Store.BLL.Interfaces;
 using Store.Models;
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -58,8 +60,17 @@ namespace Store.Controllers
                 //var user = userRepository.Users.Where(u => u.Email == viewModel.Email).First();
                 UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
 
-                var claim = await UserService.Authenticate(userDto);
+                ClaimsIdentity claim = await UserService.Authenticate(userDto);
+                var a = claim.Claims.ToList();
+                string temp = "";
 
+                foreach (Claim tempClaim in a)
+                {
+                    //tempClaim.ValueType
+                    temp += tempClaim.Value + "\n\n";
+                }
+
+                Debug.Write(temp + "\n\n\n\n\n\n");
                 if (claim == null)
                 {
                     ModelState.AddModelError("", "Неверный логин или пароль.");
@@ -79,36 +90,37 @@ namespace Store.Controllers
 
                     AuthenticationManager.SignOut();
 
+                    //var a = new AuthenticationProperties {  }
+
                     AuthenticationManager.SignIn(new AuthenticationProperties
                     {
                         IsPersistent = true
                     }, claim);
 
 
-                    CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel
-                    {
-                        Name = _TempUserName,
-                        Email = userDto.Email,
-                        Roles = await UserService.GetRoles(claim.GetUserId())
-                    };
+                    //CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel
+                    //{
+                    //    Name = _TempUserName,
+                    //    Email = userDto.Email,
+                    //    Roles = await UserService.GetRoles(claim.GetUserId())
+                    //};
 
-                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    //JavaScriptSerializer serializer = new JavaScriptSerializer();
 
-                    string userData = serializer.Serialize(serializeModel);
+                    //string userData = serializer.Serialize(serializeModel);
 
-                    
+                    //FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+                    //         1,
+                    //         model.Email,
+                    //         DateTime.Now,
+                    //         DateTime.Now.AddDays(14),
+                    //         false,
+                    //         userData);
 
-                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
-                             1,
-                             model.Email,
-                             DateTime.Now,
-                             DateTime.Now.AddMinutes(20),
-                             false,
-                             userData);
+                    //string encTicket = FormsAuthentication.Encrypt(authTicket);
+                    //HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                    //Response.Cookies.Add(faCookie);
 
-                    string encTicket = FormsAuthentication.Encrypt(authTicket);
-                    HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
-                    Response.Cookies.Add(faCookie);
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -131,6 +143,7 @@ namespace Store.Controllers
                     Name = model.Name
                 };
                 userDto.Roles.Add("User");
+                userDto.Roles.Add("Admin");
 
 
                 OperationDetails operationDetails = await UserService.CreateAsync(userDto);
