@@ -59,7 +59,6 @@ namespace Store.Controllers
             {
                 ModelState.AddModelError(result.Property, result.Message);
                 return BadRequest(ModelState);
-
             }
             
             return Ok();

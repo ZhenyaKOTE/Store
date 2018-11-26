@@ -85,10 +85,26 @@
                 error: function (error) {
 
                     console.log(error.responseJSON);
-                    //alert('error; ' + eval(error));
+                    let jsonErrors = { "message": (error.responseJSON["message"]), "modelState": (error.responseJSON["modelState"]) };
                     
-                   // let jsonErrors = JSON.parse(error);
-                   // console.log(jsonErrors);
+                    let Model = { "Email": (jsonErrors.modelState["userModel.Email"]) }
+                   
+                    if (Model.Email != null) {
+                        let secondModel = { "Array": Model.Email["0"] }
+                        //console.log(secondModel.Array);
+                        let EmailBlock = document.getElementById("ValidationMessage");
+                        EmailBlock.innerText = secondModel.Array;
+                        EmailBlock.hidden = false;
+                    }
+                    else
+                    {
+                        let EmailBlock = document.getElementById("ValidationMessage");
+                        Email.class = "text-secondary";
+                        EmailBlock.innerText = "Email is valid";
+                        EmailBlock.classList.remove("text-danger");
+                        EmailBlock.classList.add("text-secondary");
+                    }
+                    //$("#ValidationMessage").hidden = false;
                 }
 
 
