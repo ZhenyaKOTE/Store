@@ -62,15 +62,15 @@ namespace Store.Controllers
 
                 ClaimsIdentity claim = await UserService.Authenticate(userDto);
                 var a = claim.Claims.ToList();
-                string temp = "";
+                //string temp = "";
 
-                foreach (Claim tempClaim in a)
-                {
-                    //tempClaim.ValueType
-                    temp += tempClaim.Value + "\n\n";
-                }
+                //foreach (Claim tempClaim in a)
+                //{
+                //    //tempClaim.ValueType
+                //    temp += tempClaim.Value + "\n\n";
+                //}
 
-                Debug.Write(temp + "\n\n\n\n\n\n");
+                //Debug.Write(temp + "\n\n\n\n\n\n");
                 if (claim == null)
                 {
                     ModelState.AddModelError("", "Неверный логин или пароль.");
@@ -169,6 +169,11 @@ namespace Store.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Croper()
+        {
+            return View();
         }
     }
 }

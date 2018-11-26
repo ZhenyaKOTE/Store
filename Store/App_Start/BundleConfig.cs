@@ -19,7 +19,7 @@ namespace Store
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/popper").Include(
-                "~/Scripts/ bootstrap.bundle.js*"
+                "~/Scripts/bootstrap.bundle.js*"
                 ));
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -31,7 +31,18 @@ namespace Store
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/font-awesome*"));
+
+
+            bundles.Add(new StyleBundle("~/Content/Cropper").Include(
+                       "~/Content/Cropper/cropper.css",
+                       "~/Content/Cropper/main.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Cropper").Include(
+                         "~/Scripts/Cropper/cropper.min.js",
+                         "~/Scripts/Cropper/work-cropper.js"));
+
         }
     }
 }
