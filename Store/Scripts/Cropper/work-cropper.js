@@ -1,5 +1,7 @@
-﻿$(function () {
+﻿
+$(function () {
 
+    var MyCropper = null;         
     //console.log("Allalfjskdfjksdl");
 
     $("#imageContainerPlus").on('click', function () {
@@ -9,14 +11,13 @@
             .attr('id', 'img_file')
             .attr('class', 'hide');
 
-        var fileUploadContainer = $("#fileUploadContainer");
-        fileUploadContainer.html("");
-        fileUploadContainer.html(inputFile);
+        //var fileUploadContainer = $("#fileUploadContainer");
+        //fileUploadContainer.html("");
+        //fileUploadContainer.html(inputFile);
 
         inputFile.click();
 
-        inputFile.on('change', function ()
-        {
+        inputFile.on('change', function () {
             if (this.files && this.files[0]) {
                 if (this.files[0].type.match(/^image\//)) {
                     uploadFileCropper(this.files[0]);
@@ -30,8 +31,7 @@
             }
         });
 
-        function uploadFileCropper(fileName)
-        {
+        function uploadFileCropper(fileName) {
             //console.log("Upload file -----> ", fileName);
             let $canvas = $("#canvas"),
                 context = $canvas.get(0).getContext('2d');
@@ -47,12 +47,43 @@
                     $(".containerCrop").show();
 
                     context.drawImage(img, 0, 0);
-                    
+                    MyCropper = $canvas;
+
                     $canvas.cropper('destroy').cropper();
                 }
                 img.src = e.target.result;
             }
             reader.readAsDataURL(fileName);
         }
+
+        $("#cropperClose").click(function ()
+        {
+            let $canvas = $("#canvas"),
+                context = $canvas.get(0).getContext('2d');
+
+            document.body.classList.remove("open");
+
+            $(".containerCrop").hide();
+        });
+
+
+        $("#crop").click(function () {
+
+            //console.log(myImage.replace(/^data:image\/(png|jpg);base64,/, ""));
+
+            //var c = MyCropper.cropper('getCroppedCanvas', 128, 128);
+            //var myImage = c.toDataURL("image/jpg");
+
+            //$.ajax({
+            //    type: 'POST',
+            //    url: "api/Account/UploadImage",
+            //    data: '{"imageBase64": "' + myImage.replace(/^data:image\/(png|jpg);base64,/, "") + '"}',
+            //    contentType: 'application/json; charset=utf-8',
+            //    dataType: 'json',
+            //    success: function (msg) {
+            //        alert(msg.responseText);
+            //    }
+            //});
+        })
     });
 });

@@ -12,6 +12,8 @@ using Store.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Http;
 using System.Security.Claims;
@@ -74,6 +76,23 @@ namespace Store.Controllers
             base.Dispose(disposing);
         }
 
+        [HttpPost]
+        public string UploadImage(ImageData img)
+        {
+            string path = @"C:\Users\nerev\source\repos\WebCropper\WebCropper\CroppedImages\";
+
+
+            byte[] imageBytes = Convert.FromBase64String(img.imageBase64);
+            // Convert byte[] to Image
+            using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
+            {
+                Image image = Image.FromStream(ms, true);
+                image.Save(path + Guid.NewGuid() + ".jpeg", ImageFormat.Jpeg);
+            }
+
+            return JsonConvert.SerializeObject(new { success = true, responseText = "Image was saved" });
+
+        }
 
     }
 

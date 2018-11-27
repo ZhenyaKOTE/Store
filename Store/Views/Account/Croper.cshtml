@@ -1,6 +1,12 @@
-﻿@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/Cropper")
-@Styles.Render("~/Content/Cropper")
+﻿@section styles {
+    @Styles.Render("~/Content/Cropper")
+}
+
+@section scripts {
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/Cropper")
+}
 
 @{
     ViewBag.Title = "Croper";
@@ -10,15 +16,24 @@
 <div id="fileUploadContainer">
 
 </div>
-
+<br>
 <div class="row">
     <div id="listUploadImage"> </div>
 
-    <div class="col-md-2" id="imageContainerPlus">
+    <div class="col-md-auto" id="imageContainerPlus">
         <div>
             <img style="width:100px; width:100px" src="~/Images/Plus.png" class="uploadimage" />
         </div>
     </div>
+    <div class="col-md-auto" style="margin-left: 5px; margin-right: 5px;">
+        <div style="border: 1px solid #000000;">
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button><br>
+            <img style="width:100px; width:100px" src="~/Images/Plus.png" />
+        </div>
+    </div>
+
 </div>
 @Html.Partial("_ImageCropper")
 
