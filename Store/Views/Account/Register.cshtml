@@ -21,14 +21,16 @@
                     @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
                     <input placeholder="Email" id="InputEmail" class="form-control" />
-                    <label id="ValidationMessage" class="text-danger" hidden>Тут тіпа ошибка</label>
+                    <label id="ValidationMessageEmail" class="text-danger" style="margin-left:10px" hidden></label>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-10">
                     @*@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name" } })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })*@
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })*@
+                    <input placeholder="Name" id="InputName" class="form-control" />
+                    <label id="ValidationMessageName" class="text-danger" hidden></label>
                 </div>
             </div>
 
@@ -59,17 +61,15 @@
 
 <script>
 
-
-    function RegisterModel() {
-        let Email = ""
-    }
-
-
     var w = window.innerHeight;
     var container = document.getElementById('RegisterView');
     container.style.minHeight = (w - 130) + "px"; //130 - height: header and footer
 
     function Register() {
+
+        function ValidateEmail() {
+
+        }
 
         $(function () {
             let Email = $("#InputEmail").val();
@@ -87,24 +87,26 @@
                     console.log(error.responseJSON);
                     let jsonErrors = { "message": (error.responseJSON["message"]), "modelState": (error.responseJSON["modelState"]) };
                     
-                    let Model = { "Email": (jsonErrors.modelState["userModel.Email"]) }
-                   
-                    if (Model.Email != null) {
-                        let secondModel = { "Array": Model.Email["0"] }
-                        //console.log(secondModel.Array);
-                        let EmailBlock = document.getElementById("ValidationMessage");
-                        EmailBlock.innerText = secondModel.Array;
+                    let ModelValidation = {
+                        "Email": (jsonErrors.modelState["userModel.Email"]),
+                        "Name": (jsonErrors.modelState["userModel.Name"]),
+                        "Password": (jsonErrors.modelState["userModel.Password"]),
+                        "ConfirmPassword": (jsonErrors.modelState["userModel.ConfirmPassword"])
+                    }
+
+                    if (ModelValidation.Email != null) {
+                        let EmailBlock = document.getElementById("ValidationMessageEmail");
+                        EmailBlock.innerText = ModelValidation.Email["0"];
                         EmailBlock.hidden = false;
                     }
                     else
                     {
-                        let EmailBlock = document.getElementById("ValidationMessage");
-                        Email.class = "text-secondary";
-                        EmailBlock.innerText = "Email is valid";
+                        let EmailBlock = document.getElementById("ValidationMessageEmail");
+                        EmailBlock.innerText = "Email is correct";
                         EmailBlock.classList.remove("text-danger");
-                        EmailBlock.classList.add("text-secondary");
+                        EmailBlock.classList.add("text-success");
                     }
-                    //$("#ValidationMessage").hidden = false;
+                    
                 }
 
 
