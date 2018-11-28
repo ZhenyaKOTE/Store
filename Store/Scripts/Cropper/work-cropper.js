@@ -62,8 +62,9 @@ $(function () {
                 context = $canvas.get(0).getContext('2d');
 
             document.body.classList.remove("open");
-
-            $(".containerCrop").hide();
+            //document.getElementsById('containerCrop').innerHTMl
+            //$(".containerCrop").remove();
+            
         });
 
 
@@ -71,19 +72,19 @@ $(function () {
 
             //console.log(myImage.replace(/^data:image\/(png|jpg);base64,/, ""));
 
-            //var c = MyCropper.cropper('getCroppedCanvas', 128, 128);
-            //var myImage = c.toDataURL("image/jpg");
+            var crop = MyCropper.cropper('getCroppedCanvas', 128, 128);
+            var myImage = crop.toDataURL("image/jpg");
 
-            //$.ajax({
-            //    type: 'POST',
-            //    url: "api/Account/UploadImage",
-            //    data: '{"imageBase64": "' + myImage.replace(/^data:image\/(png|jpg);base64,/, "") + '"}',
-            //    contentType: 'application/json; charset=utf-8',
-            //    dataType: 'json',
-            //    success: function (msg) {
-            //        alert(msg.responseText);
-            //    }
-            //});
+            $.ajax({
+                type: 'POST',
+                url: 'api/Account/UploadImage',
+                data: '{"imageBase64": "' + myImage.replace(/^data:image\/(png|jpg);base64,/, "") + '"}',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (msg) {
+                    alert(msg.responseText);
+                }
+            });
         })
     });
 });

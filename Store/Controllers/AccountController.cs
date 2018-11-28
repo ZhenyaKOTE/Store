@@ -171,6 +171,7 @@ namespace Store.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
         public ActionResult Croper()
         {
             return View();

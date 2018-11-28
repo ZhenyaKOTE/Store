@@ -77,21 +77,21 @@ namespace Store.Controllers
         }
 
         [HttpPost]
-        public string UploadImage(ImageData img)
+        public string UploadImage(string img)
         {
             string path = @"C:\Users\nerev\source\repos\WebCropper\WebCropper\CroppedImages\";
 
-
-            byte[] imageBytes = Convert.FromBase64String(img.imageBase64);
+            Debug.Write(img);
+            //byte[] imageBytes = Convert.FromBase64String(img.imageBase64);
             // Convert byte[] to Image
-            using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
-            {
-                Image image = Image.FromStream(ms, true);
-                image.Save(path + Guid.NewGuid() + ".jpeg", ImageFormat.Jpeg);
-            }
+            //using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
+            //{
+            //    Image image = Image.FromStream(ms, true);
+            //    image.Save(path + Guid.NewGuid() + ".jpeg", ImageFormat.Jpeg);
+            //}
 
-            return JsonConvert.SerializeObject(new { success = true, responseText = "Image was saved" });
-
+            //return JsonConvert.SerializeObject(new { success = true, responseText = "Image was saved" });
+            return "";
         }
 
     }
