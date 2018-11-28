@@ -1,8 +1,7 @@
 ﻿
 $(function () {
 
-    var MyCropper = null;         
-    //console.log("Allalfjskdfjksdl");
+    var IsCroping = false;
 
     $("#imageContainerPlus").on('click', function () {
         var inputFile = $('<input/>')
@@ -11,9 +10,12 @@ $(function () {
             .attr('id', 'img_file')
             .attr('class', 'hide');
 
-        //var fileUploadContainer = $("#fileUploadContainer");
-        //fileUploadContainer.html("");
-        //fileUploadContainer.html(inputFile);
+
+        var fileUploadContainer = $("#fileUploadContainer");
+
+        fileUploadContainer.html("");
+
+        fileUploadContainer.html(inputFile);
 
         inputFile.click();
 
@@ -32,7 +34,7 @@ $(function () {
         });
 
         function uploadFileCropper(fileName) {
-            //console.log("Upload file -----> ", fileName);
+
             let $canvas = $("#canvas"),
                 context = $canvas.get(0).getContext('2d');
 
@@ -47,44 +49,62 @@ $(function () {
                     $(".containerCrop").show();
 
                     context.drawImage(img, 0, 0);
-                    MyCropper = $canvas;
+                    //$MyCropper = $canvas;
 
                     $canvas.cropper('destroy').cropper();
+                    IsCroping = true;
                 }
                 img.src = e.target.result;
             }
             reader.readAsDataURL(fileName);
+
+
         }
 
-        $("#cropperClose").click(function ()
-        {
-            let $canvas = $("#canvas"),
-                context = $canvas.get(0).getContext('2d');
+        $("#cropperClose").click(function () {
 
-            document.body.classList.remove("open");
-            //document.getElementsById('containerCrop').innerHTMl
-            //$(".containerCrop").remove();
-            
+
+            if (IsCroping == true) {
+                let $canvas = $("#canvas"),
+                    context = $canvas.get(0).getContext('2d');
+
+                console.log($canvas);
+                document.body.classList.remove("open");
+                $(".containerCrop").hide();
+                IsCroping = false;
+            }
+
+
         });
 
 
         $("#crop").click(function () {
 
             //console.log(myImage.replace(/^data:image\/(png|jpg);base64,/, ""));
+            if (IsCroping == true) {
 
-            var crop = MyCropper.cropper('getCroppedCanvas', 128, 128);
-            var myImage = crop.toDataURL("image/jpg");
+                let $canvas = $("#canvas"),
+                    context = $canvas.get(0).getContext('2d');
 
-            $.ajax({
-                type: 'POST',
-                url: 'api/Account/UploadImage',
-                data: '{"imageBase64": "' + myImage.replace(/^data:image\/(png|jpg);base64,/, "") + '"}',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function (msg) {
-                    alert(msg.responseText);
-                }
-            });
+                var myImage = $canvas.cropper('getCroppedCanvas').toDataURL("image/jpg");
+
+
+                console.log(myImage);
+                
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:9828/api/AccountApi/UploadImage',
+                    data: '{"imageBase64": "' + myImage.replace(/^data:image\/(png|jpg);base64,/, "") + '"}',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (msg) {
+                        alert(msg.responseText);
+                    }
+                });
+
+
+                IsCroping = false;
+            }
         })
     });
 });

@@ -62,7 +62,7 @@ namespace Store.Controllers
                 ModelState.AddModelError(result.Property, result.Message);
                 return BadRequest(ModelState);
             }
-            
+
             return Ok();
         }
 
@@ -79,19 +79,18 @@ namespace Store.Controllers
         [HttpPost]
         public string UploadImage(string img)
         {
-            string path = @"C:\Users\nerev\source\repos\WebCropper\WebCropper\CroppedImages\";
 
-            Debug.Write(img);
-            //byte[] imageBytes = Convert.FromBase64String(img.imageBase64);
-            // Convert byte[] to Image
+            string path = @"D:\Zhenya\";
+
+            byte[] imageBytes = Convert.FromBase64String(img);
+
             //using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
             //{
             //    Image image = Image.FromStream(ms, true);
             //    image.Save(path + Guid.NewGuid() + ".jpeg", ImageFormat.Jpeg);
             //}
 
-            //return JsonConvert.SerializeObject(new { success = true, responseText = "Image was saved" });
-            return "";
+            return "Image was Saved";
         }
 
     }
@@ -102,7 +101,7 @@ namespace Store.Controllers
         {
             using (StreamWriter str = new StreamWriter(@"D:\Desktop\SiteLogs.txt", false, System.Text.Encoding.Default))
             {
-                str.Write(log+"\n\n");
+                str.Write(log + "\n\n");
             }
         }
     }
