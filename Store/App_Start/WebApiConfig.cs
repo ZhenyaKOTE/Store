@@ -12,7 +12,7 @@ namespace Store.App_Start
         {
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{img}",
+                routeTemplate: "api/{controller}/{action}/{img}",
                 defaults: new { img = RouteParameter.Optional }
             );
             JsonMediaTypeFormatter jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();

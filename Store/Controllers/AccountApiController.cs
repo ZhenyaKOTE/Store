@@ -77,12 +77,19 @@ namespace Store.Controllers
         }
 
         [HttpPost]
-        public string UploadImage(string img)
+        public string UploadImage(ImageData img)
         {
+            if (img == null)
+                Logger.Write("null");
 
-            string path = @"D:\Zhenya\";
 
-            byte[] imageBytes = Convert.FromBase64String(img);
+            // Logger.Write(img);
+            //string path = @"D:\Zhenya\";
+
+            //sstring l = img.imgBase64;
+            
+            //Logger.Write(l);
+            //byte[] imageBytes = Convert.FromBase64String(img);
 
             //using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
             //{
@@ -95,13 +102,20 @@ namespace Store.Controllers
 
     }
 
+    public class ImageData
+    {
+       // [JsonProperty("imgBase64")]
+        public string imgBase64 { get; set; }
+    }
+
     public static class Logger
     {
         public static void Write(string log)
         {
-            using (StreamWriter str = new StreamWriter(@"D:\Desktop\SiteLogs.txt", false, System.Text.Encoding.Default))
+            using (StreamWriter str = new StreamWriter(@"C:\Users\zhenyastufeev\Desktop\SiteLogs.txt", false, System.Text.Encoding.Default))
             {
                 str.Write(log + "\n\n");
+                str.Close();
             }
         }
     }

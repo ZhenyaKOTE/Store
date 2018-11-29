@@ -86,7 +86,7 @@ $(function () {
                 let $canvas = $("#canvas"),
                     context = $canvas.get(0).getContext('2d');
 
-                var myImage = $canvas.cropper('getCroppedCanvas').toDataURL("image/jpg");
+                var myImage = $canvas.cropper('getCroppedCanvas').toDataURL("image/jpg", 128, 128);
 
 
                 console.log(myImage);
@@ -94,11 +94,11 @@ $(function () {
                 $.ajax({
                     type: 'POST',
                     url: 'http://localhost:9828/api/AccountApi/UploadImage',
-                    data: '{"imageBase64": "' + myImage.replace(/^data:image\/(png|jpg);base64,/, "") + '"}',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
+                    data: { "imgBase64": (myImage.replace(/^data:image\/(png|jpg);base64,/, "")) },
+                    //contentType: 'application/json; charset=utf-8',
+                    //dataType: 'json',
                     success: function (msg) {
-                        alert(msg.responseText);
+                        console.log(msg.responseText);
                     }
                 });
 
