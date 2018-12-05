@@ -60,7 +60,6 @@ $(function () {
         {
             let $canvas = $("#canvas"),
                 context = $canvas.get(0).getContext('2d');
-
             document.body.classList.remove("open");
             //document.getElementsById('containerCrop').innerHTMl
             //$(".containerCrop").remove();
