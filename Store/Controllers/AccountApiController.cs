@@ -62,7 +62,7 @@ namespace Store.Controllers
                 ModelState.AddModelError(result.Property, result.Message);
                 return BadRequest(ModelState);
             }
-            
+
             return Ok();
         }
 
@@ -77,32 +77,45 @@ namespace Store.Controllers
         }
 
         [HttpPost]
-        public string UploadImage(string img)
+        public string UploadImage(ImageData img)
         {
-            string path = @"C:\Users\nerev\source\repos\WebCropper\WebCropper\CroppedImages\";
+            if (img == null)
+                Logger.Write("null");
 
-            Debug.Write(img);
-            //byte[] imageBytes = Convert.FromBase64String(img.imageBase64);
-            // Convert byte[] to Image
+
+            // Logger.Write(img);
+            //string path = @"D:\Zhenya\";
+
+            //sstring l = img.imgBase64;
+            
+            //Logger.Write(l);
+            //byte[] imageBytes = Convert.FromBase64String(img);
+
             //using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
             //{
             //    Image image = Image.FromStream(ms, true);
             //    image.Save(path + Guid.NewGuid() + ".jpeg", ImageFormat.Jpeg);
             //}
 
-            //return JsonConvert.SerializeObject(new { success = true, responseText = "Image was saved" });
-            return "";
+            return "Image was Saved";
         }
 
+    }
+
+    public class ImageData
+    {
+       // [JsonProperty("imgBase64")]
+        public string imgBase64 { get; set; }
     }
 
     public static class Logger
     {
         public static void Write(string log)
         {
-            using (StreamWriter str = new StreamWriter(@"D:\Desktop\SiteLogs.txt", false, System.Text.Encoding.Default))
+            using (StreamWriter str = new StreamWriter(@"C:\Users\zhenyastufeev\Desktop\SiteLogs.txt", false, System.Text.Encoding.Default))
             {
-                str.Write(log+"\n\n");
+                str.Write(log + "\n\n");
+                str.Close();
             }
         }
     }
