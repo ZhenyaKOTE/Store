@@ -41,45 +41,36 @@ namespace Store.Controllers
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IHttpActionResult> Register(RegisterModel userModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-                // return Ok(ModelState);
-            }
-            UserDTO user = new UserDTO { Email = userModel.Email, Password = userModel.Password, Name = userModel.Name };
+        //[AllowAnonymous]
+        //[HttpPost]
 
-            OperationDetails result = await UserService.CreateAsync(user);
+        //[Route("api/AccountApi/Register/{userModel}")]
+        //public async Task<IHttpActionResult> Register(RegisterModel userModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //        // return Ok(ModelState);
+        //    }
+        //    UserDTO user = new UserDTO { Email = userModel.Email, Password = userModel.Password, Name = userModel.Name };
 
-            if (result == null)
-                return InternalServerError();
+        //    OperationDetails result = await UserService.CreateAsync(user);
 
-            if (!result.Succedeed)
-            {
-                ModelState.AddModelError(result.Property, result.Message);
-                return BadRequest(ModelState);
-            }
+        //    if (result == null)
+        //        return InternalServerError();
 
-            return Ok();
-        }
+        //    if (!result.Succedeed)
+        //    {
+        //        ModelState.AddModelError(result.Property, result.Message);
+        //        return BadRequest(ModelState);
+        //    }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                UserService.Dispose();
-            }
-
-            base.Dispose(disposing);
-        }
-
+        //    return Ok();
+        //}
         [HttpPost]
         public string UploadImage(string img)
         {
-
+            Logger.Write(img);
             string path = @"D:\Zhenya\";
 
             byte[] imageBytes = Convert.FromBase64String(img);
@@ -92,6 +83,17 @@ namespace Store.Controllers
 
             return "Image was Saved";
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                UserService.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
+
 
     }
 

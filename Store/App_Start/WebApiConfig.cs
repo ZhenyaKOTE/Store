@@ -1,5 +1,6 @@
 ﻿
 using Newtonsoft.Json.Serialization;
+using Store.Controllers;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
@@ -12,11 +13,12 @@ namespace Store.App_Start
         {
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{img}",
-                defaults: new { img = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{action}/{img}",
+                defaults: new { controller="AccountApi", action="UploadImage", img = RouteParameter.Optional }
             );
-            JsonMediaTypeFormatter jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
-            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //JsonMediaTypeFormatter jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            
         }
     }
 }

@@ -83,6 +83,7 @@ $(function () {
             //console.log(myImage.replace(/^data:image\/(png|jpg);base64,/, ""));
             if (IsCroping == true) {
 
+                console.log("+");
                 let $canvas = $("#canvas"),
                     context = $canvas.get(0).getContext('2d');
 
@@ -93,16 +94,16 @@ $(function () {
                 
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:9828/api/AccountApi/UploadImage',
-                    data: '{"imageBase64": "' + myImage.replace(/^data:image\/(png|jpg);base64,/, "") + '"}',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
+                    url: 'http://localhost:9828/api/AccountApi/UploadImage/',
+                    data: "Hello",
+                    //contentType: 'application/json; charset=utf-8',
+                    //dataType: 'json',
                     success: function (msg) {
                         alert(msg.responseText);
                     }
                 });
 
-
+                //'{"imageBase64": "' + myImage.replace(/^data:image\/(png|jpg);base64,/, "") + '"}',
                 IsCroping = false;
             }
         })
