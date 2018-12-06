@@ -24,13 +24,13 @@
 
     function GetFilters() //Сериализируем и отправляем POST (Id всіх)
     {
-        for (let i = 1; i <= 5; i++) 
-        {
+        for (let i = 1; i <= 5; i++) {
             let k = document.getElementById(i);
+
             console.log(k.id + "  " + k.checked);
-            
+
         }
-        
+
     }
 
     //function GetFilters(Id, Url) {
@@ -43,25 +43,27 @@
     //                //data: { Message: Models },
     //                success: function (msg) {
     //                    console.log("Okey");
-    //                    //$('#' + Id).replaceWith(msg);                    
+    //                    //$('#' + Id).replaceWith(msg);
     //                }
     //            });
     //    });
-    
+
 </script>
 <body>
 
-    <form style="border: 1px solid black">
-        @*<div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="1">
-                <label class="custom-control-label" for="1">Test1</label>
-          </div>*@
+    <form>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="1">
+            <label class="custom-control-label" for="1">Test1</label>
+        </div>
 
-        <input type="checkbox" id="1" />
+
+        @*<input type="checkbox" id="1" />
         <input type="checkbox" id="2" />
         <input type="checkbox" id="3" />
         <input type="checkbox" id="4" />
-        <input type="checkbox" id="5" />
+        <input type="checkbox" id="5" />*@
     </form>
+
     <input type="button" value="Обновить" onclick="GetFilters('_Filter', '@Url.Content("~/Store/GetFilters")')" />
 </body>

@@ -152,36 +152,3 @@ namespace Store.Controllers
 
 
 
-
-//CategoryDTO category = new CategoryDTO();
-//category.Name = "Диски";
-//            await StoreService.CreateAsync(category);
-
-//ProductDTO product = new ProductDTO();
-//product.Name = "Диск для машини";
-//            product.PhotoPath = "~/ContentImages/7.jpg";
-//            product.Price = 3247;
-//            product.Description = "А це диск для машин";
-
-//            await StoreService.AddProductToCategory(product, category.Name);
-
-
-//CategoryDTO category = new CategoryDTO();
-//category.Name = "Tires";
-//await StoreService.CreateAsync(category);
-
-//await StoreService.CreateAsync(new CategoryDTO { Name = "Tires" });
-
-//ProductDTO product = new ProductDTO();
-//product.Name = "Покришка";
-//product.PhotoPath = "~/ContentImages/1.jpg";
-//product.Price = 1567;
-//product.Description = "This is cool tire";
-
-//ProductDTO product1 = new ProductDTO();
-//product1.Name = "Мега покришка";
-//product1.PhotoPath = "~/ContentImages/3.jpg";
-//product1.Price = 14577;
-//product1.Description = "Це дуже крута покришка";
-//await StoreService.AddProductToCategory(product, "Tires");
-//await StoreService.AddProductToCategory(product1, "Tires");

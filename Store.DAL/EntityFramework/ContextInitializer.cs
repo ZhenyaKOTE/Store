@@ -70,7 +70,7 @@ namespace Store.DAL.EntityFramework
 
                 Product product = new Product();
                 product.Name = "ДК Ford" + i.ToString();
-                product.PhotoPath = "~/Images/shiny.png";
+                product.PhotoPath = "~/ContentImages/127.jpg";
                 product.Price = rand.Next(500, 5000);
 
                 Characteristic characteristic1 = new Characteristic();
