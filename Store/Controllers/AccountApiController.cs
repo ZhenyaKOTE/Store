@@ -79,23 +79,15 @@ namespace Store.Controllers
         [HttpPost]
         public string UploadImage(ImageData img)
         {
-            if (img == null)
-                Logger.Write("null");
-
-
-            // Logger.Write(img);
-            //string path = @"D:\Zhenya\";
-
-            //sstring l = img.imgBase64;
+            string path = AppDomain.CurrentDomain.BaseDirectory + @"ContentImages\" + Guid.NewGuid() + ".jpeg";
             
-            //Logger.Write(l);
-            //byte[] imageBytes = Convert.FromBase64String(img);
+            byte[] imageBytes = Convert.FromBase64String(img.imgBase64);
 
-            //using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
-            //{
-            //    Image image = Image.FromStream(ms, true);
-            //    image.Save(path + Guid.NewGuid() + ".jpeg", ImageFormat.Jpeg);
-            //}
+            using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
+            {
+                Image image = Image.FromStream(ms, true);
+                image.Save(path, ImageFormat.Jpeg);
+            }
 
             return "Image was Saved";
         }
