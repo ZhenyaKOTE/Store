@@ -2,7 +2,9 @@
 @using Store.Models
 @using Newtonsoft.Json;
 @{
-    ViewBag.Title = "Register";
+                /**/
+
+                ViewBag.Title = "Register";
 }
 
 <br>
@@ -18,17 +20,13 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
                     <input placeholder="Email" id="InputEmail" class="form-control" />
-                    <label id="ValidationMessageEmail" class="text-danger" style="margin-left:10px" hidden></label>
+                    <label id="ValidationMessageEmail" class="text-danger" hidden></label>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })*@
                     <input placeholder="Name" id="InputName" class="form-control" />
                     <label id="ValidationMessageName" class="text-danger" hidden></label>
                 </div>
@@ -36,15 +34,15 @@
 
             <div class="form-group">
                 <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
+                    <input placeholder="Password" id="InputPassword" class="form-control" />
+                    <label id="ValidationMessagePassword" class="text-danger" hidden></label>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Confirm Your Password" } })
-                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })*@
+                    <input placeholder="Confirm password" id="InputConfirmPassword" class="form-control" />
+                    <label id="ValidationMessageConfirmPassword" class="text-danger" hidden></label>
                 </div>
             </div>
 
@@ -60,56 +58,82 @@
 
 
 <script>
-
-    var w = window.innerHeight;
-    var container = document.getElementById('RegisterView');
-    container.style.minHeight = (w - 130) + "px"; //130 - height: header and footer
-
     function Register() {
 
-        function ValidateEmail() {
-
-        }
+        //let IdValidationMessages = {"ValidationMessageEmail", }
 
         $(function () {
             let Email = $("#InputEmail").val();
-
+            let Name = $("#InputName").val();
+            let Password = $("#InputPassword").val();
+            let ConfirmPassword = $("#InputEmail").val();
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("Register", "api/AccountApi")',
-                data: { "Email": Email, "Password": "", "ConfirmPassword": "", "Name": "" },
+                data: { "Email": Email, "Password": Password, "ConfirmPassword": ConfirmPassword, "Name": Name },
                 success: function (msg)
                 {
-                    console.log("Ala");
+                    alert("Registration was succed");
                 },
                 error: function (error) {
 
                     console.log(error.responseJSON);
-                    let jsonErrors = { "message": (error.responseJSON["message"]), "modelState": (error.responseJSON["modelState"]) };
-                    
+                    let jsonErrors = { "Message": (error.responseJSON["Message"]), "ModelState": (error.responseJSON["ModelState"]) };
+
                     let ModelValidation = {
-                        "Email": (jsonErrors.modelState["userModel.Email"]),
-                        "Name": (jsonErrors.modelState["userModel.Name"]),
-                        "Password": (jsonErrors.modelState["userModel.Password"]),
-                        "ConfirmPassword": (jsonErrors.modelState["userModel.ConfirmPassword"])
+                        "Email": (jsonErrors.ModelState["userModel.Email"]),
+                        "Name": (jsonErrors.ModelState["userModel.Name"]),
+                        "Password": (jsonErrors.ModelState["userModel.Password"]),
+                        "ConfirmPassword": (jsonErrors.ModelState["userModel.ConfirmPassword"])
                     }
 
                     if (ModelValidation.Email != null) {
-                        let EmailBlock = document.getElementById("ValidationMessageEmail");
-                        EmailBlock.innerText = ModelValidation.Email["0"];
-                        EmailBlock.hidden = false;
+                        let email = document.getElementById("ValidationMessageEmail");
+                        email.innerText = ModelValidation.Email["0"];
+                        email.hidden = false;
+                    }
+                    else {
+                        let email = document.getElementById("ValidationMessageEmail");
+                        email.hidden = true;
+                    }
+
+
+                    if (ModelValidation.Name != null) {
+                        let tmp = document.getElementById("ValidationMessageName");
+                        tmp.innerText = ModelValidation.Name["0"];
+                        tmp.hidden = false;
                     }
                     else
                     {
-                        let EmailBlock = document.getElementById("ValidationMessageEmail");
-                        EmailBlock.innerText = "Email is correct";
-                        EmailBlock.classList.remove("text-danger");
-                        EmailBlock.classList.add("text-success");
+                        let name = document.getElementById("ValidationMessageName");
+                        name.hidden = true;
                     }
-                    
+
+
+                    if (ModelValidation.Password != null) {
+                        let pass = document.getElementById("ValidationMessagePassword");
+                        pass.innerText = ModelValidation.Password["0"];
+                        pass.hidden = false;
+                    }
+                    else
+                    {
+                        let pass = document.getElementById("ValidationMessageName");
+                        pass.hidden = true;
+                    }
+
+                    if (ModelValidation.ConfirmPassword != null)
+                    {
+                        let ConPass = document.getElementById("ValidationMessageConfirmPassword");
+                        ConPass.innerText = ModelValidation.ConfirmPassword["0"];
+                        ConPass.hidden = false;
+                    }
+                    else
+                    {
+                        let ConPass = document.getElementById("ValidationMessageName");
+                        ConPass.hidden = true;
+                    }
+
                 }
-
-
             });
         });
     }

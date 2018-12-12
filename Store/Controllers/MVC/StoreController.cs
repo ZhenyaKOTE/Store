@@ -86,7 +86,6 @@ namespace Store.Controllers
                         TextUrl = product.Name,
                         Price = product.Price,
                         PhotoPath = product.PhotoPath,
-                        //UrlToBuy = 
                     };
 
                     foreach (var pr in product.Characteristics)
