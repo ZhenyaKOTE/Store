@@ -48,7 +48,6 @@ namespace Store.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-                // return Ok(ModelState);
             }
             UserDTO user = new UserDTO { Email = userModel.Email, Password = userModel.Password, Name = userModel.Name };
 

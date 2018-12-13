@@ -21,28 +21,28 @@
             <div class="form-group">
                 <div class="col-md-10">
                     <input placeholder="Email" id="InputEmail" class="form-control" />
-                    <label id="ValidationMessageEmail" class="text-danger" hidden></label>
+                    <label id="ValidationMessageEmail" style="margin-left: 15px;" class="text-danger" hidden></label>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-10">
                     <input placeholder="Name" id="InputName" class="form-control" />
-                    <label id="ValidationMessageName" class="text-danger" hidden></label>
+                    <label id="ValidationMessageName" style="margin-left: 15px" class="text-danger" hidden></label>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-10">
                     <input placeholder="Password" id="InputPassword" class="form-control" />
-                    <label id="ValidationMessagePassword" class="text-danger" hidden></label>
+                    <label id="ValidationMessagePassword" style="margin-left: 15px" class="text-danger" hidden></label>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-10">
                     <input placeholder="Confirm password" id="InputConfirmPassword" class="form-control" />
-                    <label id="ValidationMessageConfirmPassword" class="text-danger" hidden></label>
+                    <label id="ValidationMessageConfirmPassword" style="margin-left: 15px" class="text-danger" hidden></label>
                 </div>
             </div>
 
@@ -62,6 +62,23 @@
 
         //let IdValidationMessages = {"ValidationMessageEmail", }
 
+        function ValidateInput(ModelValidation, Id)
+        {
+            if (ModelValidation != null) {
+                let tmp = document.getElementById(Id);
+                tmp.innerText = "";
+
+                for (let i = 0; i < ModelValidation.length; i++)
+                    tmp.innerText += "♦ " + ModelValidation[i]+"\n";
+
+                tmp.hidden = false;
+            }
+            else {
+                let tmp = document.getElementById(Id);
+                tmp.hidden = true;
+            }
+        }
+
         $(function () {
             let Email = $("#InputEmail").val();
             let Name = $("#InputName").val();
@@ -73,11 +90,11 @@
                 data: { "Email": Email, "Password": Password, "ConfirmPassword": ConfirmPassword, "Name": Name },
                 success: function (msg)
                 {
-                    alert("Registration was succed");
+                    //alert("Registration was succed");
                 },
                 error: function (error) {
 
-                    console.log(error.responseJSON);
+                    //console.log(error.responseJSON);
                     let jsonErrors = { "Message": (error.responseJSON["Message"]), "ModelState": (error.responseJSON["ModelState"]) };
 
                     let ModelValidation = {
@@ -87,55 +104,14 @@
                         "ConfirmPassword": (jsonErrors.ModelState["userModel.ConfirmPassword"])
                     }
 
-                    if (ModelValidation.Email != null) {
-                        let email = document.getElementById("ValidationMessageEmail");
-                        email.innerText = ModelValidation.Email["0"];
-                        email.hidden = false;
-                    }
-                    else {
-                        let email = document.getElementById("ValidationMessageEmail");
-                        email.hidden = true;
-                    }
-
-
-                    if (ModelValidation.Name != null) {
-                        let tmp = document.getElementById("ValidationMessageName");
-                        tmp.innerText = ModelValidation.Name["0"];
-                        tmp.hidden = false;
-                    }
-                    else
-                    {
-                        let name = document.getElementById("ValidationMessageName");
-                        name.hidden = true;
-                    }
-
-
-                    if (ModelValidation.Password != null) {
-                        let pass = document.getElementById("ValidationMessagePassword");
-                        pass.innerText = ModelValidation.Password["0"];
-                        pass.hidden = false;
-                    }
-                    else
-                    {
-                        let pass = document.getElementById("ValidationMessageName");
-                        pass.hidden = true;
-                    }
-
-                    if (ModelValidation.ConfirmPassword != null)
-                    {
-                        let ConPass = document.getElementById("ValidationMessageConfirmPassword");
-                        ConPass.innerText = ModelValidation.ConfirmPassword["0"];
-                        ConPass.hidden = false;
-                    }
-                    else
-                    {
-                        let ConPass = document.getElementById("ValidationMessageName");
-                        ConPass.hidden = true;
-                    }
+                    ValidateInput(ModelValidation.Email, "ValidationMessageEmail");
+                    ValidateInput(ModelValidation.Name, "ValidationMessageName");
+                    ValidateInput(ModelValidation.Password, "ValidationMessagePassword");
+                    ValidateInput(ModelValidation.ConfirmPassword, "ValidationMessageConfirmPassword");
 
                 }
             });
         });
     }
-
 </script>
+
