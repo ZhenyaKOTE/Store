@@ -57,13 +57,20 @@
     <Compile Include="Entities\IdentityEntities\ApplicationRole.cs" />
     <Compile Include="Entities\IdentityEntities\ApplicationUser.cs" />
     <Compile Include="Entities\IdentityEntities\ClientProfile.cs" />
-    <Compile Include="Entities\StoreEntities\Category.cs" />
-    <Compile Include="Entities\StoreEntities\CharacteristicByProduct.cs" />
-    <Compile Include="Entities\StoreEntities\Product.cs" />
+    <Compile Include="Entities\StoreEntitiesWithFilters\Category.cs" />
+    <Compile Include="Entities\StoreEntitiesWithFilters\Filter.cs" />
+    <Compile Include="Entities\StoreEntitiesWithFilters\FilterName.cs" />
+    <Compile Include="Entities\StoreEntitiesWithFilters\FilterNameGroup.cs" />
+    <Compile Include="Entities\StoreEntitiesWithFilters\FilterValue.cs" />
+    <Compile Include="Entities\StoreEntitiesWithFilters\Product.cs" />
     <Compile Include="EntityFramework\ApplicationContext.cs" />
-    <Compile Include="EntityFramework\ContextInitializer.cs" />
     <Compile Include="Identity\IdentityManagers\ApplicationRoleManager.cs" />
     <Compile Include="Identity\IdentityManagers\ApplicationUserManager.cs" />
+    <Compile Include="Migrations\201812170916185_CreateFilters.cs" />
+    <Compile Include="Migrations\201812170916185_CreateFilters.Designer.cs">
+      <DependentUpon>201812170916185_CreateFilters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\ApplicationStoreManager.cs" />
     <Compile Include="Interfaces\IStoreManager.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
@@ -76,6 +83,10 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812170916185_CreateFilters.resx">
+      <DependentUpon>201812170916185_CreateFilters.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

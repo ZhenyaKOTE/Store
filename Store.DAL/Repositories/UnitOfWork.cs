@@ -22,7 +22,7 @@ namespace Store.DAL.Repositories
 
         public UnitOfWork(string connectionString)
         {
-            DBContext = new ApplicationContext(connectionString);
+            DBContext = new ApplicationContext(/*connectionString*/);
             userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(DBContext));
             roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(DBContext));
             storeManager = new ApplicationStoreManager(DBContext);

@@ -60,8 +60,6 @@
 <script>
     function Register() {
 
-        //let IdValidationMessages = {"ValidationMessageEmail", }
-
         function ValidateInput(ModelValidation, Id)
         {
             if (ModelValidation != null) {
@@ -84,6 +82,7 @@
             let Name = $("#InputName").val();
             let Password = $("#InputPassword").val();
             let ConfirmPassword = $("#InputEmail").val();
+
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("Register", "api/AccountApi")',
@@ -94,7 +93,6 @@
                 },
                 error: function (error) {
 
-                    //console.log(error.responseJSON);
                     let jsonErrors = { "Message": (error.responseJSON["Message"]), "ModelState": (error.responseJSON["ModelState"]) };
 
                     let ModelValidation = {
