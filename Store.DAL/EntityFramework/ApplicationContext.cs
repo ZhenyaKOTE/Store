@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using DAL.Migrations.Views.Filters;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Store.DAL.Entities;
 using Store.DAL.Entities.StoreEntitiesWithFilters;
+using Store.DAL.EntityFramework.DAL.Entities;
 //using Store.DAL.Entities.StoreEntities;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,9 @@ namespace Store.DAL.EntityFramework
         public ApplicationContext()
             : base("name=FilterStore")
         {
-
+            Database.SetInitializer<ApplicationContext>(
+              new DatabaseInitializerIsExist()
+              );
         }
 
         public DbSet<ClientProfile> ClientProfiles { get; set; }
@@ -36,6 +40,6 @@ namespace Store.DAL.EntityFramework
         public DbSet<Product> Products { get; set; }
         public DbSet<Filter> Filters { get; set; }
         public DbSet<FilterNameGroup> FilterNameGroups { get; set; }
-        //public DbSet<VFilterNameGroup> VFilterNameGroups { get; set; }
+        public DbSet<VFilterNameGroup> VFilterNameGroups { get; set; }
     }
 }
