@@ -1,7 +1,6 @@
 ﻿using Store.BLL.DTO;
 using Store.BLL.Infrastructure;
 using Store.BLL.Interfaces;
-using Store.DAL.Entities.StoreEntities;
 using Store.DAL.Entities.StoreEntitiesWithFilters;
 using Store.DAL.Interfaces;
 using System;

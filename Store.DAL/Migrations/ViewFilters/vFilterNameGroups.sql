@@ -1,3 +1,4 @@
+
 IF NOT EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[vFilterNameGroups]'))
 EXEC dbo.sp_executesql @statement = N'
 CREATE VIEW [dbo].[vFilterNameGroups]

@@ -3,7 +3,6 @@ using Store.DAL.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TestFilter;
 
 namespace TestFilters
@@ -12,79 +11,69 @@ namespace TestFilters
     {
         static void Main(string[] args)
         {
-            Console.InputEncoding = Encoding.Unicode;
-            Console.OutputEncoding = Encoding.Unicode;
+            int[] filters = { 6 };
+            Filtration filtration = new Filtration(new ApplicationContext());
 
-            ApplicationContext context = new ApplicationContext();
+            var Products = filtration.GetProductsByFilters(filters);
+
+            Console.WriteLine(Products.Count);
+        }
+
+
+
+    }
+
+    public class Filtration
+    {
+        private ApplicationContext context;
+
+        public Filtration(ApplicationContext Db)
+        {
+            context = Db;
+        }
+
+        public IList<ProductViewModel> GetProductsByFilters(int[] FiltersId)
+        {
+
+            var FilterList = GetFilters(context); //Отримати всі фільтри (Query)
+
+            var query = context.Products.AsQueryable();
+
+            foreach (FNameViewModel fName in FilterList)
             {
-                //TestWorkInitDatabasePrint(context);
-
-                var listFilters = GetFilters(context);
-                foreach (var fName in listFilters)
+                int Count_FilterGroup = 0; //Кількість співпадніть у групі фільтрів
+                var Predicate = PredicateBuilder.False<Product>();
+                foreach (var fVale in fName.Childrens)
                 {
-                    Console.WriteLine("{0} - {1}", fName.Id, fName.Name);
-                    foreach (var fValue in fName.Childrens)
+                    for (int i = 0; i < FiltersId.Count(); i++)
                     {
-                        Console.WriteLine("\t{0} - {1}", fValue.Id, fValue.Name);
-                    }
-                }
-
-                //Масив фільтрів, які потрібно примінити до продуктів
-                int[] fValsSearch = { 6, 7, 2 };
-                var query = context
-                    .Products
-                    //.Include()
-                    .AsQueryable();
-                foreach (var fName in listFilters)
-                {
-                    int count = 0; //Кількість співпадніть у групі фільтрів
-                    var predicate = PredicateBuilder.False<Product>();
-                    foreach (var fVale in fName.Childrens)
-                    {
-                        for (int i = 0; i < fValsSearch.Count(); i++)
+                        var idV = fVale.Id;
+                        if (FiltersId[i] == idV)
                         {
-                            var idV = fVale.Id;
-                            if (fValsSearch[i] == idV)
-                            {
-                                predicate = predicate
-                                    .Or(p => p.Filters
-                                    .Any(f => f.FilterValueId == idV));
-                                count++;
-                            }
+                            Predicate = Predicate
+                                .Or(p => p.Filters
+                                .Any(f => f.FilterValueId == idV));
+                            Count_FilterGroup++;
                         }
                     }
-                    if (count != 0)
-                        query = query.Where(predicate);
                 }
-                var resultSearch = query.Select(p => new
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price
-                });
-                foreach (var p in resultSearch)
-                {
-                    Console.WriteLine($"{p.Id} - {p.Name} - {p.Price}");
-                }
-
+                if (Count_FilterGroup != 0)
+                    query = query.Where(Predicate);
             }
+
+            var FilteredProducts = query.Select(fProducts => new ProductViewModel
+            {
+                Id = fProducts.Id,
+                Name = fProducts.Name,
+                Price = fProducts.Price
+            }).ToList();
+            
+
+
+            return FilteredProducts;
         }
-        static void TestWorkInitDatabasePrint(ApplicationContext context)
-        {
-            Console.WriteLine("Кількість назв фільтрів {0}",
-                   context.FilterNames.Count());
-            Console.WriteLine("Кількість значень фільрів {0}",
-                context.FilterValues.Count());
-            Console.WriteLine("Кількість категорій {0}",
-                context.Categories.Count());
-            Console.WriteLine("Кількість продуктів {0}",
-                context.Categories.Count());
-            Console.WriteLine("Кількість по групах фільрів назв {0}",
-                context.FilterNameGroups.Count());
-            Console.WriteLine("Кількість фільрів по продуктах {0}",
-                context.Filters.Count());
-        }
-        static List<FNameViewModel> GetFilters(ApplicationContext context)
+
+        private List<FNameViewModel> GetFilters(ApplicationContext context)
         {
             var query = from f in context.VFilterNameGroups.AsQueryable()
                         where f.FilterValueId != null
@@ -121,8 +110,8 @@ namespace TestFilters
                                   select g.Key).ToList();
                 listFilters.Add(node);
             }
+            
             return listFilters;
         }
-
     }
 }
