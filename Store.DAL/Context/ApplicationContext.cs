@@ -2,32 +2,24 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Store.DAL.Entities;
 using Store.DAL.Entities.StoreEntitiesWithFilters;
-using Store.DAL.EntityFramework.DAL.Entities;
-//using Store.DAL.Entities.StoreEntities;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Store.DAL.EntityFramework
+namespace Store.DAL.Context
 {
     public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
-        //public ApplicationContext(string conectionString) : base(conectionString)
-        //{
-        //    //Database.SetInitializer<ApplicationContext>(new ContextInitializer());
-        //}
-
-        public ApplicationContext()
-            : base("name=StoreContext")
+        public ApplicationContext(string conectionString) : base(conectionString)
         {
-            //Database.SetInitializer<ApplicationContext>(
-            //  new DatabaseInitializerIsExist()
-            //  );
+            Database.SetInitializer<ApplicationContext>(new DatabaseInitializerIsExist());
         }
+
+        //public ApplicationContext()
+        //    : base("name=StoreContext")
+        //{
+        //    //Database.SetInitializer<ApplicationContext>(
+        //    //  new DatabaseInitializerIsExist()
+        //    //  );
+        //}
 
         public DbSet<ClientProfile> ClientProfiles { get; set; }
 

@@ -8,9 +8,9 @@ namespace Store.DAL.Interfaces
     public interface IStoreManager :IDisposable
     {
         
-        Task CreateAsync<T>(T item) where T : class;
+        void Create<T>(T item) where T : class;
         //Task<IList<T>> GetAsync<T>() where T: class;
-        Task<IList<T>> GetItemsAsync<T>() where T : class;
+        IList<T> GetItems<T>() where T : class;
 
 
         //void Create(Characteristic item);

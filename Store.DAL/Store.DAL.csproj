@@ -63,13 +63,21 @@
     <Compile Include="Entities\StoreEntitiesWithFilters\FilterNameGroup.cs" />
     <Compile Include="Entities\StoreEntitiesWithFilters\FilterValue.cs" />
     <Compile Include="Entities\StoreEntitiesWithFilters\Product.cs" />
-    <Compile Include="EntityFramework\ApplicationContext.cs" />
-    <Compile Include="EntityFramework\DatabaseInitializer.cs" />
+    <Compile Include="Context\ApplicationContext.cs" />
+    <Compile Include="Context\DatabaseInitializer.cs" />
     <Compile Include="Identity\IdentityManagers\ApplicationRoleManager.cs" />
     <Compile Include="Identity\IdentityManagers\ApplicationUserManager.cs" />
     <Compile Include="Migrations\201812170916185_CreateFilters.cs" />
     <Compile Include="Migrations\201812170916185_CreateFilters.Designer.cs">
       <DependentUpon>201812170916185_CreateFilters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812190953002_required.cs" />
+    <Compile Include="Migrations\201812190953002_required.Designer.cs">
+      <DependentUpon>201812190953002_required.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812191343174_Added new property to Prodcut%28Description%29.cs" />
+    <Compile Include="Migrations\201812191343174_Added new property to Prodcut%28Description%29.Designer.cs">
+      <DependentUpon>201812191343174_Added new property to Prodcut%28Description%29.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Views\Filters\VFilterNameGroup.cs" />
@@ -88,6 +96,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201812170916185_CreateFilters.resx">
       <DependentUpon>201812170916185_CreateFilters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812190953002_required.resx">
+      <DependentUpon>201812190953002_required.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812191343174_Added new property to Prodcut%28Description%29.resx">
+      <DependentUpon>201812191343174_Added new property to Prodcut%28Description%29.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

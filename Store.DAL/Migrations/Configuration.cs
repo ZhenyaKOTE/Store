@@ -1,5 +1,6 @@
 namespace Store.DAL.Migrations
 {
+    using Store.DAL.Context;
     using Store.DAL.Entities.StoreEntitiesWithFilters;
     using System;
     using System.Data.Entity;
@@ -8,14 +9,14 @@ namespace Store.DAL.Migrations
     using System.Linq;
     using System.Reflection;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Store.DAL.EntityFramework.ApplicationContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Store.DAL.EntityFramework.ApplicationContext context)
+        protected override void Seed(ApplicationContext context)
         {
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             UriBuilder uri = new UriBuilder(codeBase);

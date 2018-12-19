@@ -1,125 +1,169 @@
 ﻿using Store.DAL.Entities.StoreEntitiesWithFilters;
-using Store.DAL.EntityFramework;
+using Store.DAL.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestFilter;
+using Store.BLL.Interfaces;
+using Store.BLL.Services;
+using Store.DAL.Repositories;
+using System.Threading.Tasks;
+
 
 namespace TestFilters
 {
     static class Program
     {
+        static IStoreService storeService = new StoreService(new UnitOfWork("StoreContext"));
         static void Main(string[] args)
         {
-            int[] filters = { 6 };
-            Filtration filtration = new Filtration(new ApplicationContext());
-
-            var Products = filtration.GetProductsByFilters(filters);
-            
-            Console.WriteLine(Products.Count);
+            GetNames();
             Console.Read();
+
         }
+        public static void GetNames()
+        {
+            Task.Run(async () =>
+            {
+               var a = await storeService.GetCategories();
+               foreach (var k in a)
+               {
+                   Console.WriteLine(k.Name);
+               }
+           });
+        }
+        public static void DO()
+        {
+            //int[] filters = { };
+            //Filtration filtration = new Filtration(new ApplicationContext());
 
+            //var Products = filtration.GetProductsByFilters(filters);
 
+            //foreach (var a in Products)
+            //{
+            //    Console.WriteLine(a.Name + "   " + a.Id);
+            //}
+            //Console.Read();
+        }
 
     }
 
-    public class Filtration
-    {
-        private ApplicationContext context;
+    //public class Filtration
+    //{
+    //    private ApplicationContext context;
 
-        public Filtration(ApplicationContext Db)
-        {
-            context = Db;
-        }
+    //    public Filtration(ApplicationContext Db)
+    //    {
+    //        context = Db;
+    //    }
 
-        public IList<ProductViewModel> GetProductsByFilters(int[] FiltersId)
-        {
+    //    public IList<ProductViewModel> GetProductsByFilters(int[] FiltersId)
+    //    {
 
-            var FilterList = GetFilters(context); //Отримати всі фільтри (Query)
+    //        var FilterList = GetFilters(context); //Отримати всі фільтри (Query)
+    //        var query = context.Products.AsQueryable();
 
-            var query = context.Products.AsQueryable();
+    //        foreach (FNameViewModel fName in FilterList)
+    //        {
+    //            int Count_FilterGroup = 0; //Кількість співпадніть у групі фільтрів
+    //            var Predicate = PredicateBuilder.False<Product>();
+    //            foreach (var fVale in fName.Childrens)
+    //            {
+    //                //for (int i = 0; i < FiltersId.Count(); i++)
+    //                //{
+    //                //    var idV = fVale.Id;
+    //                //    if (FiltersId[i] == idV)
+    //                //    {
+    //                //        Predicate = Predicate
+    //                //            .Or(p => p.Filters
+    //                //            .Any(f => f.FilterValueId == idV));
+    //                //        Count_FilterGroup++;
+    //                //    }
+    //                //}
+    //                foreach (var FilterId in FiltersId)
+    //                {
+    //                    var ValueId = fVale.Id;
+    //                    if (FilterId == ValueId)
+    //                    {
+    //                        Predicate = Predicate
+    //                            .Or(p => p.Filters
+    //                            .Any(filter => filter.FilterValueId == ValueId));
 
-            foreach (FNameViewModel fName in FilterList)
-            {
-                int Count_FilterGroup = 0; //Кількість співпадніть у групі фільтрів
-                var Predicate = PredicateBuilder.False<Product>();
-                foreach (var fVale in fName.Childrens)
-                {
-                    for (int i = 0; i < FiltersId.Count(); i++)
-                    {
-                        var idV = fVale.Id;
-                        if (FiltersId[i] == idV)
-                        {
-                            Predicate = Predicate
-                                .Or(p => p.Filters
-                                .Any(f => f.FilterValueId == idV));
-                            Count_FilterGroup++;
-                        }
-                    }
-                }
-                if (Count_FilterGroup != 0)
-                    query = query.Where(Predicate);
-            }
+    //                        Count_FilterGroup++;
+    //                    }
+    //                }
+    //            }
+    //            if (Count_FilterGroup != 0)
+    //                query = query.Where(Predicate);
+    //        }
 
-            var FilteredProducts = query.Select(fProducts => new ProductViewModel
-            {
-                Id = fProducts.Id,
-                Name = fProducts.Name,
-                Price = fProducts.Price
-            }).ToList();
-            
+    //        var FilteredProducts = query.Select(fProducts => new ProductViewModel
+    //        {
+    //            Id = fProducts.Id,
+    //            Name = fProducts.Name,
+    //            Price = fProducts.Price
+    //        }).ToList();
 
 
-            return FilteredProducts;
-        }
+    //        return FilteredProducts;
+    //    }
 
-        private List<FNameViewModel> GetFilters(ApplicationContext context)
-        {
-            var query = from f in context.VFilterNameGroups.AsQueryable()
-                        where f.FilterValueId != null
-                        select new
-                        {
-                            FNameId = f.FilterNameId,
-                            FName = f.FilterName,
-                            FValueId = f.FilterValueId,
-                            FValue = f.FilterValue
-                        };
-            var groupNames = from f in query
-                             group f by new
-                             {
-                                 Id = f.FNameId,
-                                 Name = f.FName
-                             } into g
-                             orderby g.Key.Name
+    //    private List<FNameViewModel> GetFilters(ApplicationContext context)
+    //    {
+    //        //var query = from filter in context.VFilterNameGroups.AsQueryable()
+    //        //            where filter.FilterValueId != null
+    //        //            select new
+    //        //            {
+    //        //                FNameId = filter.FilterNameId,
+    //        //                FName = filter.FilterName,
+    //        //                FValueId = filter.FilterValueId,
+    //        //                FValue = filter.FilterValue
+    //        //            };
 
-                             select g;
-            List<FNameViewModel> listFilters = new List<FNameViewModel>();
-            foreach (var filterName in groupNames)
-            {
-                FNameViewModel node = new FNameViewModel
-                {
-                    Id = filterName.Key.Id,
-                    Name = filterName.Key.Name
-                };
-                //node.Childrens = filterName
-                //    .GroupBy(f => new FValueViewItem { Id = f.FValueId, Name = f.FValue })
-                //    .Select(f => f.Key)
-                //    .ToList();
-                node.Childrens = (from v in filterName
-                                  group v by new FValueViewItem
-                                  {
-                                      Id = v.FValueId,
-                                      Name = v.FValue
-                                  } into g
-                                  select g.Key).ToList();
+    //        var query = context.VFilterNameGroups
+    //            .AsQueryable()
+    //            .Where(filter => filter.FilterValueId != null)
+    //            .Select(filter => new
+    //            {
+    //                FNameId = filter.FilterNameId,
+    //                FName = filter.FilterName,
+    //                FValueId = filter.FilterValueId,
+    //                FValue = filter.FilterValue
+    //            });
 
-                //var a = 
+    //        //var groupNames = from filter in query
+    //        //                 group filter by new
+    //        //                 {
+    //        //                     Id = filter.FNameId,
+    //        //                     Name = filter.FName
+    //        //                 } into g
+    //        //                 orderby g.Key.Name
+    //        //                 select g;
 
-                listFilters.Add(node);
-            }
-            
-            return listFilters;
-        }
-    }
+
+    //        var groupNames = query
+    //            .GroupBy(filter => (new { Id = filter.FNameId, Name = filter.FName }))
+    //            .OrderBy(x => x.Key.Name);
+
+    //        List<FNameViewModel> FilterList = new List<FNameViewModel>();
+
+    //        foreach (var filterName in groupNames)
+    //        {
+    //            FNameViewModel node = new FNameViewModel
+    //            {
+    //                Id = filterName.Key.Id,
+    //                Name = filterName.Key.Name
+    //            };
+
+    //            node.Childrens = filterName
+    //                .GroupBy(f => new FValueViewItem { Id = f.FValueId, Name = f.FValue })
+    //                .Select(f => f.Key)
+    //                .ToList();
+
+    //            FilterList.Add(node);
+    //        }
+
+    //        return FilterList;
+    //    }
+    //}
 }

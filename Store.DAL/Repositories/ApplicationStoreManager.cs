@@ -1,5 +1,5 @@
 ﻿//using Store.DAL.Entities.StoreEntities;
-using Store.DAL.EntityFramework;
+using Store.DAL.Context;
 using Store.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,24 +17,16 @@ namespace Store.DAL.Identity.StoreManagers
             DbContext = AppDbContext;
         }
 
-        public async Task CreateAsync<T>(T item) where T : class
+        public void Create<T>(T item) where T : class
         {
-            await Task.Run(() =>
-            {
-                DbContext.Set<T>().Add(item);
-                DbContext.SaveChanges();
-            });
+            DbContext.Set<T>().Add(item);
+            DbContext.SaveChanges();
         }
 
-        public async Task<IList<T>> GetItemsAsync<T>() where T : class
+        public IList<T> GetItems<T>() where T : class
         {
-            return await Task.Run(() =>
-            {
-                return DbContext.Set<T>().ToList() ?? null;
-            });
-
+            return DbContext.Set<T>().ToList() ?? null;
         }
-
 
         public void Dispose()
         {

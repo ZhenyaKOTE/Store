@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Store.DAL.Entities;
-using Store.DAL.EntityFramework;
+using Store.DAL.Context;
 using Store.DAL.Interfaces;
 using System;
 using System.Collections.Generic;

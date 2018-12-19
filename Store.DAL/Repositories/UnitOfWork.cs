@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Store.DAL.Entities;
-using Store.DAL.EntityFramework;
+using Store.DAL.Context;
 using Store.DAL.Identity;
 using Store.DAL.Identity.StoreManagers;
 using Store.DAL.Interfaces;
@@ -22,7 +22,7 @@ namespace Store.DAL.Repositories
 
         public UnitOfWork(string connectionString)
         {
-            DBContext = new ApplicationContext(/*connectionString*/);
+            DBContext = new ApplicationContext(connectionString);
             userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(DBContext));
             roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(DBContext));
             storeManager = new ApplicationStoreManager(DBContext);
