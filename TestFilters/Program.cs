@@ -2,13 +2,13 @@
 using Store.DAL.Context;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using TestFilter;
 using Store.BLL.Interfaces;
 using Store.BLL.Services;
 using Store.DAL.Repositories;
 using System.Threading.Tasks;
-
+using System.Linq;
 
 namespace TestFilters
 {
@@ -17,20 +17,23 @@ namespace TestFilters
         static IStoreService storeService = new StoreService(new UnitOfWork("StoreContext"));
         static void Main(string[] args)
         {
-            GetNames();
-            Console.Read();
+            int[] numbers = { -3, -2, -1, 0, 1, 2, 3 };
+            var result = numbers.Skip(5).Take(12);
+
+            foreach (int i in result)
+                Console.WriteLine(i);
 
         }
         public static void GetNames()
         {
-            Task.Run(async () =>
-            {
-               var a = await storeService.GetCategories();
-               foreach (var k in a)
-               {
-                   Console.WriteLine(k.Name);
-               }
-           });
+           // Task.Run(async () =>
+           // {
+           //    var a = await storeService.GetCategories();
+           //    foreach (var k in a)
+           //    {
+           //        Console.WriteLine(k.Name);
+           //    }
+           //});
         }
         public static void DO()
         {
