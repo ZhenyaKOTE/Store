@@ -15,8 +15,9 @@ namespace TestFilters
             Filtration filtration = new Filtration(new ApplicationContext());
 
             var Products = filtration.GetProductsByFilters(filters);
-
+            
             Console.WriteLine(Products.Count);
+            Console.Read();
         }
 
 
@@ -101,6 +102,10 @@ namespace TestFilters
                     Id = filterName.Key.Id,
                     Name = filterName.Key.Name
                 };
+                //node.Childrens = filterName
+                //    .GroupBy(f => new FValueViewItem { Id = f.FValueId, Name = f.FValue })
+                //    .Select(f => f.Key)
+                //    .ToList();
                 node.Childrens = (from v in filterName
                                   group v by new FValueViewItem
                                   {
@@ -108,6 +113,9 @@ namespace TestFilters
                                       Name = v.FValue
                                   } into g
                                   select g.Key).ToList();
+
+                //var a = 
+
                 listFilters.Add(node);
             }
             

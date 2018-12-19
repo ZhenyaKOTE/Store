@@ -71,10 +71,6 @@
     <Compile Include="Migrations\201812170916185_CreateFilters.Designer.cs">
       <DependentUpon>201812170916185_CreateFilters.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201812171110452_Create filters and params.cs" />
-    <Compile Include="Migrations\201812171110452_Create filters and params.Designer.cs">
-      <DependentUpon>201812171110452_Create filters and params.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Views\Filters\VFilterNameGroup.cs" />
     <Compile Include="Repositories\ApplicationStoreManager.cs" />
@@ -92,9 +88,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201812170916185_CreateFilters.resx">
       <DependentUpon>201812170916185_CreateFilters.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812171110452_Create filters and params.resx">
-      <DependentUpon>201812171110452_Create filters and params.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
