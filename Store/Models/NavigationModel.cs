@@ -7,8 +7,8 @@ namespace Store.Models
 {
     public class NavigationModel
     {
-        public int SelectedPage { get; set; }
-        public int MaxPages { get; set; }
-        //public IEnumerable<string> ActionUrl { get; set; }
+        public PagingInfo PagingInfo { get; set; }
+        public IEnumerable<GeneralProductModel> Products { get; set; }
+      
     }
 }

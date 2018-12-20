@@ -1,6 +1,9 @@
 ﻿
 @using Store.Models;
-@model Store.Models.InfoForPageProductModel
+@using System.Collections.Generic;
+@using Store.Helpers;
+@model NavigationModel
+
 
 <script src="~/Scripts/umd/popper.min.js" type="text/javascript"></script>
 @Scripts.Render("~/bundles/jquery")
@@ -11,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm">
-                    <h1 style="border-radius: 5px; width:100%; text-align:left; height:55px">@Model.ThisCategory:</h1>
+                    <h1 style="border-radius: 5px; width:100%; text-align:left; height:55px">@*@Model.ThisCategory:*@</h1>
                 </div>
                 <div class="col-sm d-flex flex-column">
 
@@ -38,26 +41,26 @@
         <ul class="products clearfix align-content-center" style="height: auto">
             @if (Model != null)
             {
-                foreach (GeneralProductModel gpm in Model.ProductModels)
+                foreach (GeneralProductModel pr in Model.Products)
                 {
                     <li class="product-wrapper">
                         <div class="product">
-                            <a href="@gpm.UrlToBuy">
+                            <a href="@pr.UrlToBuy">
                                 <div class="product-photo">
 
-                                    <img src="@gpm.PhotoPath" alt="" />
+                                    <img src="@pr.PhotoPath" alt="" />
                                 </div>
                             </a>
                             <hr>
                             <div style="margin:10px;">
-                                <a href="@gpm.UrlToBuy"><p style="font-size:13px; text-align:left">@gpm.TextUrl</p></a>
+                                <a href="@pr.UrlToBuy"><p style="font-size:13px; text-align:left">@pr.TextUrl</p></a>
 
                                 <div class="row">
                                     <div class="col">
-                                        <label style="margin-left:5px; background-color:antiquewhite; border-radius: 3px;">@gpm.Price грн.</label>
+                                        <label style="margin-left:5px; background-color:antiquewhite; border-radius: 3px;">@pr.Price грн.</label>
                                     </div>
                                     <div class="col">
-                                        <a href="@gpm.UrlToBuy" style="margin-right:10px; margin-top:-5px" class="btn btn-success">Купить</a>
+                                        <a href="@pr.UrlToBuy" style="margin-right:10px; margin-top:-5px" class="btn btn-success">Купить</a>
                                     </div>
                                 </div>
                             </div>
@@ -67,16 +70,31 @@
 
             }
         </ul>
-        if (Model != null)
+        <div class="pager">
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+        </div>
+        @*if (Model != null)
         {
-            @Html.Partial("_NavPartial", Model);
-
-        }
+                @Html.Partial("_NavPartial", Model.PagingInfo);
+        }*@
     }
 </div>
 
 <script>
-    var w = window.innerHeight;
-    var container = document.getElementById('ProductsView');
-    container.style.minHeight = (w - 130) + "px"; //130 - height: header and footer
+
+    //function LoadPagination(PagingInfo, url) {
+    //    let u = url;
+    //    $(function () {
+    //        $.ajax({
+    //            url: u,
+    //            type: "POST",
+    //            success: function (msg) {
+    //                console.log(u);
+    //                let result = JSON.parse(msg);
+    //                console.log(result);
+
+    //            }
+    //        })
+    //    });
+    //}
 </script>

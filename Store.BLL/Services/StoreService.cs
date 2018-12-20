@@ -33,11 +33,13 @@ namespace Store.BLL.Services
             //int[] numbers = { -3, -2, -1, 0, 1, 2, 3 };
             //var result = numbers.Skip(5).Take(12);
 
-            int Skip = (PaginationModel.Page - 1) * PaginationModel.CountViewProducts;
 
-            new PaginationViewModel() {
-                Products = 
-                DbContext.StoreManager.GetItems<Product>().Where(x => x.CategoryId == PaginationModel.CategoryId).Skip()
+
+            //int Skip = (PaginationModel.Page - 1) * PaginationModel.CountViewProducts;
+
+            //new PaginationViewModel() {
+            //    Products =
+            //    DbContext.StoreManager.GetItems<Product>().Where(x => x.CategoryId == PaginationModel.CategoryId).Skip(3).Take(12);
 
             return null;
         }
