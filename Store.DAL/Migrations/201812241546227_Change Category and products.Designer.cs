@@ -7,13 +7,13 @@ namespace Store.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddednewpropertytoProdcutDescription : IMigrationMetadata
+    public sealed partial class ChangeCategoryandproducts : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddednewpropertytoProdcutDescription));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeCategoryandproducts));
         
         string IMigrationMetadata.Id
         {
-            get { return "201812191343174_Added new property to Prodcut(Description)"; }
+            get { return "201812241546227_Change Category and products"; }
         }
         
         string IMigrationMetadata.Source

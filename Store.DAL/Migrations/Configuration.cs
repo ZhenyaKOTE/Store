@@ -31,7 +31,7 @@ namespace Store.DAL.Migrations
                 {
                     Id = 1,
                     Name = "Îäÿã",
-                    ParentId = null
+                    //ParentId = null
                 });
             #endregion
 

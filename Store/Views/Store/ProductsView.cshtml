@@ -73,6 +73,7 @@
         <div class="pager">
             @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
         </div>
+
         @*if (Model != null)
         {
                 @Html.Partial("_NavPartial", Model.PagingInfo);

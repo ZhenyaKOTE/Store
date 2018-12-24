@@ -10,7 +10,7 @@ namespace Store.DAL.Interfaces
         
         void Create<T>(T item) where T : class;
         //Task<IList<T>> GetAsync<T>() where T: class;
-        IList<T> GetItems<T>() where T : class;
+        System.Data.Entity.DbSet<T> GetItems<T>() where T : class;
 
 
         //void Create(Characteristic item);

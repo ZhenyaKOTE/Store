@@ -23,9 +23,9 @@ namespace Store.DAL.Identity.StoreManagers
             DbContext.SaveChanges();
         }
 
-        public IList<T> GetItems<T>() where T : class
+        public System.Data.Entity.DbSet<T> GetItems<T>() where T : class
         {
-            return DbContext.Set<T>().ToList() ?? null;
+            return DbContext.Set<T>() ?? null;
         }
 
         public void Dispose()

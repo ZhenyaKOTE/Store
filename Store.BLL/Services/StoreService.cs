@@ -16,33 +16,41 @@ namespace Store.BLL.Services
             DbContext = UOW;
         }
 
-        public IList<CategoryDTO> GetCategories()
+
+        //if null comes, then return all categories
+        //else return selected categories by ID
+        public IEnumerable<PreViewCategoryDTO> GetCategories(int?[] CategoriesId = null) 
         {
-            var a = DbContext.StoreManager.GetItems<Category>().ToList();
+            List<PreViewCategoryDTO> CategoriesDTO = new List<PreViewCategoryDTO>();
 
-            List<CategoryDTO> list = new List<CategoryDTO>();
+            if (CategoriesId == null || CategoriesId.Count() == 0)
+            {
+                foreach (Category DalCategory in DbContext.StoreManager
+                    .GetItems<Category>())
+                {
+                    CategoriesDTO.Add(new PreViewCategoryDTO { Id = DalCategory.Id, Name = DalCategory.Name });
+                }
+            }
+            else
+            {
+                foreach (int CategoryId in CategoriesId)
+                {
+                    
+                   var dbCategory = DbContext.StoreManager
+                        .GetItems<Category>()
+                        .FirstOrDefault(dbCategoryId => dbCategoryId.Id == CategoryId);
 
-            foreach (Category DalCategory in a)
-                list.Add(new CategoryDTO { Id = DalCategory.Id, Name = DalCategory.Name });
-            
-            return list ?? null;
+                    CategoriesDTO.Add(new PreViewCategoryDTO
+                    {
+                        Id = dbCategory.Id,
+                        Name = dbCategory.Name
+                    });
+                }
+            }
+
+            return CategoriesDTO ?? null;
         }
 
-        public PaginationViewModel GetProductsByCategoryId(PaginationParamsModel PaginationModel) 
-        {
-            //int[] numbers = { -3, -2, -1, 0, 1, 2, 3 };
-            //var result = numbers.Skip(5).Take(12);
-
-
-
-            //int Skip = (PaginationModel.Page - 1) * PaginationModel.CountViewProducts;
-
-            //new PaginationViewModel() {
-            //    Products =
-            //    DbContext.StoreManager.GetItems<Product>().Where(x => x.CategoryId == PaginationModel.CategoryId).Skip(3).Take(12);
-
-            return null;
-        }
 
         public ProductDTO GetProductById(int Id)
         {
@@ -55,6 +63,7 @@ namespace Store.BLL.Services
                 Description = dalProduct.Description
             };
         }
+
         public void Dispose()
         {
             DbContext.Dispose();

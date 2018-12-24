@@ -28,7 +28,7 @@ namespace Store.Helpers
             //    result.Append(tag.ToString());
             //}
             //return MvcHtmlString.Create(result.ToString());
-
+            
             StringBuilder result = new StringBuilder();
             for (int i = 1; i <= pagingInfo.TotalPages; ++i)
             {             
@@ -60,5 +60,6 @@ namespace Store.Helpers
             }
             return MvcHtmlString.Create(result.ToString());
         }
+
     }
 }

@@ -13,13 +13,14 @@ namespace Store.DAL.Context
             Database.SetInitializer<ApplicationContext>(new DatabaseInitializerIsExist());
         }
 
-        //public ApplicationContext()
-        //    : base("name=StoreContext")
-        //{
-        //    //Database.SetInitializer<ApplicationContext>(
-        //    //  new DatabaseInitializerIsExist()
-        //    //  );
-        //}
+
+        public ApplicationContext()
+            : base("name=StoreContext")
+        {
+            //Database.SetInitializer<ApplicationContext>(
+            //  new DatabaseInitializerIsExist()
+            //  );
+        }
 
         public DbSet<ClientProfile> ClientProfiles { get; set; }
 

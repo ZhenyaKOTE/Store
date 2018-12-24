@@ -13,11 +13,11 @@ namespace Store.DAL.Entities.StoreEntitiesWithFilters
     {
         [Key, Column(Order = 0)]
         public int Id { get; set; }
-        [ForeignKey("Parent"), Column(Order = 1)]
-        public int? ParentId { get; set; }
+        //[ForeignKey("Childrens"), Column(Order = 1)]
+        //public int? ParentId { get; set; }
         [Required, StringLength(maximumLength: 255)]
         public string Name { get; set; }
-        public ICollection<Category> Parent { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public IEnumerable<Category> Childrens { get; set; }
+        public virtual IEnumerable<Product> Products { get; set; }
     }
 }
