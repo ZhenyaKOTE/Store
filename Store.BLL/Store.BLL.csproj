@@ -65,13 +65,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\FilterDTO.cs" />
+    <Compile Include="DTO\FilterNameDTO.cs" />
+    <Compile Include="DTO\FilterNameGroupDTO.cs" />
+    <Compile Include="DTO\FilterValueDTO.cs" />
     <Compile Include="DTO\PreViewCategoryDTO.cs" />
-    <Compile Include="DTO\CharacteristicByProductDTO.cs" />
     <Compile Include="DTO\PaginationDtoModels.cs" />
     <Compile Include="DTO\ProductDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="DTO\ViewCategoryDTO.cs" />
+    <Compile Include="Infrastructure\Helper.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
+    <Compile Include="Infrastructure\PredicateBuilder.cs" />
     <Compile Include="Interfaces\IServiceCreator.cs" />
     <Compile Include="Interfaces\IStoreService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />

@@ -11,6 +11,7 @@ namespace Store.DAL.Context
         public ApplicationContext(string conectionString) : base(conectionString)
         {
             Database.SetInitializer<ApplicationContext>(new DatabaseInitializerIsExist());
+
         }
 
 

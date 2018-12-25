@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store.BLL.DTO
 {
-    class ViewCategoryDTO
+    public class ViewCategoryDTO
     {
         public PreViewCategoryDTO pViewCategoryDTO { get; set; }
         public virtual IEnumerable<ProductDTO> ProductsDTO { get; set; }
