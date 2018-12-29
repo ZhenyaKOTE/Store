@@ -6,6 +6,7 @@ using Store.DAL.Entities.StoreEntitiesWithFilters;
 using Store.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 
 namespace Store.BLL.Services
 {
@@ -18,8 +19,9 @@ namespace Store.BLL.Services
             DbContext = UOW;
         }
 
-        public IEnumerable<PreViewCategoryDTO> Get(int[] CategoriesId = null) 
+        public IEnumerable<PreViewCategoryDTO> Get(int[] CategoriesId = null)
         {
+            
             List<PreViewCategoryDTO> CategoriesDTO = new List<PreViewCategoryDTO>();
 
             if (CategoriesId == null || CategoriesId.Count() == 0)
@@ -27,18 +29,22 @@ namespace Store.BLL.Services
                 foreach (Category DalCategory in DbContext.StoreManager
                     .GetItems<Category>().ToList())
                 {
-                    CategoriesDTO.Add(new PreViewCategoryDTO { Id = DalCategory.Id, Name = DalCategory.Name });
+                    CategoriesDTO.Add(new PreViewCategoryDTO
+                    {
+                        Id = DalCategory.Id,
+                        Name = DalCategory.Name
+                    });
                 }
             }
-            else // Тeed to refactor
+            else // Need to refactor
             {
                 foreach (int CategoryId in CategoriesId)
                 {
-                    
-                   var dbCategory = DbContext.StoreManager
-                        .GetItems<Category>()
-                        //.FirstOrDefault(dbCategoryId => dbCategoryId.Id == CategoryId);
-                        .First(x => x.Id == CategoryId);
+
+                    var dbCategory = DbContext.StoreManager
+                         .GetItems<Category>()
+                         //.FirstOrDefault(dbCategoryId => dbCategoryId.Id == CategoryId);
+                         .First(x => x.Id == CategoryId);
 
                     CategoriesDTO.Add(new PreViewCategoryDTO
                     {
@@ -61,18 +67,6 @@ namespace Store.BLL.Services
                 Price = dalProduct.Price,
                 Description = dalProduct.Description
             };
-        }
-
-
-        private ICollection<FilterDTO> ConvertorFilters(ICollection<Filter> DAL_Filters)
-        {
-            List<FilterDTO> list = new List<FilterDTO>();
-
-            foreach (Filter f in DAL_Filters)
-            {
-                var a = new FilterDTO
-                { FilterNameId = f.FilterNameId, FilterNameOf = f.FilterNameOf, FilterValueId =  }
-            }
         }
 
         public IEnumerable<ProductDTO> Filter(int[] FiltersId) //Доробити з фотографіями
@@ -103,7 +97,8 @@ namespace Store.BLL.Services
                     query = query.Where(Predicate);
             }
 
-            var FilteredProducts = query.Select(fProducts => new ProductDTO
+            ProductDTO[] FilteredProducts = query
+                .Select(fProducts => new ProductDTO
             {
                 Id = fProducts.Id,
                 Name = fProducts.Name,
@@ -112,10 +107,14 @@ namespace Store.BLL.Services
                 DateCreate = fProducts.DateCreate,
                 Quantity = fProducts.Quantity,
 
-                Filters = ConvertorFilters(fProducts.Filters)
-                
-            }).ToArray();
+                Filters = fProducts.Filters
+                .Select(x => new FilterDTO
+                {
+                    FilterValue = x.FilterValueOf.Name,
+                    FilterName = x.FilterNameOf.Name
+                }).AsQueryable()
 
+             }).ToArray();
 
             return FilteredProducts;
         }

@@ -15,7 +15,6 @@ namespace Store.BLL.DTO
         public string Description { get; set; }
         public int Quantity { get; set; }
         public DateTime DateCreate { get; set; }
-        public virtual ICollection<FilterDTO> Filters { get; set; }
-        // public virtual IList<CharacteristicDTO> Characteristics { get; set; }
+        public virtual IQueryable<FilterDTO> Filters { get; set; }
     }
 }

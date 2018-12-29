@@ -71,7 +71,7 @@ namespace Store.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> ToBuyProduct(int Id) //GetProductById
+        public ActionResult ToBuyProduct(int Id) //GetProductById
         {
 
             //var model = await Task.Run(async () =>
@@ -104,21 +104,20 @@ namespace Store.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> TestPage()
+        public ActionResult TestPage()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<PartialViewResult> _FilterView(string SerializeFilters)
+        public PartialViewResult _FilterView(string SerializeFilters)
         {
-
             return PartialView("_FilterView");
         }
 
         [HttpPost]
         [OutputCache(Duration = 3600, Location = OutputCacheLocation.ServerAndClient)]
-        public async Task<string> GetCategory()
+        public string GetCategory()
         {
 
             //List<CategoryModel> categories = new List<CategoryModel>();
@@ -141,22 +140,34 @@ namespace Store.Controllers
             //    return JsonConvert.SerializeObject(list);
             //});
 
-            return null;
+            List<ViewCategoryModel> categoryDTOs = new List<ViewCategoryModel>();
+
+            foreach (PreViewCategoryDTO dTO in StoreService.Get())
+            {
+                categoryDTOs.Add(new ViewCategoryModel
+                {
+                    Id = dTO.Id,
+                    Name = dTO.Name,
+                    UrlToMove = Url.Content(@"~/Store/List?page=1")
+                });
+            }
+
+            return JsonConvert.SerializeObject(categoryDTOs);
         }
 
         public ViewResult List(int page = 1)
         {
             int SizeProducts = 9; //Количество продуктов отображаемых на странице
-            IList<GeneralProductModel> Products = new List<GeneralProductModel>();
+            IList<ViewProductModel> Products = new List<ViewProductModel>();
 
             for (int i = 0; i < 80; i++)
             {
-                GeneralProductModel pr = new GeneralProductModel()
+                ViewProductModel pr = new ViewProductModel()
                 {
                     Id = i,
                     Price = 127 + (i * 10),
-                    TextUrl = "Colesa" + i.ToString(),
-                    UrlToBuy = "#",
+                    Text = "Colesa" + i.ToString(),
+                    UrlToBuy = Url.Content(@"~/ToBuyProduct?Id=" + i),
                     PhotoPath = Url.Content(@"Images/shiny.png"),
                     Description = "Продукт шина"
                 };

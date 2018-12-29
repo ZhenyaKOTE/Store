@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Store.Models
 {
-    public class CategoryModel
+    public class ViewCategoryModel
     {
         public int Id { get; set; }
         public string UrlToMove { get; set; }

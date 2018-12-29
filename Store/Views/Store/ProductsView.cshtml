@@ -41,7 +41,7 @@
         <ul class="products clearfix align-content-center" style="height: auto">
             @if (Model != null)
             {
-                foreach (GeneralProductModel pr in Model.Products)
+                foreach (ViewProductModel pr in Model.Products)
                 {
                     <li class="product-wrapper">
                         <div class="product">
@@ -53,7 +53,7 @@
                             </a>
                             <hr>
                             <div style="margin:10px;">
-                                <a href="@pr.UrlToBuy"><p style="font-size:13px; text-align:left">@pr.TextUrl</p></a>
+                                <a href="@pr.UrlToBuy"><p style="font-size:13px; text-align:left">@pr.Text</p></a>
 
                                 <div class="row">
                                     <div class="col">

@@ -212,7 +212,7 @@
     <Compile Include="Models\CharacteriscitModel.cs" />
     <Compile Include="Models\IdentityModels\TokenIdentity.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\GeneralProductModel.cs" />
+    <Compile Include="Models\ViewProductModel.cs" />
     <Compile Include="Models\NavigationModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -331,7 +331,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="ContentImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

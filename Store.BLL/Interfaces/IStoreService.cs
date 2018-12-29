@@ -14,6 +14,7 @@ namespace Store.BLL.Interfaces
         //else return selected categories by ID
         IEnumerable<PreViewCategoryDTO> Get(int[] CategoriesId = null);
         ProductDTO Get(int Id);
+        IEnumerable<ProductDTO> Filter(int[] FiltersId);
 
     }
 }

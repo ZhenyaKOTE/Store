@@ -1,10 +1,10 @@
-﻿@model Store.Models.GeneralProductModel
+﻿@model Store.Models.ViewProductModel
 @{
     ViewBag.Title = "ToBuyProduct";
 }
 @Scripts.Render("~/bundles/jquery")
 
-<h2>@Model.TextUrl</h2>
+<h2>@Model.Text</h2>
 
 <div id="ToBuyBody">
     <script>
@@ -26,19 +26,19 @@
                         <div class="row">
                             <div class="col-sm">
                                 <ul>
-                                    @foreach (var ch in Model.Characteristics)
+                                    @*@foreach (var ch in Model.Characteristics)
                                     {
                                         <li style="font-size:20px">@ch.Key:<hr></li>
-                                    }
+                                    }*@
                                 </ul>
                             </div>
                             <div class="col-sm">
-                                <ul>
+                                @*<ul>
                                     @foreach (var ch in Model.Characteristics)
                                     {
                                         <li style="font-size:20px">@ch.Value<hr></li>
                                     }
-                                </ul>
+                                </ul>*@
                             </div>
                         </div>
                     </div>

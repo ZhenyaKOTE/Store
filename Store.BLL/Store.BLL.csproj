@@ -66,9 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\FilterDTO.cs" />
-    <Compile Include="DTO\FilterNameDTO.cs" />
-    <Compile Include="DTO\FilterNameGroupDTO.cs" />
-    <Compile Include="DTO\FilterValueDTO.cs" />
     <Compile Include="DTO\PreViewCategoryDTO.cs" />
     <Compile Include="DTO\PaginationDtoModels.cs" />
     <Compile Include="DTO\ProductDTO.cs" />
